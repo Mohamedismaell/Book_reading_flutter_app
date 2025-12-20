@@ -63,5 +63,5 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => AuthCubit(sl<LoginWithGoogle>(), sl<Logout>()),
   );
-  // sl.registerLazySingleton(() => ThemeCubit());
+  sl.registerLazySingleton(() => ThemeCubit());
 }
