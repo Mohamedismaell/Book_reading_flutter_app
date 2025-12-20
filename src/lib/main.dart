@@ -1,4 +1,5 @@
 import 'package:bookreading/features/auth/presentation/screens/home_screen.dart';
+import 'package:bookreading/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             theme: getLightTheme(),
             // themeMode: ThemeMode.light,
-            home: HomeScreen(),
+            home: LoginScreen(),
           );
           // )
           // MaterialApp.router(

@@ -2,12 +2,12 @@ import '../../../../core/connections/result.dart';
 import '../../../../core/params/params.dart';
 import '../repositories/auth_repository.dart';
 
-class Login {
+class LoginWithGoogle {
   final AuthRepository repository;
 
-  Login({required this.repository});
+  LoginWithGoogle({required this.repository});
 
-  Future<Result> login({required LoginParams params}) async {
-    return await repository.login(params: params);
+  Future<Result> loginWithGoogle() async {
+    return await repository.loginWithGoogle();
   }
 }

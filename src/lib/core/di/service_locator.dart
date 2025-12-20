@@ -1,15 +1,18 @@
 import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
+import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/otp.dart';
-import 'package:bookreading/features/auth/domain/usecases/signup.dart';
+import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/auth/data/datasources/auth_remote_data_source.dart';
-import '../../features/auth/data/repositories/news_repository_impl.dart';
+import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/usecases/forget_password.dart';
-import '../../features/auth/domain/usecases/login.dart';
+import '../../features/auth/domain/usecases/login_google.dart';
+import '../../features/auth/domain/usecases/logout.dart';
+import '../../features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import '../connections/network_info.dart';
 import '../database/api/dio_consumer.dart';
 import '../database/cache/cache_helper.dart';
@@ -27,29 +30,38 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(() => CacheHelper());
 
   //! Data Sources
-  // sl.registerLazySingleton<NewsRemoteDataSource>(
-  //   () => NewsRemoteDataSource(api: sl<DioConsumer>()),
-  // );
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSource(supabase: Supabase.instance.client),
+  );
 
-  // //! Repositories
-  // sl.registerLazySingleton<NewsRepository>(
-  //   () => NewsRepositoryImpl(
-  //     remoteDataSource: sl<NewsRemoteDataSource>(),
-  //     networkInfo: sl<NetworkInfo>(),
-  //   ),
-  // );
-  //! Supabase
-  // sl.registerLazySingleton(() => Supabase.instance.client);
+  //! Repositories
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: sl<AuthRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
 
   //! Use Cases
-  sl.registerLazySingleton(() => Login(repository: sl<AuthRepository>()));
-  sl.registerLazySingleton(() => Signup(repository: sl<AuthRepository>()));
+  sl.registerLazySingleton(
+    () => LoginWithGoogle(repository: sl<AuthRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => SignUpWithEmail(repository: sl<AuthRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => LoginWithEmail(repository: sl<AuthRepository>()),
+  );
   sl.registerLazySingleton(() => Otp(repository: sl<AuthRepository>()));
   sl.registerLazySingleton(
     () => ForgetPassword(repository: sl<AuthRepository>()),
   );
+  sl.registerLazySingleton(() => Logout(repository: sl<AuthRepository>()));
 
   //! Cubits
   //TODO Register ==> "AuthCubit" later
+  sl.registerLazySingleton(
+    () => AuthCubit(sl<LoginWithGoogle>(), sl<Logout>()),
+  );
   sl.registerLazySingleton(() => ThemeCubit());
 }
