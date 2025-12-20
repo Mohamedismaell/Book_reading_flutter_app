@@ -27,25 +27,23 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Result> logout({required UserApp currentUser}) async {
+  Future<Result> signUpWithEmail({required SignupParams params}) async {
     try {
-      await remoteDataSource.logout(currentUser: currentUser);
-      return Result.ok(null);
-    } catch (e) {
+      final response = await remoteDataSource.signUpWithEmail(params: params);
+      return Result.ok(response);
+    } on CacheException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
 
   @override
-  Future<Result> forgotPassword({required ForgotPasswordParams params}) {
-    // TODO: implement forgotPassword
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result> loginWithEmail({required LoginParams params}) {
-    // TODO: implement loginWithEmail
-    throw UnimplementedError();
+  Future<Result> loginWithEmail({required LoginParams params}) async {
+    try {
+      final response = await remoteDataSource.loginWithEmail(params: params);
+      return Result.ok(response);
+    } on CacheException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
   }
 
   @override
@@ -54,15 +52,26 @@ class AuthRepositoryImpl extends AuthRepository {
     throw UnimplementedError();
   }
 
+  // TODO: edit name of the function ===> forgotPassword
   @override
-  Future<Result> signUpWithEmail({required SignupParams params}) {
-    // TODO: implement signUpWithEmail
+  Future<Result> forgotPassword({required ForgotPasswordParams params}) {
+    // TODO: implement forgotPassword
     throw UnimplementedError();
   }
 
+  @override
+  Future<Result> logout({required UserApp currentUser}) async {
+    try {
+      await remoteDataSource.logout(currentUser: currentUser);
+      return Result.ok(null);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
   //!Filtered Posts with Category
   // @override
   // Future<Result<List<PostEntity>>> getNewsByCategory({
+
   //   required NewsCategoryParams params,
   // }) async {
   //   try {

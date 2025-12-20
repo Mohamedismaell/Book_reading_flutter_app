@@ -1,5 +1,4 @@
 import '../../../../core/connections/result.dart';
-import '../../../../core/params/params.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginWithGoogle {

@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../core/params/params.dart';
 import '../models/user_app.dart';
 
 class AuthRemoteDataSource {
@@ -17,6 +18,23 @@ class AuthRemoteDataSource {
     );
 
     return UserApp.fromSupabase(authState.session?.user);
+  }
+
+  Future<UserApp> signUpWithEmail({required SignupParams params}) async {
+    final response = await supabase.auth.signUp(
+      email: params.email,
+      password: params.password.toString(),
+      data: {'full_name': params.name},
+    );
+    return UserApp.fromSupabase(response.user);
+  }
+
+  Future<UserApp> loginWithEmail({required LoginParams params}) async {
+    final response = await supabase.auth.signInWithPassword(
+      email: params.email,
+      password: params.password.toString(),
+    );
+    return UserApp.fromSupabase(response.user);
   }
 
   Future<void> logout({required UserApp currentUser}) async {
