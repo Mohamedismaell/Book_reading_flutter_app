@@ -1,5 +1,6 @@
-import 'package:bookreading/features/auth/presentation/screens/home_screen.dart';
-import 'package:bookreading/features/auth/presentation/screens/login_screen.dart';
+import 'package:bookreading/core/theme/theme_data/dark_theme_data.dart';
+import 'package:bookreading/features/auth/presentation/screens/login_page.dart';
+import 'package:bookreading/features/auth/presentation/screens/test_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,9 +41,9 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp(
-            theme: getLightTheme(),
-            // themeMode: ThemeMode.light,
-            home: LoginScreen(),
+            theme: getDarkTheme(),
+            themeMode: ThemeMode.dark,
+            home: HomeScreen(),
           );
           // )
           // MaterialApp.router(

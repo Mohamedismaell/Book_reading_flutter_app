@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   const AppColors._();
+  static const Color aboveGround = Color(0xFF313333);
 
   static const Color accentGreen = Color(0xFFCDE7BE);
   static const Color bgBlue = Color(0xFF2D3047);
