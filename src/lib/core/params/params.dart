@@ -15,6 +15,8 @@ class SignupParams {
     required this.email,
     required this.password,
   });
+
+  get fullName => null;
 }
 
 class ForgotPasswordParams {

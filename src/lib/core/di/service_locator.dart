@@ -61,7 +61,12 @@ Future<void> initServiceLocator() async {
   //! Cubits
   //TODO Register ==> "AuthCubit" later
   sl.registerLazySingleton(
-    () => AuthCubit(sl<LoginWithGoogle>(), sl<Logout>()),
+    () => AuthCubit(
+      sl<LoginWithGoogle>(),
+      sl<Logout>(),
+      sl<SignUpWithEmail>(),
+      sl<LoginWithEmail>(),
+    ),
   );
   sl.registerLazySingleton(() => ThemeCubit());
 }
