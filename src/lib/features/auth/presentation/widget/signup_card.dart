@@ -1,7 +1,8 @@
 import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/app_shadows.dart';
 import 'package:bookreading/core/theme/app_text_styles.dart';
-import 'package:bookreading/features/auth/presentation/widget/auth_button.dart';
+import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
+import 'package:bookreading/features/auth/presentation/widget/google_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +17,7 @@ class SignUpCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.whiteContainer,
-        boxShadow: [AppShadows.ContainerSahdow],
+        boxShadow: [AppShadows.containerSahdow],
         borderRadius: BorderRadius.circular(32.r),
       ),
       child: Padding(
@@ -56,33 +57,14 @@ class _Content extends StatelessWidget {
           ),
         ),
         SizedBox(height: 32.h),
-        AuthButton(myText: "Sign Up"),
+        //! Action button
+        ActionAuthButton(myText: "Sign Up"),
         SizedBox(height: 24.h),
-        Row(
-          children: [
-            Flexible(
-              child: Container(
-                width: 78.w,
-                height: 1.h,
-                decoration: BoxDecoration(color: AppColors.athensGray),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Text(
-                "OR CONTINUE WITH",
-                style: AppTextStyles.input16.copyWith(fontSize: 14),
-              ),
-            ),
-            Flexible(
-              child: Container(
-                width: 78.w,
-                height: 1.h,
-                decoration: BoxDecoration(color: AppColors.athensGray),
-              ),
-            ),
-          ],
-        ),
+        //! hash Line
+        _SeperatorLine(),
+        SizedBox(height: 12.h),
+        //! Google Sign
+        GoogleButton(),
       ],
     );
   }
@@ -146,6 +128,40 @@ class __SignUpFields extends StatelessWidget {
         hintStyle: AppTextStyles.input16,
       ),
       style: AppTextStyles.input18,
+    );
+  }
+}
+
+class _SeperatorLine extends StatelessWidget {
+  const _SeperatorLine();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Container(
+            width: 78.w,
+            height: 3.h,
+            decoration: BoxDecoration(color: AppColors.athensGray),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: Text(
+            "OR CONTINUE WITH",
+            style: AppTextStyles.input16.copyWith(fontSize: 14),
+          ),
+        ),
+        Flexible(
+          child: Container(
+            width: 78.w,
+            height: 3.h,
+            decoration: BoxDecoration(color: AppColors.athensGray),
+          ),
+        ),
+      ],
     );
   }
 }
