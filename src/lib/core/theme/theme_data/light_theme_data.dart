@@ -1,3 +1,4 @@
+import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getLightTheme() {
@@ -15,6 +16,12 @@ ThemeData getLightTheme() {
     //                 states.contains(WidgetState.selected)
     //                     ? AppColors.purplePrimary
     //                     : AppColors.greyPrimary)))
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.eboneyClay,
+        foregroundColor: Colors.white,
+      ),
+    ),
   );
 }
 

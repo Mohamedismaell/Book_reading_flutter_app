@@ -1,8 +1,11 @@
-import 'package:bookreading/features/auth/presentation/screens/home_screen.dart';
-import 'package:bookreading/features/auth/presentation/screens/login_screen.dart';
+import 'package:bookreading/core/theme/theme_data/dark_theme_data.dart';
+import 'package:bookreading/features/auth/presentation/screens/login_page.dart';
+import 'package:bookreading/features/auth/presentation/screens/test_screen.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/observers/app_bloc_observer.dart';
@@ -27,7 +30,13 @@ Future<void> main() async {
     anonKey: 'sb_publishable_yNt2YfuCVSrFuS53esNU4A_HtIhv9j0',
   );
 
-  runApp(const MyApp());
+  runApp(
+    // DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) => const MyApp(), // Wrap your app
+    // ),
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -39,11 +48,21 @@ class MyApp extends StatelessWidget {
       create: (context) => ThemeCubit(),
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
-            theme: getLightTheme(),
-            // themeMode: ThemeMode.light,
-            home: LoginScreen(),
+          return ScreenUtilInit(
+            designSize: const Size(390, 884),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                // locale: DevicePreview.locale(context),
+                // builder: DevicePreview.appBuilder,
+                theme: getLightTheme(),
+                themeMode: ThemeMode.dark,
+                home: HomeScreen(),
+              );
+            },
           );
+
           // )
           // MaterialApp.router(
           //   // debugShowCheckedModeBanner: false,
