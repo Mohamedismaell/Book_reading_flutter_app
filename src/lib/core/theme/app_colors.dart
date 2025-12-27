@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   const AppColors._();
-  static const Color aboveGround = Color(0xFF313333);
+  static const Color eboneyClay = Color(0xFF2E3148);
+  static const Color paleSky = Color(0xFF6B7280);
+  static const Color athensGray = Color(0xFFE0E2EE);
+  static const Color flamingo = Color(0xFFEF4444);
+  static const Color gullGray = Color(0xFF9CA3AF);
+  static const Color riverBed = Color(0xFF4B5563);
+  static const Color slateGray = Color(0xFF64748B);
 
-  static const Color accentGreen = Color(0xFFCDE7BE);
-  static const Color bgBlue = Color(0xFF2D3047);
-  static const Color bgShade = Color(0xFF232538);
-  static const Color bgTint = Color(0xFF57596C);
-  static const Color white = Color(0xFFEAF4F4);
-  static const Color gray1 = Color(0xFFC4CCCC);
-
-  static const Color gray2 = Color(0xFF939999);
-  static const Color gray3 = Color(0xFF626666);
-  static const Color gray4 = Color(0xFF626666);
-  static const Color gray5 = Color(0xFF272828);
-  static const Color black = Color(0xFF181A1A);
-  static const LinearGradient blackLinear = LinearGradient(
-    colors: [Color(0xFF1E211C), Color(0xFF181919)],
+  static const Color white = Color(0xFFFFFFFF);
+  //! Active Back Ground Color
+  static const Color backGround = Color(0xFFE6EEFF);
+  //! white container
+  static final Color whiteContainer = Colors.white.withOpacity(0.6);
+  // //! Not Active Back Ground Color
+  // static const LinearGradient backGround = LinearGradient(
+  //   colors: [Color(0xFFFFFFFF), Color(0xFFE6EEFF)],
+  //   stops: [0.0, 1.0],
+  //   begin: Alignment.topCenter,
+  //   end: Alignment.bottomCenter,
+  // );
+  static const LinearGradient brandBlue = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomLeft,
+    colors: [eboneyClay, Color(0xFF4A5678)],
   );
 }
 

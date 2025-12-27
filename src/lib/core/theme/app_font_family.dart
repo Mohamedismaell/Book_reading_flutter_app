@@ -1,4 +1,4 @@
 class AppFontFamily {
   const AppFontFamily._();
-  static const String gotham = 'Gotham';
+  static const String merriweather = 'Merriweather';
 }
