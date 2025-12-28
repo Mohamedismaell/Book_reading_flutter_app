@@ -37,6 +37,17 @@ class AuthRemoteDataSource {
     return UserApp.fromSupabase(response.user);
   }
 
+  // Future<void> changePassword(String newPassword) async {
+  //   final response = await supabase.auth.updateUser(
+  //     UserAttributes(password: newPassword),
+  //   );
+  //   if (response.user != null) {
+  //     print('Password updated successfully');
+  //   } else {
+  //     print('Error: ${response.error?.message}');
+  //   }
+  // }
+
   Future<void> logout({required UserApp currentUser}) async {
     await supabase.auth.signOut();
   }

@@ -1,6 +1,5 @@
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/theme/app_colors.dart';
-import 'package:bookreading/core/theme/app_shadows.dart';
 import 'package:bookreading/core/theme/app_text_styles.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
@@ -9,6 +8,7 @@ import 'package:bookreading/features/auth/presentation/widget/banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/google_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
+import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,21 +20,7 @@ class LoginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //! Main White Container
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.whiteContainer,
-        boxShadow: [AppShadows.containerSahdow],
-        borderRadius: BorderRadius.circular(32.r),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: _Content(),
-        ),
-      ),
-    );
+    return WhiteContianer(child: _Content());
   }
 }
 
@@ -115,7 +101,6 @@ class _ContentState extends State<_Content> {
             }
           },
         ),
-
         SizedBox(height: 24.h),
         //! hash Line
         SeperatorLine(),
