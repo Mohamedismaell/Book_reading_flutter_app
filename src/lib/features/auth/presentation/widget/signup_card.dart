@@ -75,15 +75,16 @@ class _ContentState extends State<_Content> {
             ],
           ),
         ),
+        SizedBox(height: 4.h),
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
-            if (state is AuthSuccess) {
-              return const Text("Check your inbox to verify your email");
-            }
-            return const SizedBox.shrink();
+            return state is AuthError
+                ? NoteMessage(text: "This Email is already exists")
+                : state is AuthSuccess
+                ? NoteMessage(text: "Check your inbox to verify your Email")
+                : const SizedBox.shrink();
           },
         ),
-        ErrorMessage(text: "This Email is already exists"),
         SizedBox(height: 32.h),
         //! Action button
         ActionAuthButton(

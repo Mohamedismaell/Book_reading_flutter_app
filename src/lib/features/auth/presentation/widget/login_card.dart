@@ -72,7 +72,15 @@ class _ContentState extends State<_Content> {
         ),
         SizedBox(height: 5.h),
         //! Error Message
-        ErrorMessage(text: "Invalid email or password. Please try again."),
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return state is AuthError
+                ? NoteMessage(
+                    text: "Invalid email or password. Please try again.",
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
         SizedBox(height: 8.h),
         //! Forgot Password
         Align(
