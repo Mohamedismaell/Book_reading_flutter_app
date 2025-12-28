@@ -1,5 +1,4 @@
 import 'package:bookreading/core/theme/app_colors.dart';
-import 'package:bookreading/core/theme/app_text_styles.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_redirect_prompt.dart';
 import 'package:flutter/material.dart';
@@ -27,28 +26,41 @@ class SignUpPage extends StatelessWidget {
         sl<LoginWithEmail>(),
       ),
       child: Scaffold(
+        // resizeToAvoidBottomInset: true,
         body: Container(
           decoration: BoxDecoration(color: AppColors.backGround),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: SignUpCard(),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight:
+                      MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      MediaQuery.of(context).padding.bottom,
                 ),
-                AuthRedirectPrompt(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LogInPage(),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: SignUpCard(),
                       ),
-                    );
-                  },
-                  text: "Log in",
+                      AuthRedirectPrompt(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LogInPage(),
+                            ),
+                          );
+                        },
+                        text: "Log in",
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
