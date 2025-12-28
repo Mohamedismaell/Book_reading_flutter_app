@@ -7,6 +7,11 @@ final class AuthInitial extends AuthState {}
 
 final class AuthLoading extends AuthState {}
 
+// final class AuthVerification extends AuthState {
+//   final UserApp user;
+//   AuthVerification({required this.user});
+// }
+
 final class AuthSuccess extends AuthState {
   final UserApp user;
 

@@ -32,7 +32,6 @@ class _Content extends StatefulWidget {
 
 class _ContentState extends State<_Content> {
   final _formKey = GlobalKey<FormState>();
-
   String _name = '';
   String _email = '';
   String _password = '';
@@ -76,13 +75,21 @@ class _ContentState extends State<_Content> {
             ],
           ),
         ),
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            if (state is AuthSuccess) {
+              return const Text("Check your inbox to verify your email");
+            }
+            return const SizedBox.shrink();
+          },
+        ),
         ErrorMessage(text: "This Email is already exists"),
         SizedBox(height: 32.h),
         //! Action button
         ActionAuthButton(
           myText: "Sign Up",
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
+            if (_formKey.currentState?.validate() ?? false) {
               _formKey.currentState!.save();
               context.read<AuthCubit>().signUpWithEmail(
                 params: SignupParams(

@@ -18,6 +18,9 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final minHeight =
+        media.size.height - media.padding.top - media.padding.bottom;
     return BlocProvider(
       create: (context) => AuthCubit(
         sl<LoginWithGoogle>(),
@@ -29,39 +32,50 @@ class SignUpPage extends StatelessWidget {
         // resizeToAvoidBottomInset: true,
         body: Container(
           decoration: BoxDecoration(color: AppColors.backGround),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight:
-                      MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
-                      MediaQuery.of(context).padding.bottom,
+          child: Stack(
+            children: [
+              //! Arrow Back
+              if (Navigator.canPop(context))
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: SafeArea(
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
                 ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: SignUpCard(),
+              SafeArea(
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: minHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: SignUpCard(),
+                          ),
+                          AuthRedirectPrompt(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LogInPage(),
+                                ),
+                              );
+                            },
+                            text: "Log in",
+                          ),
+                        ],
                       ),
-                      AuthRedirectPrompt(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LogInPage(),
-                            ),
-                          );
-                        },
-                        text: "Log in",
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

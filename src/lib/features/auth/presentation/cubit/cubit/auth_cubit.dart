@@ -22,9 +22,11 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
+        print("****Login success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Login error****");
         print(error.errMessage);
       },
     );
@@ -36,9 +38,11 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
+        print("****Sign up success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Sign up error****");
         print(error.errMessage);
       },
     );
@@ -50,9 +54,11 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
+        print("****Log in success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Log in error****");
         print(error.errMessage);
       },
     );
@@ -64,9 +70,11 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (user) {
         emit(AuthInitial());
+        print("****Logout success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Logout error****");
         print(error.errMessage);
       },
     );
