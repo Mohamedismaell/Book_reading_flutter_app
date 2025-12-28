@@ -1,6 +1,7 @@
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/connections/network_info.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -21,7 +22,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.loginWithGoogle();
       return Result.ok(response);
-    } on CacheException catch (e) {
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
@@ -31,7 +32,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.signUpWithEmail(params: params);
       return Result.ok(response);
-    } on CacheException catch (e) {
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
@@ -41,7 +42,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.loginWithEmail(params: params);
       return Result.ok(response);
-    } on CacheException catch (e) {
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }

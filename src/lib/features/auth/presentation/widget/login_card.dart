@@ -5,6 +5,7 @@ import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.da
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
 import 'package:bookreading/features/auth/presentation/widget/banner.dart';
+import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
 import 'package:bookreading/features/auth/presentation/widget/google_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
@@ -69,7 +70,10 @@ class _ContentState extends State<_Content> {
             ],
           ),
         ),
-        SizedBox(height: 12.h),
+        SizedBox(height: 5.h),
+        //! Error Message
+        ErrorMessage(text: "Invalid email or password. Please try again."),
+        SizedBox(height: 8.h),
         //! Forgot Password
         Align(
           alignment: Alignment.centerRight,
@@ -87,7 +91,7 @@ class _ContentState extends State<_Content> {
             ),
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
         //! Action button
         ActionAuthButton(
           myText: "Log In",

@@ -3,6 +3,7 @@ import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.da
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
 import 'package:bookreading/features/auth/presentation/widget/banner.dart';
+import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
 import 'package:bookreading/features/auth/presentation/widget/google_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
@@ -75,6 +76,7 @@ class _ContentState extends State<_Content> {
             ],
           ),
         ),
+        ErrorMessage(text: "This Email is already exists"),
         SizedBox(height: 32.h),
         //! Action button
         ActionAuthButton(
@@ -91,9 +93,6 @@ class _ContentState extends State<_Content> {
               );
               _formKey.currentState!.reset();
             }
-            // else {
-            //   print('Form validation failed!');
-            // }
           },
         ),
 
