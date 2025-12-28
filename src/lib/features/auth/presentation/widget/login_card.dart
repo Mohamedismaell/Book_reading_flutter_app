@@ -14,8 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/enums/validation_type.dart';
 
-class SignUpCard extends StatelessWidget {
-  const SignUpCard({super.key});
+class LoginCard extends StatelessWidget {
+  const LoginCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,6 @@ class _Content extends StatefulWidget {
 class _ContentState extends State<_Content> {
   final _formKey = GlobalKey<FormState>();
 
-  String _name = '';
   String _email = '';
   String _password = '';
 
@@ -59,10 +58,9 @@ class _ContentState extends State<_Content> {
         //! Logo
         Logo(),
         SizedBox(height: 16.h),
-
-        //! Titel
+        //! Title
         HeadTitle(
-          headText: 'Create Account',
+          headText: 'Welcome Back',
           hashText: 'Start your reading journey today.',
         ),
         SizedBox(height: 32.h),
@@ -71,12 +69,6 @@ class _ContentState extends State<_Content> {
           key: _formKey,
           child: Column(
             children: [
-              AuthInput(
-                hintText: 'Full Name',
-                validationType: ValidationType.fullName,
-                onSaved: (value) => _name = value ?? '',
-              ),
-              SizedBox(height: 16),
               AuthInput(
                 hintText: 'Email Address',
                 validationType: ValidationType.email,
@@ -91,25 +83,36 @@ class _ContentState extends State<_Content> {
             ],
           ),
         ),
-        SizedBox(height: 32.h),
+        SizedBox(height: 12.h),
+        //! Forgot Password
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () {
+              //TODO: Implement forgot password functionality
+              print("Forgot Password pressed");
+            },
+            child: Text(
+              "Forgot Password?",
+              style: AppTextStyles.buttonMedium.copyWith(
+                color: AppColors.eboneyClay,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 16.h),
         //! Action button
         ActionAuthButton(
-          myText: "Sign Up",
+          myText: "Log In",
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
-              context.read<AuthCubit>().signUpWithEmail(
-                params: SignupParams(
-                  name: _name,
-                  email: _email,
-                  password: _password,
-                ),
+              context.read<AuthCubit>().logInWithEmail(
+                params: LoginParams(email: _email, password: _password),
               );
               _formKey.currentState!.reset();
             }
-            // else {
-            //   print('Form validation failed!');
-            // }
           },
         ),
 
@@ -120,7 +123,7 @@ class _ContentState extends State<_Content> {
         //! Google Sign
         GoogleButton(
           onPressed: () {
-            print("GoogleSignUP");
+            print("GoogleLogIn");
             context.read<AuthCubit>().logInWithGoogle();
           },
         ),

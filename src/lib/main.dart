@@ -1,7 +1,4 @@
-import 'package:bookreading/core/theme/theme_data/dark_theme_data.dart';
 import 'package:bookreading/features/auth/presentation/screens/login_page.dart';
-import 'package:bookreading/features/auth/presentation/screens/test_screen.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +55,7 @@ class MyApp extends StatelessWidget {
                 // builder: DevicePreview.appBuilder,
                 theme: getLightTheme(),
                 themeMode: ThemeMode.dark,
-                home: HomeScreen(),
+                home: LogInPage(),
               );
             },
           );

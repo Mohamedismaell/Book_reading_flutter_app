@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () => context.read<AuthCubit>().loginWithGoogle(
+                    onPressed: () => context.read<AuthCubit>().logInWithGoogle(
                       // params: LoginParams(
                       //   email: 'icebringer111@gmail.com',
                       //   password: 'Easybooy1592004',
@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () => context.read<AuthCubit>().loginWithEmail(
+                    onPressed: () => context.read<AuthCubit>().logInWithEmail(
                       params: LoginParams(
                         email: "itsfacebooky@gmail.com",
                         password: 'A123456',

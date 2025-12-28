@@ -9,20 +9,16 @@ import '../../../domain/usecases/sign_up_email.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final LoginWithGoogle logInWithGoogle;
-  final SignUpWithEmail signUpWithGoogle;
-  final LoginWithEmail logInWithEmail;
+  final LoginWithGoogle google;
+  final SignUpWithEmail signUpEmail;
+  final LoginWithEmail logInEmail;
   final Logout userLogout;
-  AuthCubit(
-    this.logInWithGoogle,
-    this.userLogout,
-    this.signUpWithGoogle,
-    this.logInWithEmail,
-  ) : super(AuthInitial());
+  AuthCubit(this.google, this.userLogout, this.signUpEmail, this.logInEmail)
+    : super(AuthInitial());
 
-  Future<void> loginWithGoogle() async {
+  Future<void> logInWithGoogle() async {
     emit(AuthLoading());
-    final response = await logInWithGoogle.loginWithGoogle();
+    final response = await google.loginWithGoogle();
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
@@ -35,7 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signUpWithEmail({required SignupParams params}) async {
     emit(AuthLoading());
-    final response = await signUpWithGoogle.signUpWithEmail(params: params);
+    final response = await signUpEmail.signUpWithEmail(params: params);
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
@@ -46,9 +42,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> loginWithEmail({required LoginParams params}) async {
+  Future<void> logInWithEmail({required LoginParams params}) async {
     emit(AuthLoading());
-    final response = await logInWithEmail.loginWithEmail(params: params);
+    final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));

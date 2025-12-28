@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../cubit/cubit/auth_cubit.dart';
 
 class GoogleButton extends StatelessWidget {
-  const GoogleButton({super.key});
-
+  const GoogleButton({super.key, required this.onPressed});
+  final Function() onPressed;
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.eboneyClay,
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 13.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              "assets/icons/earth.svg",
-              width: 18.w,
-              height: 22.h,
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        return ElevatedButton(
+          //Todo change the style of bloking button
+          onPressed: state is AuthLoading ? null : onPressed,
+          style: ElevatedButton.styleFrom(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 13.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Google",
+                  style: AppTextStyles.buttonLargeBold.copyWith(fontSize: 18),
+                ),
+                SizedBox(width: 8.w),
+                state is AuthLoading
+                    ? CircularProgressIndicator()
+                    : SvgPicture.asset(
+                        "assets/icons/earth.svg",
+                        colorFilter: ColorFilter.mode(
+                          AppColors.white,
+                          BlendMode.srcIn,
+                        ),
+                        width: 18.w,
+                        height: 22.h,
+                      ),
+              ],
             ),
-            SizedBox(width: 6.w),
-            Text(
-              "Google",
-              style: AppTextStyles.buttonLargeBold.copyWith(fontSize: 18),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
