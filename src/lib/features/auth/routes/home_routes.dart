@@ -1,54 +1,40 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:go_router/go_router.dart';
-// import '../../../core/di/service_locator.dart';
-// import '../presentation/screens/home_screen.dart';
+import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
+import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:bookreading/features/auth/presentation/screens/login_page.dart';
+import 'package:bookreading/features/auth/presentation/screens/sign_up_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/di/service_locator.dart';
+import '../../../core/routes/app_routes.dart';
+import '../domain/usecases/login_google.dart';
+import '../domain/usecases/logout.dart';
+import '../domain/usecases/sign_up_email.dart';
 
-// class HomeRoutes {
-//   static List<RouteBase> routes = [
-//     ShellRoute(
-//       builder: (context, state, child) {
-//         return BlocProvider.value(
-//           value: sl<NewsCubit>()..init(),
-//           child: Scaffold(
-//             body: child,
-//             bottomNavigationBar: HomeNavigationBar(
-//               currentLocation: state.matchedLocation,
-//             ),
-//           ),
-//         );
-//       },
-//       routes: [
-//         GoRoute(path: AppRoutes.home, builder: (_, __) => const HomeScreen()),
-//         GoRoute(
-//           path: AppRoutes.categories,
-//           builder: (_, __) => const CategoriesScreen(),
-//         ),
-//         GoRoute(
-//           path: AppRoutes.bookmarks,
-//           builder: (_, __) => const BookMarksScreen(),
-//         ),
-//         GoRoute(
-//           path: AppRoutes.categoryScreen,
-//           builder: (context, state) {
-//             //Todo: Edit cateogry passing type here.
-//             final category = state.extra as NewsCategory;
-//             context.read<NewsCubit>().eitherFailureOrSuccessByCategory(
-//               category.value,
-//             );
-
-//             return CategoryScreen(category: category);
-//           },
-//         ),
-//       ],
-//     ),
-//     GoRoute(
-//       path: AppRoutes.newsDetails,
-//       builder: (context, state) {
-//         final argu = state.extra as NewsDetailsArgs;
-
-//         return PostDetails(category: argu.category, post: argu.post);
-//       },
-//     ),
-//   ];
-// }
+class AuthRoutes {
+  static List<RouteBase> routes = [
+    ShellRoute(
+      builder: (context, state, child) {
+        return BlocProvider(
+          create: (context) => AuthCubit(
+            sl<LoginWithGoogle>(),
+            sl<Logout>(),
+            sl<SignUpWithEmail>(),
+            sl<LoginWithEmail>(),
+          ),
+          child: Scaffold(body: child),
+        );
+      },
+      routes: [
+        GoRoute(
+          path: AppRoutes.login,
+          builder: (context, state) => const LogInPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.signUp,
+          builder: (context, state) => const SignUpPage(),
+        ),
+      ],
+    ),
+  ];
+}
