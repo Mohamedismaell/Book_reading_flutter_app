@@ -2,6 +2,7 @@ import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/otp.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
+import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -56,6 +57,9 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => ForgetPassword(repository: sl<AuthRepository>()),
   );
+  sl.registerLazySingleton(
+    () => UpdatePassword(repository: sl<AuthRepository>()),
+  );
   sl.registerLazySingleton(() => Logout(repository: sl<AuthRepository>()));
 
   //! Cubits
@@ -66,6 +70,8 @@ Future<void> initServiceLocator() async {
       sl<Logout>(),
       sl<SignUpWithEmail>(),
       sl<LoginWithEmail>(),
+      sl<ForgetPassword>(),
+      sl<UpdatePassword>(),
     ),
   );
   sl.registerLazySingleton(() => ThemeCubit());

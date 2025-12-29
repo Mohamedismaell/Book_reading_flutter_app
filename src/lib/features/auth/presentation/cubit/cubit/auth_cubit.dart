@@ -1,20 +1,31 @@
 import 'package:bloc/bloc.dart';
+import 'package:bookreading/features/auth/domain/usecases/forget_password.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:meta/meta.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../../core/params/params.dart';
 import '../../../data/models/user_app.dart';
 import '../../../domain/usecases/login_google.dart';
 import '../../../domain/usecases/sign_up_email.dart';
+import '../../../domain/usecases/update_passwords.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final LoginWithGoogle google;
   final SignUpWithEmail signUpEmail;
   final LoginWithEmail logInEmail;
+  final ForgetPassword resetPassword;
+  final UpdatePassword updatePassword;
   final Logout userLogout;
-  AuthCubit(this.google, this.userLogout, this.signUpEmail, this.logInEmail)
-    : super(AuthInitial());
+  AuthCubit(
+    this.google,
+    this.userLogout,
+    this.signUpEmail,
+    this.logInEmail,
+    this.resetPassword,
+    this.updatePassword,
+  ) : super(AuthInitial());
 
   Future<void> logInWithGoogle() async {
     emit(AuthLoading());
@@ -64,11 +75,47 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  Future<void> requestResetPassword({
+    required ForgotPasswordParams params,
+  }) async {
+    emit(AuthLoading());
+    final response = await resetPassword.resetPassword(params: params);
+    return response.when(
+      success: (user) {
+        emit(AuthRequestPassword(user: user));
+        print("****Request password success****");
+      },
+      failure: (error) {
+        emit(AuthError(message: error.errMessage));
+        print("****Request password error****");
+        print(error.errMessage);
+      },
+    );
+  }
+
+  Future<void> updateUserPassword({required String newPassword}) async {
+    emit(AuthLoading());
+    final response = await updatePassword.updatePassword(
+      newPassword: newPassword,
+    );
+    return response.when(
+      success: (_) {
+        emit(AuthInitial());
+        print("****Update password success****");
+      },
+      failure: (error) {
+        emit(AuthError(message: error.errMessage));
+        print("****Update password error****");
+        print(error.errMessage);
+      },
+    );
+  }
+
   Future<void> logout({required UserApp currentUser}) async {
     emit(AuthLoading());
     final response = await userLogout.logout(currentUser: currentUser);
     return response.when(
-      success: (user) {
+      success: (_) {
         emit(AuthInitial());
         print("****Logout success****");
       },

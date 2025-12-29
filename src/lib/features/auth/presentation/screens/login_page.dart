@@ -1,4 +1,6 @@
 import 'package:bookreading/core/theme/app_colors.dart';
+import 'package:bookreading/features/auth/domain/usecases/forget_password.dart';
+import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/screens/sign_up_page.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_redirect_prompt.dart';
@@ -18,27 +20,26 @@ class LogInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final minHeight =
+        media.size.height - media.padding.top - media.padding.bottom;
+
     return BlocProvider(
       create: (context) => AuthCubit(
         sl<LoginWithGoogle>(),
         sl<Logout>(),
         sl<SignUpWithEmail>(),
         sl<LoginWithEmail>(),
+        sl<ForgetPassword>(),
+        sl<UpdatePassword>(),
       ),
       child: Scaffold(
-        // resizeToAvoidBottomInset: true,
         body: Container(
           decoration: BoxDecoration(color: AppColors.backGround),
           child: SafeArea(
             child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight:
-                      MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
-                      MediaQuery.of(context).padding.bottom,
-                ),
+                constraints: BoxConstraints(minHeight: minHeight),
                 child: IntrinsicHeight(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

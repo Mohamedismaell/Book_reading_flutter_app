@@ -11,6 +11,7 @@ class HeadTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(headText, style: AppTextStyles.heading1.copyWith(fontSize: 32)),
         SizedBox(height: 8.h),

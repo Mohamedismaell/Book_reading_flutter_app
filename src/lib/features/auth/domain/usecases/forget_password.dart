@@ -7,7 +7,7 @@ class ForgetPassword {
 
   ForgetPassword({required this.repository});
 
-  Future<Result> forgotPassword({required ForgotPasswordParams params}) async {
-    return await repository.forgotPassword(params: params);
+  Future<Result> resetPassword({required ForgotPasswordParams params}) async {
+    return await repository.resetPassword(params: params);
   }
 }

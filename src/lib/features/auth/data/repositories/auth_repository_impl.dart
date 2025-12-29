@@ -1,9 +1,7 @@
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/connections/network_info.dart';
-import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/params/params.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -48,16 +46,25 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Result> otp({required OTPParams params}) {
-    // TODO: implement otp
-    throw UnimplementedError();
+  Future<Result> resetPassword({required ForgotPasswordParams params}) async {
+    try {
+      final response = await remoteDataSource.requestPasswordReset(
+        params: params,
+      );
+      return Result.ok(response);
+    } on AuthApiException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
   }
 
-  // TODO: edit name of the function ===> forgotPassword
   @override
-  Future<Result> forgotPassword({required ForgotPasswordParams params}) {
-    // TODO: implement forgotPassword
-    throw UnimplementedError();
+  Future<Result> updatePassword({required String newPassword}) async {
+    try {
+      final response = await remoteDataSource.updatePassword(newPassword);
+      return Result.ok(response);
+    } on AuthApiException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
   }
 
   @override
@@ -65,10 +72,17 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       await remoteDataSource.logout(currentUser: currentUser);
       return Result.ok(null);
-    } catch (e) {
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Result> otp({required OTPParams params}) {
+    // TODO: implement otp
+    throw UnimplementedError();
+  }
+
   //!Filtered Posts with Category
   // @override
   // Future<Result<List<PostEntity>>> getNewsByCategory({

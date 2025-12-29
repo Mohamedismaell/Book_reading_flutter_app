@@ -11,7 +11,9 @@ abstract class AuthRepository {
   Future<Result> signUpWithEmail({required SignupParams params});
   Future<Result> loginWithEmail({required LoginParams params});
   //*Password
-  Future<Result> forgotPassword({required ForgotPasswordParams params});
+  Future<Result> resetPassword({required ForgotPasswordParams params});
+  Future<Result> updatePassword({required String newPassword});
+
   //*OTP
   Future<Result> otp({required OTPParams params});
   //*logOut

@@ -15,12 +15,10 @@ class SignupParams {
     required this.email,
     required this.password,
   });
-
-  get fullName => null;
 }
 
 class ForgotPasswordParams {
-  final String? email;
+  final String email;
 
   ForgotPasswordParams({required this.email});
 }

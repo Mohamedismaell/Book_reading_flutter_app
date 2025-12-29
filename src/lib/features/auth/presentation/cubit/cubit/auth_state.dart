@@ -12,9 +12,13 @@ final class AuthLoading extends AuthState {}
 //   AuthVerification({required this.user});
 // }
 
+final class AuthRequestPassword extends AuthState {
+  final UserApp user;
+  AuthRequestPassword({required this.user});
+}
+
 final class AuthSuccess extends AuthState {
   final UserApp user;
-
   AuthSuccess({required this.user});
 }
 

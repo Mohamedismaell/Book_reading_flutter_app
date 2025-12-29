@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/enums/validation_type.dart';
+import '../screens/foget_password.dart';
 
 class LoginCard extends StatelessWidget {
   const LoginCard({super.key});
@@ -86,10 +87,16 @@ class _ContentState extends State<_Content> {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: () {
-              //TODO: Implement forgot password functionality
-              print("Forgot Password pressed");
-            },
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FogetPasswordPage(),
+              ),
+            ),
+
+            // context.read<AuthCubit>().requestResetPassword(
+            //   params: ForgotPasswordParams(email: _email),
+            // );
             child: Text(
               "Forgot Password?",
               style: AppTextStyles.buttonMedium.copyWith(

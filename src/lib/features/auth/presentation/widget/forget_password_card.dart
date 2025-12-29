@@ -1,91 +1,114 @@
-// import 'package:bookreading/core/params/params.dart';
-// import 'package:bookreading/core/theme/app_colors.dart';
-// import 'package:bookreading/core/theme/app_shadows.dart';
-// import 'package:bookreading/core/theme/app_text_styles.dart';
-// import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
-// import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
-// import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
-// import 'package:bookreading/features/auth/presentation/widget/banner.dart';
-// import 'package:bookreading/features/auth/presentation/widget/google_button.dart';
-// import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
-// import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
-// import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import '../../../../core/enums/validation_type.dart';
+import 'package:bookreading/core/params/params.dart';
+import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
+import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
+import 'package:bookreading/features/auth/presentation/widget/banner.dart';
+import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
+import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/enums/validation_type.dart';
 
-// class ForgetPasswordCard extends StatelessWidget {
-//   const ForgetPasswordCard({super.key});
+class ForgetPasswordCard extends StatelessWidget {
+  const ForgetPasswordCard({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     //! Main White Container
-//     return WhiteContianer(child: _Content());
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    //! Main White Container
+    return WhiteContianer(child: _Content());
+  }
+}
 
-// class _Content extends StatefulWidget {
-//   const _Content();
+class _Content extends StatefulWidget {
+  const _Content();
 
-//   @override
-//   State<_Content> createState() => _ContentState();
-// }
+  @override
+  State<_Content> createState() => _ContentState();
+}
 
-// class _ContentState extends State<_Content> {
-//   final _formKey = GlobalKey<FormState>();
+class _ContentState extends State<_Content> {
+  final _formKey = GlobalKey<FormState>();
+  final _newPasswordController = TextEditingController();
+  String _email = '';
+  String _newPassword = '';
+  String _confirmPassword = '';
 
-//   String _newPassword = '';
-//   String _confirmPassword = '';
+  @override
+  void dispose() {
+    _newPasswordController.dispose();
+    super.dispose();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         //! Logo
-//         Logo(),
-//         SizedBox(height: 16.h),
-//         //! Title
-//         HeadTitle(
-//           headText: 'Welcome Back',
-//           hashText: 'Start your reading journey today.',
-//         ),
-//         SizedBox(height: 32.h),
-//         //! Form
-//         Form(
-//           key: _formKey,
-//           child: Column(
-//             children: [
-//               AuthInput(
-//                 hintText: '_oldPassword',
-//                 validationType: ValidationType.email,
-//                 onSaved: (value) => _newPassword = value ?? '',
-//               ),
-//               SizedBox(height: 16),
-//               AuthInput(
-//                 hintText: 'Password',
-//                 validationType: ValidationType.password,
-//                 onSaved: (value) => _confirmPassword = value ?? '',
-//               ),
-//             ],
-//           ),
-//         ),
-
-//         SizedBox(height: 16.h),
-//         //! Action button
-//         ActionAuthButton(
-//           myText: "Log In",
-//           onPressed: () {
-//             if (_formKey.currentState!.validate()) {
-//               _formKey.currentState!.save();
-//               context.read<AuthCubit>().logInWithEmail(
-
-//               );
-//               _formKey.currentState!.reset();
-//             }
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        //! Logo
+        Logo(),
+        SizedBox(height: 16.h),
+        //! Titel
+        HeadTitle(headText: 'Change Password', hashText: ''),
+        SizedBox(height: 10.h),
+        //! Form
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return Form(
+              key: _formKey,
+              child: state is AuthRequestPassword
+                  //Todo fix the forget screen
+                  ? Column(
+                      children: [
+                        AuthInput(
+                          hintText: 'New Password',
+                          validationType: ValidationType.password,
+                          controller: _newPasswordController,
+                          onSaved: (value) => _newPassword = value ?? '',
+                        ),
+                        AuthInput(
+                          hintText: 'Confirm Password',
+                          validationType: ValidationType.password,
+                          validator: (value) =>
+                              value != _newPasswordController.text
+                              ? 'Passwords must match'
+                              : null,
+                          onSaved: (value) => _confirmPassword = value ?? '',
+                        ),
+                      ],
+                    )
+                  : AuthInput(
+                      hintText: 'Email Address',
+                      validationType: ValidationType.email,
+                      onSaved: (value) => _email = value ?? '',
+                    ),
+            );
+          },
+        ),
+        SizedBox(height: 4.h),
+        // BlocBuilder<AuthCubit, AuthState>(
+        //   builder: (context, state) {
+        //     return state is AuthError
+        //         ? NoteMessage(text: "This Email is already exists")
+        //         : state is AuthSuccess
+        //         ? NoteMessage(text: "Check your inbox to verify your Email")
+        //         : const SizedBox.shrink();
+        //   },
+        // ),
+        SizedBox(height: 20.h),
+        //! Action button
+        ActionAuthButton(
+          myText: "Send Request",
+          onPressed: () {
+            if (_formKey.currentState?.validate() ?? false) {
+              _formKey.currentState!.save();
+              context.read<AuthCubit>().requestResetPassword(
+                params: ForgotPasswordParams(email: _email),
+              );
+              _formKey.currentState!.reset();
+            }
+          },
+        ),
+      ],
+    );
+  }
+}

@@ -37,14 +37,44 @@ class AuthRemoteDataSource {
     return UserApp.fromSupabase(response.user);
   }
 
-  // Future<void> changePassword(String newPassword) async {
+  Future<UserApp?> requestPasswordReset({
+    required ForgotPasswordParams params,
+  }) async {
+    await supabase.auth.resetPasswordForEmail(
+      params.email,
+      redirectTo: 'io.supabase.flutter://login-callback',
+    );
+    final authState = await supabase.auth.onAuthStateChange.firstWhere(
+      (data) => data.event == AuthChangeEvent.passwordRecovery,
+    );
+    return UserApp.fromSupabase(authState.session?.user);
+  }
+
+  Future<UserApp?> updatePassword(String newPassword) async {
+    final response = await supabase.auth.updateUser(
+      UserAttributes(password: newPassword),
+    );
+    if (response.user != null) {
+      return UserApp.fromSupabase(response.user);
+    }
+    return null;
+  }
+
+  // Future<void> updatePassword(String newPassword) async {
   //   final response = await supabase.auth.updateUser(
   //     UserAttributes(password: newPassword),
   //   );
   //   if (response.user != null) {
-  //     print('Password updated successfully');
-  //   } else {
-  //     print('Error: ${response.error?.message}');
+  //     print('Password updated successfully!');
+  //   }
+  // }
+
+  // Future<UserApp?> updatePassword(String newPassword) async {
+  //   final response = await supabase.auth.updateUser(
+  //     UserAttributes(password: newPassword),
+  //   );
+  //   if (response.user != null) {
+  //     return UserApp.fromSupabase(response.user);
   //   }
   // }
 
