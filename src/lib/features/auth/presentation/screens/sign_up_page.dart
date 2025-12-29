@@ -5,14 +5,11 @@ import 'package:bookreading/features/auth/presentation/widget/auth_redirect_prom
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/di/service_locator.dart';
-import '../../domain/usecases/forget_password.dart';
 import '../../domain/usecases/login_email.dart';
 import '../../domain/usecases/login_google.dart';
 import '../../domain/usecases/logout.dart';
 import '../../domain/usecases/sign_up_email.dart';
-import '../../domain/usecases/update_passwords.dart';
 import '../widget/signup_card.dart';
 import 'login_page.dart';
 
@@ -30,8 +27,6 @@ class SignUpPage extends StatelessWidget {
         sl<Logout>(),
         sl<SignUpWithEmail>(),
         sl<LoginWithEmail>(),
-        sl<ForgetPassword>(),
-        sl<UpdatePassword>(),
       ),
       child: Scaffold(
         body: Container(

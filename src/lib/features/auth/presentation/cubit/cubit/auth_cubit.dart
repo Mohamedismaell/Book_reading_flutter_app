@@ -15,16 +15,16 @@ class AuthCubit extends Cubit<AuthState> {
   final LoginWithGoogle google;
   final SignUpWithEmail signUpEmail;
   final LoginWithEmail logInEmail;
-  final ForgetPassword resetPassword;
-  final UpdatePassword updatePassword;
+  // final ForgetPassword resetPassword;
+  // final UpdatePassword updatePassword;
   final Logout userLogout;
   AuthCubit(
     this.google,
     this.userLogout,
     this.signUpEmail,
     this.logInEmail,
-    this.resetPassword,
-    this.updatePassword,
+    // this.resetPassword,
+    // this.updatePassword,
   ) : super(AuthInitial());
 
   Future<void> logInWithGoogle() async {
@@ -75,41 +75,41 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> requestResetPassword({
-    required ForgotPasswordParams params,
-  }) async {
-    emit(AuthLoading());
-    final response = await resetPassword.resetPassword(params: params);
-    return response.when(
-      success: (user) {
-        emit(AuthRequestPassword(user: user));
-        print("****Request password success****");
-      },
-      failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        print("****Request password error****");
-        print(error.errMessage);
-      },
-    );
-  }
+  // Future<void> requestResetPassword({
+  //   required ForgotPasswordParams params,
+  // }) async {
+  //   emit(AuthLoading());
+  //   final response = await resetPassword.resetPassword(params: params);
+  //   return response.when(
+  //     success: (user) {
+  //       emit(AuthRequestPassword(user: user));
+  //       print("****Request password success****");
+  //     },
+  //     failure: (error) {
+  //       emit(AuthError(message: error.errMessage));
+  //       print("****Request password error****");
+  //       print(error.errMessage);
+  //     },
+  //   );
+  // }
 
-  Future<void> updateUserPassword({required String newPassword}) async {
-    emit(AuthLoading());
-    final response = await updatePassword.updatePassword(
-      newPassword: newPassword,
-    );
-    return response.when(
-      success: (_) {
-        emit(AuthInitial());
-        print("****Update password success****");
-      },
-      failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        print("****Update password error****");
-        print(error.errMessage);
-      },
-    );
-  }
+  // Future<void> updateUserPassword({required String newPassword}) async {
+  //   emit(AuthLoading());
+  //   final response = await updatePassword.updatePassword(
+  //     newPassword: newPassword,
+  //   );
+  //   return response.when(
+  //     success: (_) {
+  //       emit(AuthInitial());
+  //       print("****Update password success****");
+  //     },
+  //     failure: (error) {
+  //       emit(AuthError(message: error.errMessage));
+  //       print("****Update password error****");
+  //       print(error.errMessage);
+  //     },
+  //   );
+  // }
 
   Future<void> logout({required UserApp currentUser}) async {
     emit(AuthLoading());

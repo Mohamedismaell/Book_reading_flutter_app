@@ -83,20 +83,11 @@ class _ContentState extends State<_Content> {
           },
         ),
         SizedBox(height: 8.h),
-        //! Forgot Password
+        //! Forgot Password **** No Funciton Fow Now ****
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const FogetPasswordPage(),
-              ),
-            ),
-
-            // context.read<AuthCubit>().requestResetPassword(
-            //   params: ForgotPasswordParams(email: _email),
-            // );
+            onPressed: () {},
             child: Text(
               "Forgot Password?",
               style: AppTextStyles.buttonMedium.copyWith(

@@ -1,6 +1,4 @@
 import 'package:bookreading/core/theme/app_colors.dart';
-import 'package:bookreading/features/auth/domain/usecases/forget_password.dart';
-import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/screens/sign_up_page.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_redirect_prompt.dart';
@@ -30,8 +28,8 @@ class LogInPage extends StatelessWidget {
         sl<Logout>(),
         sl<SignUpWithEmail>(),
         sl<LoginWithEmail>(),
-        sl<ForgetPassword>(),
-        sl<UpdatePassword>(),
+        // sl<ForgetPassword>(),
+        // sl<UpdatePassword>(),
       ),
       child: Scaffold(
         body: Container(

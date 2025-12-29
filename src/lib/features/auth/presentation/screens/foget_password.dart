@@ -29,8 +29,8 @@ class FogetPasswordPage extends StatelessWidget {
         sl<Logout>(),
         sl<SignUpWithEmail>(),
         sl<LoginWithEmail>(),
-        sl<ForgetPassword>(),
-        sl<UpdatePassword>(),
+        // sl<ForgetPassword>(),
+        // sl<UpdatePassword>(),
       ),
       child: Scaffold(
         body: Container(

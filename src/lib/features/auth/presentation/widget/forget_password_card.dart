@@ -101,10 +101,16 @@ class _ContentState extends State<_Content> {
           onPressed: () {
             if (_formKey.currentState?.validate() ?? false) {
               _formKey.currentState!.save();
-              context.read<AuthCubit>().requestResetPassword(
-                params: ForgotPasswordParams(email: _email),
-              );
+              // context.read<AuthCubit>().requestResetPassword(
+              //   params: ForgotPasswordParams(email: _email),
+              // );
               _formKey.currentState!.reset();
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const LogInPage(),
+              //   ),
+              // );
             }
           },
         ),
