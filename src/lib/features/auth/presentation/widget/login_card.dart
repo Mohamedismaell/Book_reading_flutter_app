@@ -1,4 +1,5 @@
 import 'package:bookreading/core/params/params.dart';
+import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/app_text_styles.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
@@ -10,9 +11,11 @@ import 'package:bookreading/features/auth/presentation/widget/google_button.dart
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
+import 'package:bookreading/features/book/presentation/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 
 class LoginCard extends StatelessWidget {
@@ -100,16 +103,27 @@ class _ContentState extends State<_Content> {
         ),
         SizedBox(height: 12.h),
         //! Action button
-        ActionAuthButton(
-          myText: "Log In",
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-              context.read<AuthCubit>().logInWithEmail(
-                params: LoginParams(email: _email, password: _password),
-              );
-              _formKey.currentState!.reset();
-            }
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return ActionAuthButton(
+              myText: "Log In",
+              state: state,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  context.read<AuthCubit>().logInWithEmail(
+                    params: LoginParams(email: _email, password: _password),
+                  );
+                  _formKey.currentState!.reset();
+                  state is AuthSuccess
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        )
+                      : null;
+                }
+              },
+            );
           },
         ),
         SizedBox(height: 24.h),

@@ -40,12 +40,13 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  //! does signUp return something ?
   Future<void> signUpWithEmail({required SignupParams params}) async {
     emit(AuthLoading());
     final response = await signUpEmail.signUpWithEmail(params: params);
     return response.when(
       success: (user) {
-        emit(AuthSuccess(user: user));
+        emit(AuthVerification(user: user));
         print("****Sign up success****");
       },
       failure: (error) {
