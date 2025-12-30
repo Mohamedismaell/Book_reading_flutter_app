@@ -3,8 +3,9 @@ import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_redirect_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../widget/signup_card.dart';
-import 'login_page.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -14,44 +15,48 @@ class SignUpPage extends StatelessWidget {
     final media = MediaQuery.of(context);
     final minHeight =
         media.size.height - media.padding.top - media.padding.bottom;
-    return Container(
-      decoration: BoxDecoration(color: AppColors.backGround),
-      child: Stack(
-        children: [
-          //! Arrow Back
-          Navigator.canPop(context)
-              ? ArrowBack(onPressed: () => Navigator.pop(context))
-              : const SizedBox(),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: minHeight),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: SignUpCard(),
-                      ),
-                      AuthRedirectPrompt(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LogInPage(),
-                            ),
-                          );
-                        },
-                        text: "Log in",
-                      ),
-                    ],
+    debugPrint('canPop: ${context.canPop()}');
+
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(color: AppColors.backGround),
+        child: Stack(
+          children: [
+            SafeArea(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: minHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: SignUpCard(),
+                        ),
+                        AuthRedirectPrompt(
+                          onPressed: () {
+                            context.pushReplacement(AppRoutes.login);
+                          },
+                          text: "Log in",
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+            //! Arrow Back
+            context.canPop()
+                ? ArrowBack(
+                    onPressed: () {
+                      debugPrint('back pressed');
+                      context.pop();
+                    },
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }

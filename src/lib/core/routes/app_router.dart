@@ -7,7 +7,7 @@ class AppRouter {
   static GoRouter get router => _router;
 
   static final GoRouter _router = GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: AppRoutes.login,
     routes: [...AuthRoutes.routes],
     errorBuilder: (context, state) => ErrorScreen(error: state.error),
   );

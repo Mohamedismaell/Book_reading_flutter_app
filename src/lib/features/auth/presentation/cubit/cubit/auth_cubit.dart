@@ -1,14 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:bookreading/features/auth/domain/usecases/forget_password.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:meta/meta.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../../core/params/params.dart';
 import '../../../data/models/user_app.dart';
 import '../../../domain/usecases/login_google.dart';
 import '../../../domain/usecases/sign_up_email.dart';
-import '../../../domain/usecases/update_passwords.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
