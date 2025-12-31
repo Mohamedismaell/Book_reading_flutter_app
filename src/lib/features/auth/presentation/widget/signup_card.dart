@@ -1,5 +1,4 @@
 import 'package:bookreading/core/params/params.dart';
-import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
@@ -12,7 +11,6 @@ import 'package:bookreading/features/auth/presentation/widget/white_contianer.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 
 class SignUpCard extends StatelessWidget {

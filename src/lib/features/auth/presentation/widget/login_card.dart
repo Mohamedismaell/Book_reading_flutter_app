@@ -11,7 +11,6 @@ import 'package:bookreading/features/auth/presentation/widget/google_button.dart
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
-import 'package:bookreading/features/book/presentation/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,7 +102,12 @@ class _ContentState extends State<_Content> {
         ),
         SizedBox(height: 12.h),
         //! Action button
-        BlocBuilder<AuthCubit, AuthState>(
+        BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthSuccess) {
+              context.go(AppRoutes.home);
+            }
+          },
           builder: (context, state) {
             return ActionAuthButton(
               myText: "Log In",
@@ -115,12 +119,6 @@ class _ContentState extends State<_Content> {
                     params: LoginParams(email: _email, password: _password),
                   );
                   _formKey.currentState!.reset();
-                  state is AuthSuccess
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        )
-                      : null;
                 }
               },
             );

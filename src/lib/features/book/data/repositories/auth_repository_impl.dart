@@ -1,5 +1,5 @@
 import 'package:bookreading/core/connections/result.dart';
-import 'package:bookreading/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:bookreading/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/connections/network_info.dart';
 import '../../../../core/errors/failure.dart';

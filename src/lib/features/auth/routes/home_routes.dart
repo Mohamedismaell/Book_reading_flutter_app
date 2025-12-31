@@ -14,5 +14,10 @@ class AuthRoutes {
       path: AppRoutes.signUp,
       builder: (context, state) => const SignUpPage(),
     ),
+    GoRoute(
+      path: AppRoutes.redirect,
+      builder: (context, state) =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
+    ),
   ];
 }
