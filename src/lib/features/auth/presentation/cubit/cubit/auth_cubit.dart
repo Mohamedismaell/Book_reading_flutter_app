@@ -28,8 +28,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final response = await google.loginWithGoogle();
     return response.when(
-      success: (user) {
-        emit(AuthSuccess(user: user));
+      success: (_) {
+        emit(AuthSuccess());
         print("****Login success****");
       },
       failure: (error) {
@@ -45,8 +45,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final response = await signUpEmail.signUpWithEmail(params: params);
     return response.when(
-      success: (user) {
-        emit(AuthVerification(user: user));
+      success: (_) {
+        emit(AuthVerification());
         print("****Sign up success****");
       },
       failure: (error) {
@@ -61,8 +61,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
-      success: (user) {
-        emit(AuthSuccess(user: user));
+      success: (_) {
+        emit(AuthSuccess());
         print("****Log in success****");
       },
       failure: (error) {

@@ -14,7 +14,9 @@ class AppRouter {
     refreshListenable: sl<AuthNotifier>(),
     redirect: (context, state) {
       final session = sl<SupabaseClient>().auth.currentUser;
+      //! usre logged ?
       final loggedIn = session != null;
+      //! user locaiton
       final isAuthRoute =
           state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.signUp;
