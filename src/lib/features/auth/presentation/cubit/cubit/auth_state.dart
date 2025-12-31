@@ -11,6 +11,8 @@ final class AuthVerification extends AuthState {}
 
 final class AuthSuccess extends AuthState {}
 
+final class AuthChangePassword extends AuthState {}
+
 final class AuthError extends AuthState {
   final String message;
 

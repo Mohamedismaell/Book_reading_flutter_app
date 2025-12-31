@@ -12,7 +12,7 @@ abstract class AuthRepository {
   Future<Result> loginWithEmail({required LoginParams params});
 
   //*Password
-  // Future<Result> resetPassword({required ForgotPasswordParams params});
+  Future<Result> resetPassword({required ForgotPasswordParams params});
   // Future<Result> updatePassword({required String newPassword});
 
   //*OTP

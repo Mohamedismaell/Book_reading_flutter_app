@@ -1,7 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../../../../core/params/params.dart';
-import '../models/user_app.dart';
 
 class AuthRemoteDataSource {
   final SupabaseClient supabase;
@@ -10,7 +8,7 @@ class AuthRemoteDataSource {
   Future<void> loginWithGoogle() async {
     await supabase.auth.signInWithOAuth(
       OAuthProvider.google,
-      redirectTo: 'io.supabase.flutter://login-callback',
+      redirectTo: 'bookreading://login-callback',
     );
   }
 
@@ -29,21 +27,14 @@ class AuthRemoteDataSource {
     );
   }
 
-  // Future<UserApp?> requestPasswordReset({
-  //   required ForgotPasswordParams params,
-  // }) async {
-  //   await supabase.auth.resetPasswordForEmail(
-  //     params.email,
-  //     redirectTo: 'io.supabase.flutter://login-callback',
-  //   );
-  //   final authState = await supabase.auth.onAuthStateChange.firstWhere(
-  //     (data) => data.event == AuthChangeEvent.passwordRecovery,
-  //   );
-  //   if (authState.session?.user != null) {
-  //     return UserApp.fromSupabase(authState.session?.user);
-  //   }
-  //   return null;
-  // }
+  Future<void> requestPasswordReset({
+    required ForgotPasswordParams params,
+  }) async {
+    await supabase.auth.resetPasswordForEmail(
+      params.email,
+      redirectTo: 'bookreading://reset-password',
+    );
+  }
 
   // Future<UserApp?> updatePassword(String newPassword) async {
   //   final response = await supabase.auth.updateUser(

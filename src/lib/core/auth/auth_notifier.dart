@@ -11,6 +11,7 @@ class AuthNotifier extends ChangeNotifier {
       if (event.event == AuthChangeEvent.signedIn ||
           event.event == AuthChangeEvent.signedOut) {
         notifyListeners();
+        print("***Event  ${event.event.name}***");
       }
     });
   }

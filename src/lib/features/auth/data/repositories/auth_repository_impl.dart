@@ -45,27 +45,15 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  // @override
-  // Future<Result> resetPassword({required ForgotPasswordParams params}) async {
-  //   try {
-  //     final response = await remoteDataSource.requestPasswordReset(
-  //       params: params,
-  //     );
-  //     return Result.ok(response);
-  //   } on AuthApiException catch (e) {
-  //     return Result.error(Failure(errMessage: e.toString()));
-  //   }
-  // }
-
-  // @override
-  // Future<Result> updatePassword({required String newPassword}) async {
-  //   try {
-  //     final response = await remoteDataSource.updatePassword(newPassword);
-  //     return Result.ok(response);
-  //   } on AuthApiException catch (e) {
-  //     return Result.error(Failure(errMessage: e.toString()));
-  //   }
-  // }
+  @override
+  Future<Result> resetPassword({required ForgotPasswordParams params}) async {
+    try {
+      await remoteDataSource.requestPasswordReset(params: params);
+      return Result.ok(null);
+    } on AuthApiException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
 
   @override
   Future<Result> logout() async {

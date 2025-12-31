@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import '../../../../../core/params/params.dart';
 import '../../../data/models/user_app.dart';
+import '../../../domain/usecases/forget_password.dart';
 import '../../../domain/usecases/login_google.dart';
 import '../../../domain/usecases/sign_up_email.dart';
 part 'auth_state.dart';
@@ -12,7 +14,7 @@ class AuthCubit extends Cubit<AuthState> {
   final LoginWithGoogle google;
   final SignUpWithEmail signUpEmail;
   final LoginWithEmail logInEmail;
-  // final ForgetPassword resetPassword;
+  final ForgetPassword resetPassword;
   // final UpdatePassword updatePassword;
   final Logout userLogout;
   AuthCubit(
@@ -20,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
     this.userLogout,
     this.signUpEmail,
     this.logInEmail,
-    // this.resetPassword,
+    this.resetPassword,
     // this.updatePassword,
   ) : super(AuthInitial());
 
@@ -30,11 +32,9 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (_) {
         emit(AuthSuccess());
-        print("****Login success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Login error****");
         print(error.errMessage);
       },
     );
@@ -47,11 +47,9 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (_) {
         emit(AuthVerification());
-        print("****Sign up success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Sign up error****");
         print(error.errMessage);
       },
     );
@@ -63,33 +61,29 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (_) {
         emit(AuthSuccess());
-        print("****Log in success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Log in error****");
         print(error.errMessage);
       },
     );
   }
 
-  // Future<void> requestResetPassword({
-  //   required ForgotPasswordParams params,
-  // }) async {
-  //   emit(AuthLoading());
-  //   final response = await resetPassword.resetPassword(params: params);
-  //   return response.when(
-  //     success: (user) {
-  //       emit(AuthRequestPassword(user: user));
-  //       print("****Request password success****");
-  //     },
-  //     failure: (error) {
-  //       emit(AuthError(message: error.errMessage));
-  //       print("****Request password error****");
-  //       print(error.errMessage);
-  //     },
-  //   );
-  // }
+  Future<void> requestResetPassword({
+    required ForgotPasswordParams params,
+  }) async {
+    emit(AuthLoading());
+    final response = await resetPassword.resetPassword(params: params);
+    return response.when(
+      success: (_) {
+        emit(AuthChangePassword());
+      },
+      failure: (error) {
+        emit(AuthError(message: error.errMessage));
+        print(error.errMessage);
+      },
+    );
+  }
 
   // Future<void> updateUserPassword({required String newPassword}) async {
   //   emit(AuthLoading());
@@ -99,11 +93,9 @@ class AuthCubit extends Cubit<AuthState> {
   //   return response.when(
   //     success: (_) {
   //       emit(AuthInitial());
-  //       print("****Update password success****");
   //     },
   //     failure: (error) {
   //       emit(AuthError(message: error.errMessage));
-  //       print("****Update password error****");
   //       print(error.errMessage);
   //     },
   //   );
@@ -115,11 +107,9 @@ class AuthCubit extends Cubit<AuthState> {
     return response.when(
       success: (_) {
         emit(AuthInitial());
-        print("****Logout success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Logout error****");
         print(error.errMessage);
       },
     );
