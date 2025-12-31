@@ -36,15 +36,9 @@ class AuthRemoteDataSource {
     );
   }
 
-  // Future<UserApp?> updatePassword(String newPassword) async {
-  //   final response = await supabase.auth.updateUser(
-  //     UserAttributes(password: newPassword),
-  //   );
-  //   if (response.user != null) {
-  //     return UserApp.fromSupabase(response.user);
-  //   }
-  //   return null;
-  // }
+  Future<void> updatePassword({required String newPassword}) async {
+    await supabase.auth.updateUser(UserAttributes(password: newPassword));
+  }
 
   // Future<void> updatePassword(String newPassword) async {
   //   final response = await supabase.auth.updateUser(

@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../di/service_locator.dart';
 
 class AuthNotifier extends ChangeNotifier {
@@ -11,8 +9,11 @@ class AuthNotifier extends ChangeNotifier {
       if (event.event == AuthChangeEvent.signedIn ||
           event.event == AuthChangeEvent.signedOut) {
         notifyListeners();
-        print("***Event  ${event.event.name}***");
       }
+      if (event.event == AuthChangeEvent.passwordRecovery) {
+        notifyListeners();
+      }
+      debugPrint("***Event  ${event.event.name}***");
     });
   }
   late final StreamSubscription<AuthState> _subscription;

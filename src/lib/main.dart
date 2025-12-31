@@ -3,8 +3,8 @@ import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
+import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
-import 'package:bookreading/features/auth/presentation/screens/login_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +17,8 @@ import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'features/auth/domain/usecases/forget_password.dart';
 // import 'core/theme/theme_data/dark_theme_data.dart';
 // import 'core/routes/app_router.dart';
 
@@ -47,6 +49,8 @@ Future<void> main() async {
             sl<Logout>(),
             sl<SignUpWithEmail>(),
             sl<LoginWithEmail>(),
+            sl<ForgetPassword>(),
+            sl<UpdatePassword>(),
           ),
         ),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),

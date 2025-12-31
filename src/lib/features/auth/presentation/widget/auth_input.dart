@@ -8,7 +8,7 @@ import '../../../../core/utils/validators/form_validators.dart';
 class AuthInput extends StatefulWidget {
   final String hintText;
   final ValidationType validationType;
-  final Function(String?) onSaved;
+  final Function(String?)? onSaved;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool isPassword;
@@ -16,7 +16,7 @@ class AuthInput extends StatefulWidget {
     super.key,
     required this.hintText,
     required this.validationType,
-    required this.onSaved,
+    this.onSaved,
     this.controller,
     this.validator,
     required this.isPassword,
@@ -43,7 +43,8 @@ class _AuthInputState extends State<AuthInput> {
           ? widget.validator!(value)
           : FormValidators().getValidator(widget.validationType, value),
 
-      onSaved: (value) => widget.onSaved(value),
+      onSaved: (value) =>
+          widget.onSaved != null ? widget.onSaved!(value) : null,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,

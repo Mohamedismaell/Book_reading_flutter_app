@@ -1,13 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
-import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import '../../../../../core/params/params.dart';
-import '../../../data/models/user_app.dart';
 import '../../../domain/usecases/forget_password.dart';
 import '../../../domain/usecases/login_google.dart';
 import '../../../domain/usecases/sign_up_email.dart';
+import '../../../domain/usecases/update_passwords.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -15,7 +14,7 @@ class AuthCubit extends Cubit<AuthState> {
   final SignUpWithEmail signUpEmail;
   final LoginWithEmail logInEmail;
   final ForgetPassword resetPassword;
-  // final UpdatePassword updatePassword;
+  final UpdatePassword updatePassword;
   final Logout userLogout;
   AuthCubit(
     this.google,
@@ -23,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
     this.signUpEmail,
     this.logInEmail,
     this.resetPassword,
-    // this.updatePassword,
+    this.updatePassword,
   ) : super(AuthInitial());
 
   Future<void> logInWithGoogle() async {
@@ -35,12 +34,11 @@ class AuthCubit extends Cubit<AuthState> {
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }
 
-  //! does signUp return something ?
   Future<void> signUpWithEmail({required SignupParams params}) async {
     emit(AuthLoading());
     final response = await signUpEmail.signUpWithEmail(params: params);
@@ -50,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }
@@ -64,7 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }
@@ -80,26 +78,26 @@ class AuthCubit extends Cubit<AuthState> {
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }
 
-  // Future<void> updateUserPassword({required String newPassword}) async {
-  //   emit(AuthLoading());
-  //   final response = await updatePassword.updatePassword(
-  //     newPassword: newPassword,
-  //   );
-  //   return response.when(
-  //     success: (_) {
-  //       emit(AuthInitial());
-  //     },
-  //     failure: (error) {
-  //       emit(AuthError(message: error.errMessage));
-  //       print(error.errMessage);
-  //     },
-  //   );
-  // }
+  Future<void> resetePassword({required String newPassword}) async {
+    emit(AuthLoading());
+    final response = await updatePassword.updatePassword(
+      newPassword: newPassword,
+    );
+    return response.when(
+      success: (_) {
+        emit(AuthInitial());
+      },
+      failure: (error) {
+        emit(AuthError(message: error.errMessage));
+        debugPrint(error.errMessage);
+      },
+    );
+  }
 
   Future<void> logout() async {
     emit(AuthLoading());
@@ -110,7 +108,7 @@ class AuthCubit extends Cubit<AuthState> {
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }

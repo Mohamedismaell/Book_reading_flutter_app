@@ -1,6 +1,3 @@
-import 'package:bookreading/features/auth/data/models/user_app.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../../../../core/connections/result.dart';
 import '../../../../core/params/params.dart';
 
@@ -13,7 +10,7 @@ abstract class AuthRepository {
 
   //*Password
   Future<Result> resetPassword({required ForgotPasswordParams params});
-  // Future<Result> updatePassword({required String newPassword});
+  Future<Result> updatePassword({required String newPassword});
 
   //*OTP
   Future<Result> otp({required OTPParams params});

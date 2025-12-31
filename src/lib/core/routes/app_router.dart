@@ -13,18 +13,27 @@ class AppRouter {
     initialLocation: AppRoutes.login,
     refreshListenable: sl<AuthNotifier>(),
     redirect: (context, state) {
-      final session = sl<SupabaseClient>().auth.currentUser;
       //! usre logged ?
-      final loggedIn = session != null;
-      //! user locaiton
+      final user = sl<SupabaseClient>().auth.currentUser;
+      final loggedIn = user != null;
+      final publicRoutes = {
+        AppRoutes.login,
+        AppRoutes.signUp,
+        AppRoutes.forgotPassword,
+        AppRoutes.resetPassword,
+      };
+      final isPublicRoute = publicRoutes.contains(state.matchedLocation);
       final isAuthRoute =
           state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.signUp;
-      return !loggedIn && !isAuthRoute
-          ? AppRoutes.login
-          : loggedIn && isAuthRoute
-          ? AppRoutes.home
-          : null;
+      if (!loggedIn && !isPublicRoute) {
+        return AppRoutes.login;
+      }
+      if (loggedIn && isAuthRoute) {
+        return AppRoutes.home;
+      }
+
+      return null;
     },
     routes: [...AuthRoutes.routes, ...HomeRoutes.routes],
     errorBuilder: (context, state) => ErrorScreen(error: state.error),

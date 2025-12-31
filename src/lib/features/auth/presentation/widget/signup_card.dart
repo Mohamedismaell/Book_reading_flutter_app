@@ -90,28 +90,20 @@ class _ContentState extends State<_Content> {
         ),
         SizedBox(height: 32.h),
         //! Action button
-        BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return ActionAuthButton(
-              myText: "Sign Up",
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  _formKey.currentState!.save();
-                  context.read<AuthCubit>().signUpWithEmail(
-                    params: SignupParams(
-                      name: _name,
-                      email: _email,
-                      password: _password,
-                    ),
-                  );
-                  _formKey.currentState!.reset();
-                  // state is AuthVerification
-                  //     ? context.go(AppRoutes.login)
-                  //     : null;
-                }
-              },
-              state: state,
-            );
+        ActionAuthButton(
+          myText: "Sign Up",
+          onPressed: () {
+            if (_formKey.currentState?.validate() ?? false) {
+              _formKey.currentState!.save();
+              context.read<AuthCubit>().signUpWithEmail(
+                params: SignupParams(
+                  name: _name,
+                  email: _email,
+                  password: _password,
+                ),
+              );
+              _formKey.currentState!.reset();
+            }
           },
         ),
         SizedBox(height: 24.h),
