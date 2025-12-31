@@ -9,65 +9,118 @@ import '../../../domain/usecases/sign_up_email.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final LoginWithGoogle logInWithGoogle;
-  final SignUpWithEmail signUpWithGoogle;
-  final LoginWithEmail logInWithEmail;
+  final LoginWithGoogle google;
+  final SignUpWithEmail signUpEmail;
+  final LoginWithEmail logInEmail;
+  // final ForgetPassword resetPassword;
+  // final UpdatePassword updatePassword;
   final Logout userLogout;
   AuthCubit(
-    this.logInWithGoogle,
+    this.google,
     this.userLogout,
-    this.signUpWithGoogle,
-    this.logInWithEmail,
+    this.signUpEmail,
+    this.logInEmail,
+    // this.resetPassword,
+    // this.updatePassword,
   ) : super(AuthInitial());
 
-  Future<void> loginWithGoogle() async {
+  Future<void> logInWithGoogle() async {
     emit(AuthLoading());
-    final response = await logInWithGoogle.loginWithGoogle();
+    final response = await google.loginWithGoogle();
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
+        print("****Login success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Login error****");
+        print(error.errMessage);
       },
     );
   }
 
+  //! does signUp return something ?
   Future<void> signUpWithEmail({required SignupParams params}) async {
     emit(AuthLoading());
-    final response = await signUpWithGoogle.signUpWithEmail(params: params);
+    final response = await signUpEmail.signUpWithEmail(params: params);
     return response.when(
       success: (user) {
-        emit(AuthSuccess(user: user));
+        emit(AuthVerification(user: user));
+        print("****Sign up success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Sign up error****");
+        print(error.errMessage);
       },
     );
   }
 
-  Future<void> loginWithEmail({required LoginParams params}) async {
+  Future<void> logInWithEmail({required LoginParams params}) async {
     emit(AuthLoading());
-    final response = await logInWithEmail.loginWithEmail(params: params);
+    final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
       success: (user) {
         emit(AuthSuccess(user: user));
+        print("****Log in success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Log in error****");
+        print(error.errMessage);
       },
     );
   }
+
+  // Future<void> requestResetPassword({
+  //   required ForgotPasswordParams params,
+  // }) async {
+  //   emit(AuthLoading());
+  //   final response = await resetPassword.resetPassword(params: params);
+  //   return response.when(
+  //     success: (user) {
+  //       emit(AuthRequestPassword(user: user));
+  //       print("****Request password success****");
+  //     },
+  //     failure: (error) {
+  //       emit(AuthError(message: error.errMessage));
+  //       print("****Request password error****");
+  //       print(error.errMessage);
+  //     },
+  //   );
+  // }
+
+  // Future<void> updateUserPassword({required String newPassword}) async {
+  //   emit(AuthLoading());
+  //   final response = await updatePassword.updatePassword(
+  //     newPassword: newPassword,
+  //   );
+  //   return response.when(
+  //     success: (_) {
+  //       emit(AuthInitial());
+  //       print("****Update password success****");
+  //     },
+  //     failure: (error) {
+  //       emit(AuthError(message: error.errMessage));
+  //       print("****Update password error****");
+  //       print(error.errMessage);
+  //     },
+  //   );
+  // }
 
   Future<void> logout({required UserApp currentUser}) async {
     emit(AuthLoading());
     final response = await userLogout.logout(currentUser: currentUser);
     return response.when(
-      success: (user) {
+      success: (_) {
         emit(AuthInitial());
+        print("****Logout success****");
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
+        print("****Logout error****");
+        print(error.errMessage);
       },
     );
   }

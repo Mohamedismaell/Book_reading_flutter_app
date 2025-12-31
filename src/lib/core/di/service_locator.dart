@@ -6,10 +6,9 @@ import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../features/auth/data/datasources/auth_remote_data_source.dart';
+import '../../features/auth/data/sources/auth_remote_data_source.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
-import '../../features/auth/domain/usecases/forget_password.dart';
 import '../../features/auth/domain/usecases/login_google.dart';
 import '../../features/auth/domain/usecases/logout.dart';
 import '../../features/auth/presentation/cubit/cubit/auth_cubit.dart';
@@ -53,9 +52,12 @@ Future<void> initServiceLocator() async {
     () => LoginWithEmail(repository: sl<AuthRepository>()),
   );
   sl.registerLazySingleton(() => Otp(repository: sl<AuthRepository>()));
-  sl.registerLazySingleton(
-    () => ForgetPassword(repository: sl<AuthRepository>()),
-  );
+  // sl.registerLazySingleton(
+  //   () => ForgetPassword(repository: sl<AuthRepository>()),
+  // );
+  // sl.registerLazySingleton(
+  //   () => UpdatePassword(repository: sl<AuthRepository>()),
+  // );
   sl.registerLazySingleton(() => Logout(repository: sl<AuthRepository>()));
 
   //! Cubits
@@ -66,6 +68,8 @@ Future<void> initServiceLocator() async {
       sl<Logout>(),
       sl<SignUpWithEmail>(),
       sl<LoginWithEmail>(),
+      // sl<ForgetPassword>(),
+      // sl<UpdatePassword>(),
     ),
   );
   sl.registerLazySingleton(() => ThemeCubit());

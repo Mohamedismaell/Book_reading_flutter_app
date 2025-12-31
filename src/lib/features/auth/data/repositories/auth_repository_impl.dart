@@ -1,8 +1,7 @@
 import 'package:bookreading/core/connections/result.dart';
-import 'package:bookreading/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
+import 'package:bookreading/features/auth/data/sources/auth_remote_data_source.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/connections/network_info.dart';
-import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/params/params.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -21,7 +20,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.loginWithGoogle();
       return Result.ok(response);
-    } on CacheException catch (e) {
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
@@ -31,7 +30,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.signUpWithEmail(params: params);
       return Result.ok(response);
-    } on CacheException catch (e) {
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
@@ -41,7 +40,39 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await remoteDataSource.loginWithEmail(params: params);
       return Result.ok(response);
-    } on CacheException catch (e) {
+    } on AuthApiException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  // @override
+  // Future<Result> resetPassword({required ForgotPasswordParams params}) async {
+  //   try {
+  //     final response = await remoteDataSource.requestPasswordReset(
+  //       params: params,
+  //     );
+  //     return Result.ok(response);
+  //   } on AuthApiException catch (e) {
+  //     return Result.error(Failure(errMessage: e.toString()));
+  //   }
+  // }
+
+  // @override
+  // Future<Result> updatePassword({required String newPassword}) async {
+  //   try {
+  //     final response = await remoteDataSource.updatePassword(newPassword);
+  //     return Result.ok(response);
+  //   } on AuthApiException catch (e) {
+  //     return Result.error(Failure(errMessage: e.toString()));
+  //   }
+  // }
+
+  @override
+  Future<Result> logout({required UserApp currentUser}) async {
+    try {
+      await remoteDataSource.logout(currentUser: currentUser);
+      return Result.ok(null);
+    } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
@@ -52,22 +83,6 @@ class AuthRepositoryImpl extends AuthRepository {
     throw UnimplementedError();
   }
 
-  // TODO: edit name of the function ===> forgotPassword
-  @override
-  Future<Result> forgotPassword({required ForgotPasswordParams params}) {
-    // TODO: implement forgotPassword
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result> logout({required UserApp currentUser}) async {
-    try {
-      await remoteDataSource.logout(currentUser: currentUser);
-      return Result.ok(null);
-    } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
-    }
-  }
   //!Filtered Posts with Category
   // @override
   // Future<Result<List<PostEntity>>> getNewsByCategory({

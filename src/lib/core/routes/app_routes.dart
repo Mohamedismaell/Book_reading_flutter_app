@@ -1,8 +1,8 @@
 class AppRoutes {
-  //! Nav_bar
+  //! Auth
+  static const String login = '/login';
+  static const String signUp = '/signup';
+  static const String redirect = '/io.supabase.flutter://login-callback';
+  //! book
   static const String home = '/home';
-  static const String categories = '/categories';
-  static const String bookmarks = '/bookmarks';
-  static const String newsDetails = '/newsdetails';
-  static const String categoryScreen = '/categoryscreen';
 }
