@@ -18,8 +18,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Result> loginWithGoogle() async {
     try {
-      final response = await remoteDataSource.loginWithGoogle();
-      return Result.ok(response);
+      await remoteDataSource.loginWithGoogle();
+      return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
@@ -28,8 +28,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Result> signUpWithEmail({required SignupParams params}) async {
     try {
-      final response = await remoteDataSource.signUpWithEmail(params: params);
-      return Result.ok(response);
+      await remoteDataSource.signUpWithEmail(params: params);
+      return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
@@ -38,8 +38,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Result> loginWithEmail({required LoginParams params}) async {
     try {
-      final response = await remoteDataSource.loginWithEmail(params: params);
-      return Result.ok(response);
+      await remoteDataSource.loginWithEmail(params: params);
+      return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
@@ -68,9 +68,9 @@ class AuthRepositoryImpl extends AuthRepository {
   // }
 
   @override
-  Future<Result> logout({required UserApp currentUser}) async {
+  Future<Result> logout() async {
     try {
-      await remoteDataSource.logout(currentUser: currentUser);
+      await remoteDataSource.logout();
       return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));

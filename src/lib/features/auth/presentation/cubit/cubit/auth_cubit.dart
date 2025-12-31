@@ -109,9 +109,9 @@ class AuthCubit extends Cubit<AuthState> {
   //   );
   // }
 
-  Future<void> logout({required UserApp currentUser}) async {
+  Future<void> logout() async {
     emit(AuthLoading());
-    final response = await userLogout.logout(currentUser: currentUser);
+    final response = await userLogout.logout();
     return response.when(
       success: (_) {
         emit(AuthInitial());

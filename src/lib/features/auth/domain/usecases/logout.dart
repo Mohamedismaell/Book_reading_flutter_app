@@ -8,7 +8,7 @@ class Logout {
 
   Logout({required this.repository});
 
-  Future<Result> logout({required UserApp currentUser}) async {
-    return await repository.logout(currentUser: currentUser);
+  Future<Result> logout() async {
+    return await repository.logout();
   }
 }

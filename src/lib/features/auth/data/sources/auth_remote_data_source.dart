@@ -7,34 +7,26 @@ class AuthRemoteDataSource {
   final SupabaseClient supabase;
   AuthRemoteDataSource({required this.supabase});
 
-  Future<UserApp?> loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     await supabase.auth.signInWithOAuth(
       OAuthProvider.google,
       redirectTo: 'io.supabase.flutter://login-callback',
     );
-
-    final authState = await supabase.auth.onAuthStateChange.firstWhere(
-      (data) => data.event == AuthChangeEvent.signedIn,
-    );
-
-    return UserApp.fromSupabase(authState.session?.user);
   }
 
-  Future<UserApp> signUpWithEmail({required SignupParams params}) async {
-    final response = await supabase.auth.signUp(
+  Future<void> signUpWithEmail({required SignupParams params}) async {
+    await supabase.auth.signUp(
       email: params.email,
       password: params.password.toString(),
       data: {'full_name': params.name},
     );
-    return UserApp.fromSupabase(response.user);
   }
 
-  Future<UserApp> loginWithEmail({required LoginParams params}) async {
-    final response = await supabase.auth.signInWithPassword(
+  Future<void> loginWithEmail({required LoginParams params}) async {
+    await supabase.auth.signInWithPassword(
       email: params.email,
       password: params.password.toString(),
     );
-    return UserApp.fromSupabase(response.user);
   }
 
   // Future<UserApp?> requestPasswordReset({
@@ -81,7 +73,7 @@ class AuthRemoteDataSource {
   //   }
   // }
 
-  Future<void> logout({required UserApp currentUser}) async {
+  Future<void> logout() async {
     await supabase.auth.signOut();
   }
 }

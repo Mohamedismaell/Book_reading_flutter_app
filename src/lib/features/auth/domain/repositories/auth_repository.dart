@@ -18,7 +18,7 @@ abstract class AuthRepository {
   //*OTP
   Future<Result> otp({required OTPParams params});
   //*logOut
-  Future<Result> logout({required UserApp currentUser});
+  Future<Result> logout();
 }
 
 

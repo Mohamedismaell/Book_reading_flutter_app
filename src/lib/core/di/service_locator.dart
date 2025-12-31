@@ -12,6 +12,7 @@ import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/usecases/login_google.dart';
 import '../../features/auth/domain/usecases/logout.dart';
 import '../../features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import '../auth/auth_notifier.dart';
 import '../connections/network_info.dart';
 import '../database/api/dio_consumer.dart';
 import '../database/cache/cache_helper.dart';
@@ -27,10 +28,14 @@ Future<void> initServiceLocator() async {
     () => NetworkInfoImpl(connectionChecker: sl<DataConnectionChecker>()),
   );
   sl.registerLazySingleton(() => CacheHelper());
+  sl.registerLazySingleton(() => AuthNotifier());
+
+  //! Register SupabaseClient
+  sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
   //! Data Sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSource(supabase: Supabase.instance.client),
+    () => AuthRemoteDataSource(supabase: sl<SupabaseClient>()),
   );
 
   //! Repositories
