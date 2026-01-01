@@ -13,23 +13,31 @@ class AppRouter {
     initialLocation: AppRoutes.login,
     refreshListenable: sl<AuthNotifier>(),
     redirect: (context, state) {
-      //! usre logged ?
-      final user = sl<SupabaseClient>().auth.currentUser;
+      final authNotifier = sl<AuthNotifier>();
+      final supabase = Supabase.instance.client;
+
+      final user = supabase.auth.currentUser;
       final loggedIn = user != null;
-      final publicRoutes = {
-        AppRoutes.login,
-        AppRoutes.signUp,
-        AppRoutes.forgotPassword,
-        AppRoutes.resetPassword,
-      };
-      final isPublicRoute = publicRoutes.contains(state.matchedLocation);
+
+      final isRecovering = authNotifier.isRecoveringPassword;
+
       final isAuthRoute =
           state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.signUp;
-      if (!loggedIn && !isPublicRoute) {
+
+      final isForgotRoute = state.matchedLocation == AppRoutes.forgotPassword;
+
+      final isResetRoute = state.matchedLocation == AppRoutes.resetPassword;
+
+      if (isRecovering && !isResetRoute) {
+        return AppRoutes.resetPassword;
+      }
+
+      if (!loggedIn && !isAuthRoute && !isForgotRoute && !isResetRoute) {
         return AppRoutes.login;
       }
-      if (loggedIn && isAuthRoute) {
+
+      if (loggedIn && isAuthRoute && !isRecovering) {
         return AppRoutes.home;
       }
 

@@ -5,9 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../widget/forget_password_card.dart';
+import '../widget/reset_password_card.dart';
 
-class FogetPasswordPage extends StatelessWidget {
-  const FogetPasswordPage({super.key});
+class ResetPasswordPage extends StatelessWidget {
+  const ResetPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class FogetPasswordPage extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: ForgetPasswordCard(),
+                          child: ResetPasswordCard(),
                         ),
                       ],
                     ),

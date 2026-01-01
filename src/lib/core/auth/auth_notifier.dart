@@ -4,16 +4,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../di/service_locator.dart';
 
 class AuthNotifier extends ChangeNotifier {
+  bool isRecoveringPassword = false;
   AuthNotifier() {
     _subscription = sl<SupabaseClient>().auth.onAuthStateChange.listen((event) {
-      if (event.event == AuthChangeEvent.signedIn ||
-          event.event == AuthChangeEvent.signedOut) {
-        notifyListeners();
-      }
-      if (event.event == AuthChangeEvent.passwordRecovery) {
-        notifyListeners();
-      }
       debugPrint("***Event  ${event.event.name}***");
+      if (event.event == AuthChangeEvent.passwordRecovery) {
+        isRecoveringPassword = true;
+      }
+
+      if (event.event == AuthChangeEvent.signedOut) {
+        isRecoveringPassword = false;
+      }
+      notifyListeners();
     });
   }
   late final StreamSubscription<AuthState> _subscription;

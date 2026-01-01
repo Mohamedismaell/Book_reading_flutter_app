@@ -35,7 +35,11 @@ Future<void> main() async {
     url: 'https://iszsxfqfmsjotmdnszyi.supabase.co',
     anonKey: 'sb_publishable_yNt2YfuCVSrFuS53esNU4A_HtIhv9j0',
   );
+  final uri = Uri.base;
 
+  if (uri.hasQuery || uri.fragment.isNotEmpty) {
+    await Supabase.instance.client.auth.getSessionFromUrl(uri);
+  }
   runApp(
     // DevicePreview(
     //   enabled: !kReleaseMode,

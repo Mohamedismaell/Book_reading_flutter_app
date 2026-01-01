@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/enums/validation_type.dart';
 import 'action_auth_button.dart';
 
-class ForgetPasswordCard extends StatelessWidget {
-  const ForgetPasswordCard({super.key});
+class ResetPasswordCard extends StatelessWidget {
+  const ResetPasswordCard({super.key});
 
   @override
   Widget build(BuildContext context) {
