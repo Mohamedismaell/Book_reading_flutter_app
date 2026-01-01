@@ -1,58 +1,57 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/params/params.dart';
-import '../../../data/models/user_app.dart';
+import '../../../domain/usecases/forget_password.dart';
 import '../../../domain/usecases/login_google.dart';
 import '../../../domain/usecases/sign_up_email.dart';
+import '../../../domain/usecases/update_passwords.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final LoginWithGoogle google;
   final SignUpWithEmail signUpEmail;
   final LoginWithEmail logInEmail;
-  // final ForgetPassword resetPassword;
-  // final UpdatePassword updatePassword;
+  final ForgetPassword resetPassword;
+  final UpdatePassword updatePassword;
   final Logout userLogout;
   AuthCubit(
     this.google,
     this.userLogout,
     this.signUpEmail,
     this.logInEmail,
-    // this.resetPassword,
-    // this.updatePassword,
+    this.resetPassword,
+    this.updatePassword,
   ) : super(AuthInitial());
 
   Future<void> logInWithGoogle() async {
     emit(AuthLoading());
     final response = await google.loginWithGoogle();
     return response.when(
-      success: (user) {
-        emit(AuthSuccess(user: user));
-        print("****Login success****");
+      success: (_) {
+        emit(AuthSuccess());
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Login error****");
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }
 
-  //! does signUp return something ?
   Future<void> signUpWithEmail({required SignupParams params}) async {
     emit(AuthLoading());
+
     final response = await signUpEmail.signUpWithEmail(params: params);
     return response.when(
-      success: (user) {
-        emit(AuthVerification(user: user));
-        print("****Sign up success****");
+      success: (_) {
+        emit(AuthVerification());
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Sign up error****");
-        print(error.errMessage);
+        debugPrint(error.errMessage);
       },
     );
   }
@@ -61,66 +60,73 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
-      success: (user) {
-        emit(AuthSuccess(user: user));
-        print("****Log in success****");
+      success: (_) {
+        final user = sl<SupabaseClient>().auth.currentUser;
+        if (user == null) {
+          emit(AuthError(message: "Something went wrong. Please try again."));
+          return;
+        }
+        if (user.emailConfirmedAt == null) {
+          emit(AuthVerification());
+          return;
+        }
+        emit(AuthSuccess());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        print("****Log in error****");
-        print(error.errMessage);
+        if (error.errMessage.contains('confirmed')) {
+          emit(AuthError(message: "Email not Confirmed."));
+        } else {
+          emit(
+            AuthError(message: "Invalid email or password. Please try again."),
+          );
+        }
+        debugPrint(error.errMessage);
       },
     );
   }
 
-  // Future<void> requestResetPassword({
-  //   required ForgotPasswordParams params,
-  // }) async {
-  //   emit(AuthLoading());
-  //   final response = await resetPassword.resetPassword(params: params);
-  //   return response.when(
-  //     success: (user) {
-  //       emit(AuthRequestPassword(user: user));
-  //       print("****Request password success****");
-  //     },
-  //     failure: (error) {
-  //       emit(AuthError(message: error.errMessage));
-  //       print("****Request password error****");
-  //       print(error.errMessage);
-  //     },
-  //   );
-  // }
-
-  // Future<void> updateUserPassword({required String newPassword}) async {
-  //   emit(AuthLoading());
-  //   final response = await updatePassword.updatePassword(
-  //     newPassword: newPassword,
-  //   );
-  //   return response.when(
-  //     success: (_) {
-  //       emit(AuthInitial());
-  //       print("****Update password success****");
-  //     },
-  //     failure: (error) {
-  //       emit(AuthError(message: error.errMessage));
-  //       print("****Update password error****");
-  //       print(error.errMessage);
-  //     },
-  //   );
-  // }
-
-  Future<void> logout({required UserApp currentUser}) async {
+  Future<void> requestResetPassword({
+    required ForgotPasswordParams params,
+  }) async {
     emit(AuthLoading());
-    final response = await userLogout.logout(currentUser: currentUser);
+    final response = await resetPassword.resetPassword(params: params);
     return response.when(
       success: (_) {
-        emit(AuthInitial());
-        print("****Logout success****");
+        emit(AuthForgetPassword());
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
-        print("****Logout error****");
-        print(error.errMessage);
+        debugPrint(error.errMessage);
+      },
+    );
+  }
+
+  Future<void> resetePassword({required String newPassword}) async {
+    emit(AuthLoading());
+    final response = await updatePassword.updatePassword(
+      newPassword: newPassword,
+    );
+    return response.when(
+      success: (_) {
+        emit(AuthUpdatePassword());
+      },
+      failure: (error) {
+        emit(AuthError(message: error.errMessage));
+        debugPrint(error.errMessage);
+      },
+    );
+  }
+
+  Future<void> logout() async {
+    emit(AuthLoading());
+    final response = await userLogout.logout();
+    return response.when(
+      success: (_) {
+        emit(AuthInitial());
+      },
+      failure: (error) {
+        emit(AuthError(message: error.errMessage));
+        debugPrint(error.errMessage);
       },
     );
   }

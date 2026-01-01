@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ArrowBack extends StatelessWidget {
-  const ArrowBack({super.key, required this.onPressed});
-  final Function() onPressed;
+  const ArrowBack({super.key});
+  // final Function() onPressed;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -11,7 +12,7 @@ class ArrowBack extends StatelessWidget {
       child: SafeArea(
         child: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: onPressed,
+          onPressed: () => context.pop(),
         ),
       ),
     );

@@ -79,9 +79,7 @@ class _ContentState extends State<_Content> {
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return state is AuthError
-                ? NoteMessage(
-                    text: "Invalid email or password. Please try again.",
-                  )
+                ? NoteMessage(text: state.message)
                 : const SizedBox.shrink();
           },
         ),
@@ -90,7 +88,9 @@ class _ContentState extends State<_Content> {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push(AppRoutes.forgotPassword);
+            },
             child: Text(
               "Forgot Password?",
               style: AppTextStyles.buttonMedium.copyWith(
@@ -101,27 +101,20 @@ class _ContentState extends State<_Content> {
           ),
         ),
         SizedBox(height: 12.h),
+
         //! Action button
-        BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              context.go(AppRoutes.home);
+        ActionAuthButton(
+          myText: "Log In",
+
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+              context.read<AuthCubit>().logInWithEmail(
+                params: LoginParams(email: _email, password: _password),
+              );
+
+              _formKey.currentState!.reset();
             }
-          },
-          builder: (context, state) {
-            return ActionAuthButton(
-              myText: "Log In",
-              state: state,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  context.read<AuthCubit>().logInWithEmail(
-                    params: LoginParams(email: _email, password: _password),
-                  );
-                  _formKey.currentState!.reset();
-                }
-              },
-            );
           },
         ),
         SizedBox(height: 24.h),

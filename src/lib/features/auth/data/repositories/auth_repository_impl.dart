@@ -5,7 +5,6 @@ import '../../../../core/connections/network_info.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/params/params.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../models/user_app.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final NetworkInfo networkInfo;
@@ -18,8 +17,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Result> loginWithGoogle() async {
     try {
-      final response = await remoteDataSource.loginWithGoogle();
-      return Result.ok(response);
+      await remoteDataSource.loginWithGoogle();
+      return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
@@ -28,8 +27,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Result> signUpWithEmail({required SignupParams params}) async {
     try {
-      final response = await remoteDataSource.signUpWithEmail(params: params);
-      return Result.ok(response);
+      await remoteDataSource.signUpWithEmail(params: params);
+      return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
@@ -38,39 +37,37 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Result> loginWithEmail({required LoginParams params}) async {
     try {
-      final response = await remoteDataSource.loginWithEmail(params: params);
-      return Result.ok(response);
+      await remoteDataSource.loginWithEmail(params: params);
+      return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
 
-  // @override
-  // Future<Result> resetPassword({required ForgotPasswordParams params}) async {
-  //   try {
-  //     final response = await remoteDataSource.requestPasswordReset(
-  //       params: params,
-  //     );
-  //     return Result.ok(response);
-  //   } on AuthApiException catch (e) {
-  //     return Result.error(Failure(errMessage: e.toString()));
-  //   }
-  // }
-
-  // @override
-  // Future<Result> updatePassword({required String newPassword}) async {
-  //   try {
-  //     final response = await remoteDataSource.updatePassword(newPassword);
-  //     return Result.ok(response);
-  //   } on AuthApiException catch (e) {
-  //     return Result.error(Failure(errMessage: e.toString()));
-  //   }
-  // }
+  @override
+  Future<Result> resetPassword({required ForgotPasswordParams params}) async {
+    try {
+      await remoteDataSource.requestPasswordReset(params: params);
+      return Result.ok(null);
+    } on AuthApiException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
 
   @override
-  Future<Result> logout({required UserApp currentUser}) async {
+  Future<Result> updatePassword({required String newPassword}) async {
     try {
-      await remoteDataSource.logout(currentUser: currentUser);
+      await remoteDataSource.updatePassword(newPassword: newPassword);
+      return Result.ok(null);
+    } on AuthApiException catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> logout() async {
+    try {
+      await remoteDataSource.logout();
       return Result.ok(null);
     } on AuthApiException catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
@@ -82,18 +79,4 @@ class AuthRepositoryImpl extends AuthRepository {
     // TODO: implement otp
     throw UnimplementedError();
   }
-
-  //!Filtered Posts with Category
-  // @override
-  // Future<Result<List<PostEntity>>> getNewsByCategory({
-
-  //   required NewsCategoryParams params,
-  // }) async {
-  //   try {
-  //     final remoteNews = await remoteDataSource.getNewsByCategory(params);
-  //     return Result.ok(remoteNews.posts ?? []);
-  //   } on ServerExceptions catch (e) {
-  //     return Result.error(Failure(errMessage: e.errorModel.errorMessage));
-  //   }
-  // }
 }
