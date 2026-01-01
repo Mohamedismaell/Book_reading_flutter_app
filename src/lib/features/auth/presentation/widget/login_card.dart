@@ -112,6 +112,7 @@ class _ContentState extends State<_Content> {
               context.read<AuthCubit>().logInWithEmail(
                 params: LoginParams(email: _email, password: _password),
               );
+
               _formKey.currentState!.reset();
             }
           },

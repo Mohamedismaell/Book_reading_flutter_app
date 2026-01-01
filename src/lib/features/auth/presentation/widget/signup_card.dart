@@ -1,6 +1,7 @@
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
+import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
 import 'package:bookreading/features/auth/presentation/widget/banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
@@ -83,28 +84,39 @@ class _ContentState extends State<_Content> {
           builder: (context, state) {
             return state is AuthError
                 ? NoteMessage(text: "This Email is already exists")
-                : state is AuthVerification
-                ? NoteMessage(text: "Check your inbox to verify your Email")
                 : const SizedBox.shrink();
           },
         ),
         SizedBox(height: 32.h),
+
         //! Action button
-        ActionAuthButton(
-          myText: "Sign Up",
-          onPressed: () {
-            if (_formKey.currentState?.validate() ?? false) {
-              _formKey.currentState!.save();
-              context.read<AuthCubit>().signUpWithEmail(
-                params: SignupParams(
-                  name: _name,
-                  email: _email,
-                  password: _password,
-                ),
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthVerification) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const AuthDialog(),
               );
-              // _formKey.currentState!.reset();
             }
           },
+          child: ActionAuthButton(
+            myText: "Sign Up",
+            onPressed: () {
+              if (_formKey.currentState?.validate() ?? false) {
+                _formKey.currentState!.save();
+                context.read<AuthCubit>().signUpWithEmail(
+                  params: SignupParams(
+                    name: _name,
+                    email: _email,
+                    password: _password,
+                  ),
+                );
+
+                // _formKey.currentState!.reset();
+              }
+            },
+          ),
         ),
         SizedBox(height: 24.h),
         //! hash Line
