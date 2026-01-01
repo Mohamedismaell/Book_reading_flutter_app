@@ -39,6 +39,7 @@ class AuthRemoteDataSource {
 
   Future<void> updatePassword({required String newPassword}) async {
     await supabase.auth.updateUser(UserAttributes(password: newPassword));
+    logout();
   }
 
   Future<void> logout() async {

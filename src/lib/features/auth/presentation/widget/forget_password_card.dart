@@ -1,4 +1,5 @@
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
 import 'package:bookreading/features/auth/presentation/widget/banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
@@ -68,30 +69,44 @@ class _ContentState extends State<_Content> {
           builder: (context, state) {
             return state is AuthError
                 ? NoteMessage(text: "This Email doesn't exists")
-                : state is AuthChangePassword
+                : state is AuthForgetPassword
                 ? NoteMessage(text: "Check your inbox to change your Password")
                 : const SizedBox.shrink();
           },
         ),
         SizedBox(height: 20.h),
         //! Action button
-        ActionAuthButton(
-          myText: "Send Request",
-          onPressed: () {
-            if (_formKey.currentState?.validate() ?? false) {
-              _formKey.currentState!.save();
-              context.read<AuthCubit>().requestResetPassword(
-                params: ForgotPasswordParams(email: _email),
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthForgetPassword) {
+              showDialog(
+                context: context,
+                builder: (context) => AuthDialog(
+                  title: "Reset Link Sent",
+                  description: "Check your inbox for the password reset link.",
+                  actionText: 'Continue',
+                ),
               );
-              _formKey.currentState!.reset();
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const LogInPage(),
-              //   ),
-              // );
             }
           },
+          child: ActionAuthButton(
+            myText: "Send Request",
+            onPressed: () {
+              if (_formKey.currentState?.validate() ?? false) {
+                _formKey.currentState!.save();
+                context.read<AuthCubit>().requestResetPassword(
+                  params: ForgotPasswordParams(email: _email),
+                );
+                _formKey.currentState!.reset();
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const LogInPage(),
+                //   ),
+                // );
+              }
+            },
+          ),
         ),
       ],
     );

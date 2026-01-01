@@ -92,7 +92,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await resetPassword.resetPassword(params: params);
     return response.when(
       success: (_) {
-        emit(AuthChangePassword());
+        emit(AuthForgetPassword());
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
@@ -108,7 +108,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
     return response.when(
       success: (_) {
-        emit(AuthInitial());
+        emit(AuthUpdatePassword());
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));

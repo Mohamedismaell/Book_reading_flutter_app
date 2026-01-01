@@ -8,8 +8,15 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class AuthDialog extends StatelessWidget {
-  const AuthDialog({super.key});
-
+  const AuthDialog({
+    super.key,
+    required this.title,
+    required this.actionText,
+    this.description,
+  });
+  final String title;
+  final String? description;
+  final String actionText;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -19,13 +26,25 @@ class AuthDialog extends StatelessWidget {
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * 0.9,
       ),
-      child: _Content(),
+      child: _Content(
+        title: title,
+        description: description ?? "",
+        actionText: actionText,
+      ),
     );
   }
 }
 
 class _Content extends StatelessWidget {
-  const _Content();
+  const _Content({
+    required this.title,
+    required this.description,
+    required this.actionText,
+  });
+
+  final String title;
+  final String description;
+  final String actionText;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +56,7 @@ class _Content extends StatelessWidget {
           _CheckIcon(),
           SizedBox(height: 24.h),
           Text(
-            "Account Created",
+            title,
             style: AppTextStyles.buttonLargeBold.copyWith(
               fontSize: 18.sp,
               color: AppColors.eboneyClay,
@@ -45,7 +64,8 @@ class _Content extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            "We’ve sent a verification link to your email address.\nPlease verify your email before logging in.",
+            description,
+            // "We’ve sent a verification link to your email address.\nPlease verify your email before logging in.",
             textAlign: TextAlign.center,
             style: AppTextStyles.input16.copyWith(
               color: AppColors.eboneyClay.withOpacity(0.7),
@@ -53,7 +73,7 @@ class _Content extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           ActionAuthButton(
-            myText: "Log In",
+            myText: actionText,
             onPressed: () => context.go(AppRoutes.login),
           ),
         ],

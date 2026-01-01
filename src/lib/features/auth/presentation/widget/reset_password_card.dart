@@ -1,4 +1,6 @@
+import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
 import 'package:bookreading/features/auth/presentation/widget/banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
@@ -6,6 +8,7 @@ import 'package:bookreading/features/auth/presentation/widget/white_contianer.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 import 'action_auth_button.dart';
 
@@ -78,17 +81,32 @@ class _ContentState extends State<_Content> {
         ),
         SizedBox(height: 20.h),
         //! Action button
-        ActionAuthButton(
-          myText: "Send Request",
-          onPressed: () {
-            if (_formKey.currentState?.validate() ?? false) {
-              _formKey.currentState!.save();
-              context.read<AuthCubit>().resetePassword(
-                newPassword: _newPassword,
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthUpdatePassword) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const AuthDialog(
+                  title: "Password Changed Successfully",
+                  actionText: 'Log In',
+                ),
               );
-              _formKey.currentState!.reset();
             }
           },
+          child: ActionAuthButton(
+            myText: "Send Request",
+            onPressed: () {
+              if (_formKey.currentState?.validate() ?? false) {
+                _formKey.currentState!.save();
+                context.read<AuthCubit>().resetePassword(
+                  newPassword: _newPassword,
+                );
+                _formKey.currentState!.reset();
+                context.go(AppRoutes.login);
+              }
+            },
+          ),
         ),
       ],
     );

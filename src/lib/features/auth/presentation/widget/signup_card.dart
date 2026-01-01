@@ -96,7 +96,12 @@ class _ContentState extends State<_Content> {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => const AuthDialog(),
+                builder: (_) => const AuthDialog(
+                  title: "Password Reset",
+                  description:
+                      "We’ve sent a verification link to your email address.\nPlease verify your email before logging in.",
+                  actionText: 'Log In',
+                ),
               );
             }
           },
