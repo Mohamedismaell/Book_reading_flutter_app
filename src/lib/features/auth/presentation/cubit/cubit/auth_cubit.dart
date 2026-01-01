@@ -60,7 +60,12 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
-      success: (user) {
+      success: (_) {
+        final user = sl<SupabaseClient>().auth.currentUser;
+        if (user == null) {
+          emit(AuthError(message: "Something went wrong. Please try again."));
+          return;
+        }
         if (user.emailConfirmedAt == null) {
           emit(AuthVerification());
           return;
@@ -68,9 +73,8 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSuccess());
       },
       failure: (error) {
-        if (error.errMessage.contains('confirm') ||
-            error.errMessage.contains('verify')) {
-          emit(AuthVerification());
+        if (error.errMessage.contains('confirmed')) {
+          emit(AuthError(message: "Email not Confirmed."));
         } else {
           emit(
             AuthError(message: "Invalid email or password. Please try again."),
