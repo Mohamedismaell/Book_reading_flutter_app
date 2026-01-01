@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:flutter/foundation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/params/params.dart';
 import '../../../domain/usecases/forget_password.dart';
 import '../../../domain/usecases/login_google.dart';
@@ -41,6 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signUpWithEmail({required SignupParams params}) async {
     emit(AuthLoading());
+
     final response = await signUpEmail.signUpWithEmail(params: params);
     return response.when(
       success: (_) {
@@ -57,11 +60,22 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
-      success: (_) {
+      success: (user) {
+        if (user.emailConfirmedAt == null) {
+          emit(AuthVerification());
+          return;
+        }
         emit(AuthSuccess());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
+        if (error.errMessage.contains('confirm') ||
+            error.errMessage.contains('verify')) {
+          emit(AuthVerification());
+        } else {
+          emit(
+            AuthError(message: "Invalid email or password. Please try again."),
+          );
+        }
         debugPrint(error.errMessage);
       },
     );

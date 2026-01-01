@@ -83,7 +83,7 @@ class _ContentState extends State<_Content> {
           builder: (context, state) {
             return state is AuthError
                 ? NoteMessage(text: "This Email is already exists")
-                : state is AuthSuccess
+                : state is AuthVerification
                 ? NoteMessage(text: "Check your inbox to verify your Email")
                 : const SizedBox.shrink();
           },
@@ -102,7 +102,7 @@ class _ContentState extends State<_Content> {
                   password: _password,
                 ),
               );
-              _formKey.currentState!.reset();
+              // _formKey.currentState!.reset();
             }
           },
         ),

@@ -78,7 +78,9 @@ class _ContentState extends State<_Content> {
         //! Error Message
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
-            return state is AuthError
+            return state is AuthVerification
+                ? NoteMessage(text: "Check your inbox to verify your Email")
+                : state is AuthError
                 ? NoteMessage(
                     text: "Invalid email or password. Please try again.",
                   )
