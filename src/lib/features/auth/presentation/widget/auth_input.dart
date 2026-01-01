@@ -53,6 +53,7 @@ class _AuthInputState extends State<AuthInput> {
           borderSide: BorderSide.none,
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+        //! Hint Text
         hintText: widget.hintText,
         hintStyle: AppTextStyles.input16,
         //! Eye icon
