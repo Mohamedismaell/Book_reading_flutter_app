@@ -57,9 +57,15 @@ class _AuthInputState extends State<AuthInput> {
         hintStyle: AppTextStyles.input16,
         //! Eye icon
         suffixIcon: widget.isPassword
-            ? IconButton(
-                icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
-                onPressed: () => setState(() => _obscure = !_obscure),
+            // icebringer111@gmail.com
+            ? Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: IconButton(
+                  icon: Icon(
+                    _obscure ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () => setState(() => _obscure = !_obscure),
+                ),
               )
             : null,
       ),

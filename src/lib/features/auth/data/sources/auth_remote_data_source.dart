@@ -8,7 +8,7 @@ class AuthRemoteDataSource {
   Future<void> loginWithGoogle() async {
     await supabase.auth.signInWithOAuth(
       OAuthProvider.google,
-      redirectTo: 'bookreading://login-callback',
+      redirectTo: 'bookreading://auth',
     );
   }
 
@@ -16,6 +16,7 @@ class AuthRemoteDataSource {
     await supabase.auth.signUp(
       email: params.email,
       password: params.password.toString(),
+      emailRedirectTo: "https://mohamedismaell.github.io/bookreading-auth/",
       data: {'full_name': params.name},
     );
   }
@@ -32,7 +33,7 @@ class AuthRemoteDataSource {
   }) async {
     await supabase.auth.resetPasswordForEmail(
       params.email,
-      redirectTo: 'bookreading://reset-password',
+      redirectTo: 'bookreading://auth',
     );
   }
 
