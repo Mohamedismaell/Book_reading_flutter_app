@@ -1,7 +1,7 @@
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_colors.dart';
-import 'package:bookreading/core/theme/app_text_styles.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
@@ -93,10 +93,11 @@ class _ContentState extends State<_Content> {
             },
             child: Text(
               "Forgot Password?",
-              style: AppTextStyles.buttonMedium.copyWith(
-                color: AppColors.eboneyClay,
-                fontWeight: FontWeight.w600,
-              ),
+              style: context.textTheme.bodyMedium,
+              //  AppTextStyles.buttonMedium.copyWith(
+              //   color: AppColors.eboneyClay,
+              //   fontWeight: FontWeight.w600,
+              // ),
             ),
           ),
         ),

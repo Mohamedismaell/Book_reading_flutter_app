@@ -1,10 +1,12 @@
 import 'package:bookreading/core/theme/app_colors.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_redirect_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/theme/app_gradients.dart';
 import '../widget/signup_card.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -19,7 +21,11 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: AppColors.backGround),
+        decoration: BoxDecoration(
+          gradient: context.isLight
+              ? AppGradients.lightBackground
+              : AppGradients.darkBackground,
+        ),
         child: Stack(
           children: [
             SafeArea(

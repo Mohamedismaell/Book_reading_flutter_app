@@ -1,6 +1,7 @@
-import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-// import '../app_colors.dart';
+
+import '../app_color_schemes.dart';
+import '../app_text_theme.dart';
 
 ThemeData getDarkTheme() {
   return ThemeData(
@@ -10,5 +11,9 @@ ThemeData getDarkTheme() {
     // textTheme: const TextTheme(
     //   bodyMedium: TextStyle(color: AppColors.darkText),
     // ),
+    useMaterial3: true,
+    colorScheme: darkColorScheme,
+    textTheme: AppTextTheme.from(darkColorScheme),
+    scaffoldBackgroundColor: Colors.transparent,
   );
 }

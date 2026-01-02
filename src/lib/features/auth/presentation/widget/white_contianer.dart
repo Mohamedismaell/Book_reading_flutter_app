@@ -1,6 +1,6 @@
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_shadows.dart';
 
@@ -12,7 +12,7 @@ class WhiteContianer extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.whiteContainer,
+        color: context.colorTheme.surface,
         boxShadow: [AppShadows.containerSahdow],
         borderRadius: BorderRadius.circular(32.r),
       ),

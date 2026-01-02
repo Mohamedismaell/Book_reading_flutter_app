@@ -1,7 +1,6 @@
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../core/theme/app_text_styles.dart';
 
 class HeadTitle extends StatelessWidget {
   const HeadTitle({super.key, required this.headText, required this.hashText});
@@ -13,9 +12,9 @@ class HeadTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(headText, style: AppTextStyles.heading1.copyWith(fontSize: 32)),
+        Text(headText, style: context.textTheme.headlineLarge),
         SizedBox(height: 8.h),
-        Text(hashText, style: AppTextStyles.buttonMedium.copyWith()),
+        Text(hashText, style: context.textTheme.bodySmall),
       ],
     );
   }

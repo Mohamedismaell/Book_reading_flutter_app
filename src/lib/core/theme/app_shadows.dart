@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class AppShadows {
   const AppShadows._();
+  // === Light ===
   static BoxShadow bannerSahdow = BoxShadow(
-    color: AppColors.eboneyClay.withOpacity(0.4),
+    color: AppColors.ebonyClay.withOpacity(0.4),
     // color: Color(0x662E3148),
     blurRadius: 20,
     spreadRadius: -5,
@@ -18,16 +19,17 @@ class AppShadows {
   );
   static BoxShadow actionButton1 = BoxShadow(
     // color: AppColors.eboneyClay.withOpacity(0.4),
-    color: AppColors.eboneyClay.withOpacity(0.3),
+    color: AppColors.ebonyClay.withOpacity(0.3),
     blurRadius: 15,
     offset: Offset(0, 10),
     spreadRadius: -3,
   );
   static BoxShadow actionButton2 = BoxShadow(
     // color: AppColors.eboneyClay.withOpacity(0.4),
-    color: AppColors.eboneyClay.withOpacity(0.3),
+    color: AppColors.ebonyClay.withOpacity(0.3),
     offset: Offset(0, 4),
     blurRadius: 6,
     spreadRadius: -4,
   );
+  // === Dark ===
 }

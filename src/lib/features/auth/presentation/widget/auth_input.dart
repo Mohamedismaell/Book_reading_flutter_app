@@ -1,8 +1,7 @@
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/enums/validation_type.dart';
-import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/validators/form_validators.dart';
 
 class AuthInput extends StatefulWidget {
@@ -55,7 +54,7 @@ class _AuthInputState extends State<AuthInput> {
         contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
         //! Hint Text
         hintText: widget.hintText,
-        hintStyle: AppTextStyles.input16,
+        hintStyle: context.textTheme.bodyMedium,
         //! Eye icon
         suffixIcon: widget.isPassword
             // icebringer111@gmail.com
@@ -70,7 +69,7 @@ class _AuthInputState extends State<AuthInput> {
               )
             : null,
       ),
-      style: AppTextStyles.input18,
+      style: context.textTheme.bodyLarge,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/theme/cubit/theme_cubit.dart';
+import '../theme/cubit/theme_cubit.dart';
 
 class ThemeIcon extends StatelessWidget {
   const ThemeIcon({super.key});
