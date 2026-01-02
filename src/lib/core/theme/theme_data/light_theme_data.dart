@@ -1,32 +1,36 @@
-import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../app_color_schemes.dart';
+import '../app_semantic_colors.dart';
+import '../app_text_theme.dart';
 
 ThemeData getLightTheme() {
+  final textTheme = AppTextTheme.from(lightColorScheme);
   return ThemeData(
-    // elevatedButtonTheme: ElevatedButtonThemeData(
-    //     style: ElevatedButton.styleFrom(
-    //         backgroundColor: AppColors.purplePrimary)),
-    // navigationBarTheme: NavigationBarThemeData(
-    //     backgroundColor: Colors.white,
-    //     indicatorColor: Colors.transparent,
-    //     iconTheme: WidgetStateProperty.resolveWith(
-    //         (states) => IconThemeData(
-    //             size: 28,
-    //             color:
-    //                 states.contains(WidgetState.selected)
-    //                     ? AppColors.purplePrimary
-    //                     : AppColors.greyPrimary)))
+    brightness: Brightness.light,
+    useMaterial3: true,
+    colorScheme: lightColorScheme,
+    textTheme: textTheme,
+    scaffoldBackgroundColor: Colors.transparent, // gradient handles bg
+
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppSemanticColors.inputFillLight,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(60.r),
+        borderSide: BorderSide.none,
+      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      hintStyle: textTheme.bodySmall?.copyWith(
+        color: lightColorScheme.onSurface,
+      ),
+    ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.eboneyClay,
-        foregroundColor: Colors.white,
+        backgroundColor: lightColorScheme.primary,
+        foregroundColor: lightColorScheme.onPrimary,
       ),
     ),
   );
 }
-
-// extension ShortTheme on BuildContext {
-//   TextTheme get text => Theme.of(this).textTheme;
-//   ColorScheme get colors => Theme.of(this).colorScheme;
-
-// }

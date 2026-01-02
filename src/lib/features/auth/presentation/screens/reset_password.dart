@@ -1,10 +1,9 @@
-import 'package:bookreading/core/theme/app_colors.dart';
+import 'package:bookreading/core/theme/app_gradients.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
-import '../widget/forget_password_card.dart';
 import '../widget/reset_password_card.dart';
 
 class ResetPasswordPage extends StatelessWidget {
@@ -17,7 +16,11 @@ class ResetPasswordPage extends StatelessWidget {
         media.size.height - media.padding.top - media.padding.bottom;
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: AppColors.backGround),
+        decoration: BoxDecoration(
+          gradient: context.isLight
+              ? AppGradients.lightBackground
+              : AppGradients.darkBackground,
+        ),
         child: Stack(
           children: [
             SafeArea(

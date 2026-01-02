@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_gradients.dart';
 import '../../../../core/theme/app_shadows.dart';
 
 class Logo extends StatelessWidget {
@@ -12,7 +13,7 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: AppColors.brandBlue,
+        gradient: AppGradients.brandBlue,
         boxShadow: [AppShadows.bannerSahdow],
         borderRadius: BorderRadius.circular(16.r),
       ),

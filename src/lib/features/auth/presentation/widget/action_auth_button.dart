@@ -1,8 +1,8 @@
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_shadows.dart';
-import '../../../../core/theme/app_text_styles.dart';
 import '../cubit/cubit/auth_cubit.dart';
 
 class ActionAuthButton extends StatelessWidget {
@@ -57,7 +57,7 @@ class _Content extends StatelessWidget {
       children: [
         Text(
           isLoading ? "Please wait..." : myText,
-          style: AppTextStyles.buttonLargeBold.copyWith(fontSize: 18),
+          style: context.textTheme.labelLarge,
         ),
         SizedBox(width: 8.w),
         state is AuthLoading

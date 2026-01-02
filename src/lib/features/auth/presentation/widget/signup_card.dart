@@ -123,7 +123,7 @@ class _ContentState extends State<_Content> {
             },
           ),
         ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 12.h),
         //! hash Line
         SeperatorLine(),
         SizedBox(height: 12.h),

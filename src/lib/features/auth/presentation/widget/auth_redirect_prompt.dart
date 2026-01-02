@@ -1,7 +1,5 @@
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
 
 class AuthRedirectPrompt extends StatelessWidget {
   const AuthRedirectPrompt({
@@ -17,15 +15,10 @@ class AuthRedirectPrompt extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Already have an account?", style: AppTextStyles.buttonMedium),
+        Text("Already have an account?", style: context.textTheme.bodyMedium),
         TextButton(
           onPressed: onPressed,
-          child: Text(
-            text,
-            style: AppTextStyles.buttonLargeBold.copyWith(
-              color: AppColors.eboneyClay,
-            ),
-          ),
+          child: Text(text, style: context.textTheme.headlineSmall),
         ),
       ],
     );

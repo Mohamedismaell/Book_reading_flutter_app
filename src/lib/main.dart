@@ -17,8 +17,8 @@ import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'features/auth/domain/usecases/forget_password.dart';
+
 // import 'core/theme/theme_data/dark_theme_data.dart';
 // import 'core/routes/app_router.dart';
 
@@ -35,11 +35,12 @@ Future<void> main() async {
     url: 'https://iszsxfqfmsjotmdnszyi.supabase.co',
     anonKey: 'sb_publishable_yNt2YfuCVSrFuS53esNU4A_HtIhv9j0',
   );
-  // final uri = Uri.base;
 
+  // final uri = Uri.base;
   // if (uri.hasQuery || uri.fragment.isNotEmpty) {
   //   await Supabase.instance.client.auth.getSessionFromUrl(uri);
   // }
+
   runApp(
     // DevicePreview(
     //   enabled: !kReleaseMode,
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
+      builder: (context, mode) {
         return ScreenUtilInit(
           designSize: const Size(390, 884),
           minTextAdapt: true,
@@ -82,7 +83,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: getLightTheme(),
               darkTheme: getDarkTheme(),
-              themeMode: state.themeMode,
+              themeMode: mode.themeMode,
               routerConfig: AppRouter.router,
             );
           },
