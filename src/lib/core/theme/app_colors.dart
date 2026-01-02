@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   const AppColors._();
+
+  //! Common
+  static const Color white = Color(0xFFFFFFFF);
+
   static const Color eboneyClay = Color(0xFF2E3148);
   static const Color paleSky = Color(0xFF6B7280);
   static const Color athensGray = Color(0xFFE0E2EE);
@@ -10,7 +14,6 @@ class AppColors {
   static const Color riverBed = Color(0xFF4B5563);
   static const Color slateGray = Color(0xFF64748B);
 
-  static const Color white = Color(0xFFFFFFFF);
   //! Active Back Ground Color
   static const Color backGround = Color(0xFFE6EEFF);
   //! white container
@@ -26,6 +29,15 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomLeft,
     colors: [eboneyClay, Color(0xFF4A5678)],
+  );
+
+  //! Dark Mode Colors
+  static const Color linearGround1 = Color(0xFF252836);
+  static const Color linearGround2 = Color(0xFF0F1014);
+  static LinearGradient darkbackGround = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomLeft,
+    colors: [linearGround1, linearGround2],
   );
 }
 
