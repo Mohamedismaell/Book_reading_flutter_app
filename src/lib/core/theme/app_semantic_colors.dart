@@ -38,6 +38,7 @@ class AppSemanticColors {
   /// Secondary / hint / hash text
   static const textSecondaryLight = AppColors.paleSky;
 
+  static const inputFillLight = AppColors.inputFillLight;
   // =====================
   // DARK MODE
   // =====================
@@ -51,6 +52,7 @@ class AppSemanticColors {
   /// Secondary / hash text
   static const textSecondaryDark = AppColors.gullGray;
 
+  static const inputFillDark = AppColors.inputFillDark;
   // =====================
   // STATUS (shared)
   // =====================

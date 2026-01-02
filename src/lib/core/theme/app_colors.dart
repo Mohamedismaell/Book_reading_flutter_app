@@ -157,4 +157,9 @@ class AppColors {
   static const white75 = Color(0xC0FFFFFF);
   static const white80 = Color(0xCCFFFFFF);
   static const white90 = Color(0xE6FFFFFF);
+
+  //inputField
+
+  static const inputFillLight = Color(0xFFF3F4F6);
+  static const inputFillDark = Color(0x14FFFFFF);
 }

@@ -45,19 +45,11 @@ class _AuthInputState extends State<AuthInput> {
       onSaved: (value) =>
           widget.onSaved != null ? widget.onSaved!(value) : null,
       decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(60.r),
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
         //! Hint Text
         hintText: widget.hintText,
-        hintStyle: context.textTheme.bodyMedium,
+
         //! Eye icon
         suffixIcon: widget.isPassword
-            // icebringer111@gmail.com
             ? Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: IconButton(
@@ -69,7 +61,9 @@ class _AuthInputState extends State<AuthInput> {
               )
             : null,
       ),
-      style: context.textTheme.bodyLarge,
+      style: context.textTheme.bodyMedium!.copyWith(
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

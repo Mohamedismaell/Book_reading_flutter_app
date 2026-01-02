@@ -22,14 +22,14 @@ class GoogleButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Google", style: context.textTheme.headlineSmall),
+                Text("Google", style: context.textTheme.labelLarge),
                 SizedBox(width: 8.w),
                 state is AuthLoading
                     ? CircularProgressIndicator()
                     : SvgPicture.asset(
                         "assets/icons/earth.svg",
                         colorFilter: ColorFilter.mode(
-                          AppColors.white,
+                          context.colorTheme.onPrimary,
                           BlendMode.srcIn,
                         ),
                         width: 18.w,

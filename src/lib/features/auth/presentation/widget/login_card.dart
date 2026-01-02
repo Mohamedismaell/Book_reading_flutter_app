@@ -83,8 +83,7 @@ class _ContentState extends State<_Content> {
                 : const SizedBox.shrink();
           },
         ),
-        SizedBox(height: 8.h),
-        //! Forgot Password **** No Funciton Fow Now ****
+        //! Forgot Password
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
@@ -93,15 +92,11 @@ class _ContentState extends State<_Content> {
             },
             child: Text(
               "Forgot Password?",
-              style: context.textTheme.bodyMedium,
-              //  AppTextStyles.buttonMedium.copyWith(
-              //   color: AppColors.eboneyClay,
-              //   fontWeight: FontWeight.w600,
-              // ),
+              style: context.textTheme.headlineSmall!.copyWith(fontSize: 14.sp),
             ),
           ),
         ),
-        SizedBox(height: 12.h),
+        SizedBox(height: 6.h),
 
         //! Action button
         ActionAuthButton(
@@ -118,7 +113,7 @@ class _ContentState extends State<_Content> {
             }
           },
         ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 12.h),
         //! hash Line
         SeperatorLine(),
         SizedBox(height: 12.h),

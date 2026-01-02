@@ -20,7 +20,10 @@ class SeperatorLine extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: Text("OR CONTINUE WITH", style: context.textTheme.bodySmall),
+          child: Text(
+            "OR CONTINUE WITH",
+            style: context.textTheme.bodySmall?.copyWith(fontSize: 13.sp),
+          ),
         ),
         Flexible(
           child: Container(

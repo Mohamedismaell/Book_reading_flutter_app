@@ -1,4 +1,3 @@
-import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/app_gradients.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
