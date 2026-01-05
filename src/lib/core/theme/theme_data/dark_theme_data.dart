@@ -16,7 +16,7 @@ ThemeData getDarkTheme() {
     //!input
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppSemanticColors.inputFillDark,
+      fillColor: AppSemanticColors.surfaceMutedLight,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60.r),
         borderSide: BorderSide.none,

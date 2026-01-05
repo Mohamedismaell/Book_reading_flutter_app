@@ -15,7 +15,7 @@ class AppTextTheme {
         fontFamily: font,
         fontSize: 30.sp,
         fontWeight: FontWeight.w700,
-        color: c.onSurface, // ebonyClay / white
+        color: c.onSurface,
       ),
       headlineMedium: TextStyle(
         fontFamily: font,

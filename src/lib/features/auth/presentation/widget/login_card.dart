@@ -1,6 +1,5 @@
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/routes/app_routes.dart';
-import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
@@ -11,7 +10,7 @@ import 'package:bookreading/features/auth/presentation/widget/google_button.dart
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -44,8 +43,8 @@ class _ContentState extends State<_Content> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //! Logo
-        Logo(),
+        //! Banner
+        Banner(),
         SizedBox(height: 16.h),
         //! Title
         HeadTitle(

@@ -1,7 +1,7 @@
+import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_colors.dart';
 
 class SeperatorLine extends StatelessWidget {
   const SeperatorLine({super.key});
@@ -15,7 +15,10 @@ class SeperatorLine extends StatelessWidget {
           child: Container(
             width: 78.w,
             height: 3.h,
-            decoration: BoxDecoration(color: AppColors.athensGray),
+            //Todo Fix Color
+            decoration: BoxDecoration(
+              color: AppSemanticColors.textSecondaryLight,
+            ),
           ),
         ),
         Padding(
@@ -29,7 +32,9 @@ class SeperatorLine extends StatelessWidget {
           child: Container(
             width: 78.w,
             height: 3.h,
-            decoration: BoxDecoration(color: AppColors.athensGray),
+            decoration: BoxDecoration(
+              color: AppSemanticColors.textSecondaryLight,
+            ),
           ),
         ),
       ],

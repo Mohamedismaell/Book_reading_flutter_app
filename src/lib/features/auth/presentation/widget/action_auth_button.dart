@@ -2,7 +2,6 @@ import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_shadows.dart';
 import '../cubit/cubit/auth_cubit.dart';
 
 class ActionAuthButton extends StatelessWidget {
@@ -22,12 +21,12 @@ class ActionAuthButton extends StatelessWidget {
         final isLoading = state is AuthLoading;
         return Container(
           decoration: BoxDecoration(
-            boxShadow: [AppShadows.actionButton1, AppShadows.actionButton2],
+            // boxShadow: [AppShadows.actionButton1, AppShadows.actionButton2],
           ),
           child: ElevatedButton(
             onPressed: isLoading ? null : onPressed,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
+              padding: EdgeInsets.symmetric(vertical: 8.h),
               child: _Content(
                 state: state,
                 myText: myText,

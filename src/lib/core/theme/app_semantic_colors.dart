@@ -3,59 +3,43 @@ import 'app_colors.dart';
 class AppSemanticColors {
   const AppSemanticColors._();
 
-  // =====================
-  // BRAND / ACTION
-  // =====================
+  //! LIGHT MODE
 
-  /// Active / primary button (light mode)
-  static const primaryLight = AppColors.ebonyClay;
-
-  /// Text/icon on primary button (light mode)
-  static const onPrimaryLight = AppColors.white;
-
-  /// Active / primary button (dark mode)
-  static const primaryDark = AppColors.white;
-
-  /// Text/icon on primary button (dark mode)
-  static const onPrimaryDark = AppColors.ebonyClay;
-
-  /// Accent / progress / hint
-  static const accent = AppColors.anakiwa60;
-
-  // =====================
-  // LIGHT MODE
-  // =====================
-
-  /// Cards & surfaces on gradient background
+  // Backgrounds & surfaces
+  static const backgroundLight = AppColors.offWhite;
   static const surfaceLight = AppColors.white;
+  static const surfaceMutedLight = AppColors.grayLight15;
 
-  /// Main headings
-  static const textPrimaryLight = AppColors.ebonyClay;
+  // Text
+  static const textPrimaryLight = AppColors.nearBlack;
+  static const textSecondaryLight = AppColors.gray;
+  static const textHintLight = AppColors.grayLight;
 
-  /// Content text
-  static const textContentLight = AppColors.ebonyClay80;
+  // Actions
+  static const primaryActionLight = AppColors.red;
+  static const onPrimaryActionLight = AppColors.white;
+  static const secondaryActionLight = AppColors.nearBlack;
 
-  /// Secondary / hint / hash text
-  static const textSecondaryLight = AppColors.paleSky;
+  // Accent / highlight
+  static const accentLight = AppColors.yellow;
 
-  static const inputFillLight = AppColors.inputFillLight;
-  // =====================
-  // DARK MODE
-  // =====================
+  //! DARK MODE
 
-  /// Cards & disabled buttons
-  static const surfaceDark = AppColors.white5;
+  // Backgrounds & surfaces
+  static const backgroundDark = AppColors.nearBlack;
+  static const surfaceDark = AppColors.black;
+  static const surfaceMutedDark = AppColors.white15;
 
-  /// Main content text
-  static const textContentDark = AppColors.mischka;
+  // Text
+  static const textPrimaryDark = AppColors.white;
+  static const textSecondaryDark = AppColors.gray;
+  static const textHintDark = AppColors.grayLight;
 
-  /// Secondary / hash text
-  static const textSecondaryDark = AppColors.gullGray;
+  // Actions
+  static const primaryActionDark = AppColors.red;
+  static const onPrimaryActionDark = AppColors.white;
+  static const secondaryActionDark = AppColors.nearBlack;
 
-  static const inputFillDark = AppColors.inputFillDark;
-  // =====================
-  // STATUS (shared)
-  // =====================
-
-  static const error = AppColors.flamingo;
+  // Accent / highlight
+  static const accentDark = AppColors.yellow;
 }

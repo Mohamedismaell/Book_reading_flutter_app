@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../cubit/cubit/auth_cubit.dart';
 
 class GoogleButton extends StatelessWidget {
@@ -18,7 +17,7 @@ class GoogleButton extends StatelessWidget {
           onPressed: state is AuthLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 13.h),
+            padding: EdgeInsets.symmetric(vertical: 8.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
