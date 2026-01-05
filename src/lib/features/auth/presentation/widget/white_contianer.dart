@@ -1,7 +1,7 @@
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import '../../../../core/theme/app_shadows.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_shadows.dart';
 
 class WhiteContianer extends StatelessWidget {
   const WhiteContianer({super.key, required this.child});
@@ -11,8 +11,8 @@ class WhiteContianer extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: context.colorTheme.surface,
-        boxShadow: [AppShadows.containerSahdow],
+        // color: context.colorTheme.surface,
+        // boxShadow: [AppShadows.containerSahdow],
         borderRadius: BorderRadius.circular(32.r),
       ),
       child: Padding(

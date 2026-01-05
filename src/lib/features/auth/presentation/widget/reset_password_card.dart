@@ -5,7 +5,7 @@ import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
 import 'package:bookreading/features/auth/presentation/widget/banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -44,8 +44,8 @@ class _ContentState extends State<_Content> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //! Logo
-        Logo(),
+        //! Banner
+        Banner(),
         SizedBox(height: 16.h),
         //! Titel
         HeadTitle(headText: 'Change Password', hashText: ''),

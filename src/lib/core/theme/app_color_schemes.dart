@@ -1,48 +1,44 @@
 import 'package:flutter/material.dart';
 import 'app_semantic_colors.dart';
 
-/// =====================
-/// LIGHT COLOR SCHEME
-/// =====================
+//! LIGHT SCHEME
 final ColorScheme lightColorScheme = ColorScheme.light(
   brightness: Brightness.light,
 
-  // Active buttons
-  primary: AppSemanticColors.primaryLight,
-  onPrimary: AppSemanticColors.onPrimaryLight,
+  // Primary action
+  primary: AppSemanticColors.primaryActionLight,
+  onPrimary: AppSemanticColors.onPrimaryActionLight,
 
-  // Accent (progress, hints)
-  secondary: AppSemanticColors.accent,
+  // Accent / highlight
+  secondary: AppSemanticColors.accentLight,
   onSecondary: AppSemanticColors.textPrimaryLight,
 
-  // Main surfaces (screens & cards)
+  // Surfaces
   surface: AppSemanticColors.surfaceLight,
-  onSurface: AppSemanticColors.textContentLight,
+  onSurface: AppSemanticColors.textPrimaryLight,
 
   // Status
-  error: AppSemanticColors.error,
-  onError: AppSemanticColors.onPrimaryLight,
+  error: Colors.red,
+  onError: AppSemanticColors.onPrimaryActionLight,
 );
 
-/// =====================
-/// DARK COLOR SCHEME
-/// =====================
+//! DARK SCHEME
 final ColorScheme darkColorScheme = ColorScheme.dark(
   brightness: Brightness.dark,
 
-  // Active buttons
-  primary: AppSemanticColors.primaryDark,
-  onPrimary: AppSemanticColors.onPrimaryDark,
+  // Primary action
+  primary: AppSemanticColors.primaryActionDark,
+  onPrimary: AppSemanticColors.onPrimaryActionDark,
 
-  // Accent (progress, hints)
-  secondary: AppSemanticColors.accent,
-  onSecondary: AppSemanticColors.onPrimaryDark,
+  // Accent / highlight
+  secondary: AppSemanticColors.accentDark,
+  onSecondary: AppSemanticColors.textPrimaryDark,
 
-  // Main surfaces (screens & cards)
+  // Surfaces
   surface: AppSemanticColors.surfaceDark,
-  onSurface: AppSemanticColors.textContentDark,
+  onSurface: AppSemanticColors.textPrimaryDark,
 
   // Status
-  error: AppSemanticColors.error,
-  onError: AppSemanticColors.onPrimaryDark,
+  error: Colors.red,
+  onError: AppSemanticColors.onPrimaryActionDark,
 );

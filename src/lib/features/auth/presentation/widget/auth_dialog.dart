@@ -20,7 +20,8 @@ class AuthDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: AppColors.white,
+      // backgroundColor: context.colorTheme.surface,
+      backgroundColor: AppColors.nearBlack,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: EdgeInsets.symmetric(horizontal: 30.w),
       constraints: BoxConstraints(
@@ -87,6 +88,7 @@ class _CheckIcon extends StatelessWidget {
         // gradient: LinearGradient(
         //   colors: [AppColors.backGround, AppColors.backGround.withOpacity(0.8)],
         // ),
+        color: context.colorTheme.primary,
         boxShadow: [
           // BoxShadow(
           //   color: AppColors.backGround.withOpacity(0.3),
@@ -95,7 +97,11 @@ class _CheckIcon extends StatelessWidget {
           // ),
         ],
       ),
-      child: Icon(Icons.check_rounded, size: 48.sp, color: AppColors.ebonyClay),
+      child: Icon(
+        Icons.check_rounded,
+        size: 48.sp,
+        color: context.colorTheme.onPrimary,
+      ),
     );
   }
 }
