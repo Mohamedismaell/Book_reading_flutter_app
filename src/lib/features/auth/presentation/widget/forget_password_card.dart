@@ -69,8 +69,6 @@ class _ContentState extends State<_Content> {
           builder: (context, state) {
             return state is AuthError
                 ? NoteMessage(text: "This Email doesn't exists")
-                : state is AuthForgetPassword
-                ? NoteMessage(text: "Check your inbox to change your Password")
                 : const SizedBox.shrink();
           },
         ),
@@ -98,12 +96,6 @@ class _ContentState extends State<_Content> {
                   params: ForgotPasswordParams(email: _email),
                 );
                 _formKey.currentState!.reset();
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const LogInPage(),
-                //   ),
-                // );
               }
             },
           ),

@@ -23,6 +23,7 @@ class LogInPage extends StatelessWidget {
     final minHeight =
         media.size.height - media.padding.top - media.padding.bottom;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           color: context.isLight

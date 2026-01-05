@@ -1,4 +1,5 @@
 import 'package:bookreading/core/routes/app_routes.dart';
+import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,8 @@ class AuthDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: context.colorTheme.surface,
+      // backgroundColor: context.colorTheme.surface,
+      backgroundColor: AppColors.nearBlack,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: EdgeInsets.symmetric(horizontal: 30.w),
       constraints: BoxConstraints(

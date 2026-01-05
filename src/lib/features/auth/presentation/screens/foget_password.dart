@@ -18,6 +18,7 @@ class FogetPasswordPage extends StatelessWidget {
     final minHeight =
         media.size.height - media.padding.top - media.padding.bottom;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           color: context.isLight
@@ -27,7 +28,7 @@ class FogetPasswordPage extends StatelessWidget {
         child: Stack(
           children: [
             Orb(position: OrbPosition.topRight, isCyan: false),
-            Orb(position: OrbPosition.centerRight),
+            Orb(position: OrbPosition.bottomRight),
             Orb(position: OrbPosition.bottomLeft, isCyan: false),
             SafeArea(
               child: SingleChildScrollView(

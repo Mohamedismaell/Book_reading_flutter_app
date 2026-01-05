@@ -21,6 +21,7 @@ class SignUpPage extends StatelessWidget {
     debugPrint('canPop: ${context.canPop()}');
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           color: context.isLight
