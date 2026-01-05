@@ -1,10 +1,12 @@
-import 'package:bookreading/core/theme/app_colors.dart';
-import 'package:bookreading/core/theme/app_gradients.dart';
+import 'package:bookreading/core/theme/app_semantic_colors.dart';
+
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/enums/orb_position.dart';
+import '../../../../core/widget/orb.dart';
 import '../widget/forget_password_card.dart';
 
 class FogetPasswordPage extends StatelessWidget {
@@ -18,12 +20,15 @@ class FogetPasswordPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: context.isLight
-              ? AppGradients.lightBackground
-              : AppGradients.darkBackground,
+          color: context.isLight
+              ? AppSemanticColors.backgroundLight
+              : AppSemanticColors.backgroundDark,
         ),
         child: Stack(
           children: [
+            Orb(position: OrbPosition.topRight, isCyan: false),
+            Orb(position: OrbPosition.centerRight),
+            Orb(position: OrbPosition.bottomLeft, isCyan: false),
             SafeArea(
               child: SingleChildScrollView(
                 child: ConstrainedBox(

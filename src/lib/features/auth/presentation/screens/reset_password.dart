@@ -4,6 +4,7 @@ import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/theme/app_semantic_colors.dart';
 import '../widget/reset_password_card.dart';
 
 class ResetPasswordPage extends StatelessWidget {
@@ -17,9 +18,9 @@ class ResetPasswordPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: context.isLight
-              ? AppGradients.lightBackground
-              : AppGradients.darkBackground,
+          color: context.isLight
+              ? AppSemanticColors.backgroundLight
+              : AppSemanticColors.backgroundDark,
         ),
         child: Stack(
           children: [
