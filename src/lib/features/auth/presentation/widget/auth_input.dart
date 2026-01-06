@@ -1,6 +1,5 @@
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/enums/validation_type.dart';
 import '../../../../core/utils/validators/form_validators.dart';
 

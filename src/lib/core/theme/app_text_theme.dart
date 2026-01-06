@@ -8,9 +8,6 @@ class AppTextTheme {
 
   static TextTheme from(ColorScheme c) {
     return TextTheme(
-      // =====================
-      // HEADLINES
-      // =====================
       headlineLarge: TextStyle(
         fontFamily: font,
         fontSize: 30.sp,
@@ -30,9 +27,6 @@ class AppTextTheme {
         color: c.onSurface,
       ),
 
-      // =====================
-      // BODY / CONTENT
-      // =====================
       bodyLarge: TextStyle(
         fontFamily: font,
         fontSize: 18.sp,
@@ -54,9 +48,6 @@ class AppTextTheme {
         color: c.onSurface.withOpacity(0.6),
       ),
 
-      // =====================
-      // BUTTONS
-      // =====================
       labelLarge: TextStyle(
         fontFamily: font,
         fontSize: 18.sp,

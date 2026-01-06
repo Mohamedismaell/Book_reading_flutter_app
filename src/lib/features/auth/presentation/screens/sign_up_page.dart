@@ -22,45 +22,38 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: BoxDecoration(
-          color: context.isLight
-              ? AppSemanticColors.backgroundLight
-              : AppSemanticColors.backgroundDark,
-        ),
-        child: Stack(
-          children: [
-            Orb(position: OrbPosition.topRight, isCyan: false),
-            Orb(position: OrbPosition.centerRight),
-            Orb(position: OrbPosition.bottomLeft, isCyan: false),
-            SafeArea(
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: minHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: SignUpCard(),
-                        ),
-                        AuthRedirectPrompt(
-                          onPressed: () {
-                            context.pushReplacement(AppRoutes.login);
-                          },
-                          text: "Log in",
-                        ),
-                      ],
-                    ),
+      body: Stack(
+        children: [
+          Orb(position: OrbPosition.topRight, isCyan: false),
+          Orb(position: OrbPosition.centerRight),
+          Orb(position: OrbPosition.bottomLeft, isCyan: false),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: minHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: SignUpCard(),
+                      ),
+                      AuthRedirectPrompt(
+                        onPressed: () {
+                          context.pushReplacement(AppRoutes.login);
+                        },
+                        text: "Log in",
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            //! Arrow Back
-            context.canPop() ? ArrowBack() : const SizedBox(),
-          ],
-        ),
+          ),
+          //! Arrow Back
+          context.canPop() ? ArrowBack() : const SizedBox(),
+        ],
       ),
     );
   }

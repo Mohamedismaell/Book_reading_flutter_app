@@ -12,7 +12,7 @@ ThemeData getDarkTheme() {
     useMaterial3: true,
     colorScheme: darkColorScheme,
     textTheme: textTheme,
-    scaffoldBackgroundColor: Colors.transparent,
+    scaffoldBackgroundColor: AppSemanticColors.backgroundDark,
     //!input
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

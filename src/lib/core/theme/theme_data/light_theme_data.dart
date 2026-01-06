@@ -11,8 +11,7 @@ ThemeData getLightTheme() {
     useMaterial3: true,
     colorScheme: lightColorScheme,
     textTheme: textTheme,
-    scaffoldBackgroundColor: Colors.transparent, // gradient handles bg
-
+    scaffoldBackgroundColor: AppSemanticColors.backgroundLight,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppSemanticColors.surfaceMutedLight,

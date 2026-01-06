@@ -25,7 +25,7 @@ class AuthCubit extends Cubit<AuthState> {
     this.logInEmail,
     this.resetPassword,
     this.updatePassword,
-  ) : super(AuthInitial());
+  ) : super(AuthNone());
 
   Future<void> logInWithGoogle() async {
     emit(AuthLoading());
@@ -122,7 +122,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await userLogout.logout();
     return response.when(
       success: (_) {
-        emit(AuthInitial());
+        emit(AuthNone());
       },
       failure: (error) {
         emit(AuthError(message: error.errMessage));
