@@ -6,4 +6,5 @@ class AppRoutes {
   static const String resetPassword = '/resetpassword';
   //! book
   static const String home = '/home';
+  static const String bookDetails = '/bookdetails';
 }

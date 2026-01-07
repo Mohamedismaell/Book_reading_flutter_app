@@ -27,7 +27,7 @@ class AppSemanticColors {
 
   // Backgrounds & surfaces
   static const backgroundDark = AppColors.nearBlack;
-  static const surfaceDark = AppColors.black;
+  static const surfaceDark = AppColors.nearBlack;
   static const surfaceMutedDark = AppColors.white15;
 
   // Text

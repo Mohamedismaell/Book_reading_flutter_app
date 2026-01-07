@@ -14,7 +14,7 @@ class AppRouter {
     refreshListenable: sl<AuthNotifier>(),
     redirect: (context, state) {
       final authNotifier = sl<AuthNotifier>();
-      final supabase = Supabase.instance.client;
+      final supabase = sl<SupabaseClient>();
 
       final user = supabase.auth.currentUser;
       final loggedIn = user != null;

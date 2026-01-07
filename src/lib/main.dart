@@ -6,6 +6,7 @@ import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,7 +58,10 @@ Future<void> main() async {
         ),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
       ],
-      child: const MyApp(),
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => const MyApp(), // Wrap your app
+      ),
     ),
   );
 }
@@ -68,7 +72,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
-      print("User is here******** ${sl<SupabaseClient>().auth.currentUser}");
+      print(
+        "USER EMAIL ===> **** ${sl<SupabaseClient>().auth.currentUser?.email} ****",
+      );
     }
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, mode) {

@@ -6,6 +6,7 @@ import '../../../core/routes/app_routes.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/widget/orb.dart';
+import '../presentation/screens/book_details.dart';
 
 class HomeRoutes {
   static List<RouteBase> routes = [
@@ -16,13 +17,11 @@ class HomeRoutes {
             children: [
               Orb(position: OrbPosition.topLeft),
               Orb(position: OrbPosition.centerRight, isCyan: false),
-              Orb(position: OrbPosition.bottomLeft),
+              Orb(position: OrbPosition.bottomRight),
               SafeArea(
+                bottom: false,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 20.h,
-                  ),
+                  padding: EdgeInsets.only(right: 20.w, left: 20.w, top: 5.h),
                   child: child,
                 ),
               ),
@@ -35,6 +34,10 @@ class HomeRoutes {
         GoRoute(
           path: AppRoutes.home,
           builder: (context, state) => const HomePage(),
+        ),
+        GoRoute(
+          path: AppRoutes.bookDetails,
+          builder: (context, state) => const BookDetails(),
         ),
       ],
     ),

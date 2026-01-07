@@ -1,6 +1,7 @@
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomHeader extends StatelessWidget {
   const CustomHeader({super.key, this.text});
@@ -12,10 +13,10 @@ class CustomHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Icon(
-          Icons.arrow_back,
-          size: 26.sp,
+        IconButton(
+          onPressed: () => context.canPop() ? context.pop() : null,
           color: context.colorTheme.onSurface,
+          icon: Icon(Icons.arrow_back, size: 22.sp),
         ),
         // Spacer(),
         Text(text ?? '', style: context.textTheme.headlineMedium),
