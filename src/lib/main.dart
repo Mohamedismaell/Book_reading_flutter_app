@@ -1,3 +1,4 @@
+import 'package:bookreading/core/helper/hydra.dart';
 import 'package:bookreading/core/routes/app_router.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
@@ -16,7 +17,7 @@ import 'core/di/service_locator.dart';
 import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'features/auth/domain/usecases/forget_password.dart';
 
 // import 'core/theme/theme_data/dark_theme_data.dart';
@@ -25,11 +26,7 @@ import 'features/auth/domain/usecases/forget_password.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorageDirectory.web
-        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
-  );
+  HydratedBloc.storage = await buildHydratedStorage();
   await initServiceLocator();
   await Supabase.initialize(
     url: 'https://iszsxfqfmsjotmdnszyi.supabase.co',
@@ -70,6 +67,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) {
+      print("User is here******** ${sl<SupabaseClient>().auth.currentUser}");
+    }
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, mode) {
         return ScreenUtilInit(

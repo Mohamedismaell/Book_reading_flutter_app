@@ -1,3 +1,4 @@
+import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class Header extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => context.read<ThemeCubit>().toggleTheme(),
             icon: const Icon(Icons.notifications_outlined),
           ),
         ),

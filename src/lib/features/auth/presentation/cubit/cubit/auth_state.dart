@@ -1,7 +1,13 @@
 part of 'auth_cubit.dart';
 
 @immutable
-sealed class AuthState {}
+sealed class AuthState {
+  // AuthState() {
+  //   if (kDebugMode) {
+  //     print("User is ******** ${sl<SupabaseClient>().auth.currentUser}");
+  //   }
+  // }
+}
 
 final class AuthNone extends AuthState {}
 
