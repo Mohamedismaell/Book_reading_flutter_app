@@ -13,17 +13,17 @@ class ProgressBar extends StatelessWidget {
       children: [
         Container(
           width: width,
-          height: 6.h,
+          height: 6,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
+            borderRadius: BorderRadius.circular(30),
             color: context.colorTheme.surface,
           ),
         ),
         Container(
-          width: width * (progress / 100),
-          height: 6.h,
+          width: width / 2,
+          height: 6,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
+            borderRadius: BorderRadius.circular(30),
             color: context.colorTheme.onSurface,
           ),
         ),

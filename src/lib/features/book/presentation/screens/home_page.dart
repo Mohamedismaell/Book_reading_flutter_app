@@ -1,3 +1,4 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/presentation/widget/books.dart';
 import 'package:bookreading/features/book/presentation/widget/search.dart';
@@ -16,16 +17,16 @@ class HomePage extends StatelessWidget {
       children: [
         //! Header
         const Header(),
-        // SizedBox(height: 16.h),
+        SizedBox(height: context.setHeight(16)),
         // //! Search
-        // // const Search(),
-        // // SizedBox(height: 16.h),
+        // const Search(),
+        // SizedBox(height: context.setHeight(16),
         // //! Button
         // // const CategoryButton(),
         // // SizedBox(height: 35.h),
-        // //! Continue Reading
-        // Stack(children: [const ContinueReading()]),
-        // SizedBox(height: 32.h),
+        //! Continue Reading
+        const ContinueReading(),
+        SizedBox(height: context.setHeight(32)),
         // //! Books
         // Column(
         //   crossAxisAlignment: CrossAxisAlignment.start,

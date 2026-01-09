@@ -1,50 +1,59 @@
+import 'package:bookreading/core/helper/size_provider/size_provider.dart';
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/presentation/widget/progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContinueReading extends StatelessWidget {
   const ContinueReading({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    final cardHeight = screenHeight < 700 ? 250.0 : 500.0;
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                "Continue Reading",
-                style: context.textTheme.headlineSmall,
-              ),
+    return SizeProvider(
+      baseSize: const Size(350, 180),
+      width: context.setWidth(350),
+      height: context.setHeight(230),
+      child: Builder(
+        builder: (context) {
+          return Container(
+            width: context.sizeProvider.width,
+            height: context.sizeProvider.height,
+            decoration: BoxDecoration(
+              color: context.colorTheme.surfaceContainer,
+              // shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(context.setMinSize(16)),
             ),
-            Text("See All", style: context.textTheme.bodySmall),
-          ],
-        ),
-        SizedBox(height: 16.h),
-        SizedBox(
-          height: cardHeight,
-          child: Row(
+            child: Padding(
+              padding: EdgeInsets.all(context.setMinSize(16)),
+              child: _CardItem(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CardItem extends StatelessWidget {
+  const _CardItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _BookCover(),
+        SizedBox(width: context.setMinSize(16)),
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //! Book
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                clipBehavior: Clip.antiAlias,
-                width: 160.w,
-                height: 250.w,
-                child: Image.asset(
-                  'assets/images/back_ground_auth.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(width: 16.w),
-              // Expanded(child: _BookDetails()),
+              Text("Book Class", style: context.bodyMedium()),
+              SizedBox(height: context.setMinSize(2)),
+              Text("Book Title", style: context.headlineMedium()),
+              Expanded(child: Text("Book Author", style: context.bodyMedium())),
+              SizedBox(height: context.setMinSize(10)),
+              _Progress(),
             ],
           ),
         ),
@@ -53,70 +62,60 @@ class ContinueReading extends StatelessWidget {
   }
 }
 
-class _BookDetails extends StatelessWidget {
-  const _BookDetails();
+class _BookCover extends StatelessWidget {
+  const _BookCover();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      // height: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Book Type", style: context.textTheme.bodyMedium),
-          SizedBox(height: 5.h),
-          Text("Book Title", style: context.textTheme.headlineSmall),
-          SizedBox(height: 5.h),
-          Expanded(
-            child: Text("Book Author", style: context.textTheme.bodyMedium),
-          ),
-          // Align(alignment: AlignmentGeometry.centerRight, child: Text("Icon")),
-          Align(
-            alignment: AlignmentGeometry.centerRight,
-            child: Container(
+    return ClipRRect(
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.circular(context.setMinSize(16)),
+
+      child: Image.asset("assets/images/dune.png", fit: BoxFit.cover),
+    );
+  }
+}
+
+class _Progress extends StatelessWidget {
+  const _Progress();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          children: [
+            Expanded(child: Text("Chapter 4", style: context.bodySmall())),
+            Container(
+              width: context.setMinSize(40),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: context.colorTheme.onSurface,
+                color: context.colorTheme.surface,
               ),
               child: IconButton(
                 onPressed: () {},
                 icon: Icon(
                   Icons.play_arrow_outlined,
-                  color: context.colorTheme.surface,
+                  size: context.setMinSize(24),
+                  color: context.colorTheme.onSurface,
                 ),
               ),
             ),
-          ),
-          Spacer(),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Chapter 4",
-                      style: context.textTheme.bodySmall,
-                    ),
-                  ),
-                  Text(
-                    "45%",
-                    style: context.textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.h),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return ProgressBar(progress: 45, width: constraints.maxWidth);
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+            SizedBox(width: context.setMinSize(6)),
+            Text(
+              "45%",
+              style: context.bodySmall().copyWith(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        SizedBox(height: context.setMinSize(8)),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            return ProgressBar(progress: 45, width: constraints.maxWidth);
+          },
+        ),
+      ],
     );
   }
 }

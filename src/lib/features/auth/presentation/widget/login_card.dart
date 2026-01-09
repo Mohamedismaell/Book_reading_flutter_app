@@ -73,7 +73,7 @@ class _ContentState extends State<_Content> {
                 : const SizedBox.shrink();
           },
         ),
-        // //! Forgot Password
+        //! Forgot Password
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
@@ -85,23 +85,26 @@ class _ContentState extends State<_Content> {
         ),
         SizedBox(height: context.setHeight(6)),
 
-        // //! Action button
-        ActionAuthButton(
-          myText: "Log In",
-
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-              context.read<AuthCubit>().logInWithEmail(
-                params: LoginParams(
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                ),
-              );
-
-              _formKey.currentState!.reset();
-            }
+        //! Action button
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            state is AuthSuccess ? _formKey.currentState!.reset() : null;
           },
+          child: ActionAuthButton(
+            myText: "Log In",
+
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                context.read<AuthCubit>().logInWithEmail(
+                  params: LoginParams(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  ),
+                );
+              }
+            },
+          ),
         ),
         SizedBox(height: context.setHeight(24)),
         // //! hash Line

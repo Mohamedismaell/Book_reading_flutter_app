@@ -1,3 +1,4 @@
+import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'app_semantic_colors.dart';
 
@@ -16,7 +17,7 @@ final ColorScheme lightColorScheme = ColorScheme.light(
   // Surfaces
   surface: AppSemanticColors.surfaceLight,
   onSurface: AppSemanticColors.textPrimaryLight,
-
+  surfaceContainer: AppSemanticColors.surfaceMutedLight.withOpacity(0.4),
   // Status
   error: Colors.red,
   onError: AppSemanticColors.onPrimaryActionLight,
@@ -37,7 +38,7 @@ final ColorScheme darkColorScheme = ColorScheme.dark(
   // Surfaces
   surface: AppSemanticColors.surfaceDark,
   onSurface: AppSemanticColors.textPrimaryDark,
-
+  surfaceContainer: AppSemanticColors.surfaceMutedDark.withOpacity(0.1),
   // Status
   error: Colors.red,
   onError: AppSemanticColors.onPrimaryActionDark,
