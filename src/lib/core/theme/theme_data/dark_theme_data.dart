@@ -18,10 +18,10 @@ ThemeData getDarkTheme() {
       filled: true,
       fillColor: AppSemanticColors.surfaceMutedLight,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(60.r),
+        borderRadius: BorderRadius.circular(60),
         borderSide: BorderSide.none,
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16),
       hintStyle: textTheme.bodySmall?.copyWith(
         color: darkColorScheme.onSurface,
       ),
@@ -31,10 +31,8 @@ ThemeData getDarkTheme() {
       style: ElevatedButton.styleFrom(
         backgroundColor: darkColorScheme.primary,
         foregroundColor: darkColorScheme.onPrimary,
-        padding: EdgeInsets.symmetric(horizontal: 34.w, vertical: 14.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r), // rectangle
-        ),
+        // padding: EdgeInsets.symmetric(horizontal: 34, vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
     ),
   );

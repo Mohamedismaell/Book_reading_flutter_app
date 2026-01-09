@@ -18,11 +18,11 @@ class HomePage extends StatelessWidget {
         const Header(),
         SizedBox(height: 16.h),
         //! Search
-        const Search(),
-        SizedBox(height: 16.h),
+        // const Search(),
+        // SizedBox(height: 16.h),
         //! Button
-        const CategoryButton(),
-        SizedBox(height: 35.h),
+        // const CategoryButton(),
+        // SizedBox(height: 35.h),
         //! Continue Reading
         Stack(children: [const ContinueReading()]),
         SizedBox(height: 32.h),

@@ -2,7 +2,7 @@ import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
-import 'package:bookreading/features/auth/presentation/widget/banner.dart';
+import 'package:bookreading/features/auth/presentation/widget/main_banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
 import 'package:flutter/material.dart' hide Banner;
@@ -45,7 +45,7 @@ class _ContentState extends State<_Content> {
     return Column(
       children: [
         //! Banner
-        Banner(),
+        MainBanner(),
         SizedBox(height: 16.h),
         //! Titel
         HeadTitle(headText: 'Change Password', hashText: ''),
@@ -53,30 +53,8 @@ class _ContentState extends State<_Content> {
         //! Form
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
-            return Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  AuthInput(
-                    isPassword: true,
-                    validationType: ValidationType.password,
-                    hintText: 'New Password',
-                    onSaved: (value) => _newPassword = value ?? '',
-                    controller: _newPasswordController,
-                  ),
-                  SizedBox(height: 10.h),
-                  AuthInput(
-                    isPassword: true,
-                    validationType: ValidationType.password,
-                    hintText: 'Confirm Password',
-                    // onSaved: (value) => _confirmPassword = value ?? '',
-                    validator: (value) => value != _newPasswordController.text
-                        ? 'Passwords must match'
-                        : null,
-                  ),
-                ],
-              ),
-            );
+            return
+_ResetForm(formKey: null,, email: null,, password: null,);
           },
         ),
         SizedBox(height: 20.h),
@@ -109,6 +87,46 @@ class _ContentState extends State<_Content> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ResetForm extends StatelessWidget {
+  const _ResetForm({
+    required this.formKey,
+    required this.newPasswordController,
+    required this.passwordController,
+  });
+  final GlobalKey<FormState> formKey;
+
+  final TextEditingController newPasswordController;
+  final TextEditingController passwordController;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          AuthInput(
+            isPassword: true,
+                    validationType: ValidationType.password,
+                    hintText: 'New Password',
+                    onSaved: (value) => _newPassword = value ?? '',
+                    controller: newPasswordController,
+                  ),
+                  SizedBox(height: 10.h),
+                  AuthInput(
+                    isPassword: true,
+                    validationType: ValidationType.password,
+                    hintText: 'Confirm Password',
+                    // onSaved: (value) => _confirmPassword = value ?? '',
+                    validator: (value) => value != newPasswordController.text
+                        ? 'Passwords must match'
+                        : null,
+                  ),
+                ],
+              ),
+            );
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,23 +13,26 @@ class Orb extends StatelessWidget {
   final OrbPosition position;
   final bool isCyan;
 
-  static const double _size = 200;
-  static const double _radius = _size / 2;
+  double orbSize(BuildContext context) {
+    return context.setMinSize(200);
+  }
 
+  double radius(BuildContext context) => orbSize(context) / 2;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final sizeOrb = orbSize(context);
 
     return Positioned(
-      top: _top(size),
-      bottom: _bottom,
-      left: _left(size),
-      right: _right,
+      top: _top(size, context),
+      bottom: _bottom(context),
+      left: _left(size, context),
+      right: _right(context),
       child: ImageFiltered(
         imageFilter: ImageFilter.blur(sigmaX: 120, sigmaY: 120),
         child: Container(
-          width: _size.w,
-          height: _size.w,
+          width: sizeOrb,
+          height: sizeOrb,
           decoration: BoxDecoration(
             color: isCyan ? AppColors.cyan50 : AppColors.pink50,
             shape: BoxShape.circle,
@@ -38,55 +42,55 @@ class Orb extends StatelessWidget {
     );
   }
 
-  double? _top(Size size) {
+  double? _top(Size size, BuildContext context) {
     switch (position) {
       case OrbPosition.topLeft:
       case OrbPosition.topRight:
       case OrbPosition.topCenter:
-        return -_radius.h;
+        return -radius(context);
 
       case OrbPosition.centerLeft:
       case OrbPosition.centerRight:
-        return (size.height / 2) - _radius.h;
+        return (size.height / 2) - radius(context);
 
       default:
         return null;
     }
   }
 
-  double? get _bottom {
+  double? _bottom(BuildContext context) {
     switch (position) {
       case OrbPosition.bottomLeft:
       case OrbPosition.bottomRight:
       case OrbPosition.bottomCenter:
-        return -_radius.h;
+        return -radius(context);
       default:
         return null;
     }
   }
 
-  double? _left(Size size) {
+  double? _left(Size size, BuildContext context) {
     switch (position) {
       case OrbPosition.topLeft:
       case OrbPosition.centerLeft:
       case OrbPosition.bottomLeft:
-        return -_radius.w;
+        return -radius(context);
 
       case OrbPosition.topCenter:
       case OrbPosition.bottomCenter:
-        return (size.width / 2) - _radius.w;
+        return (size.width / 2) - radius(context);
 
       default:
         return null;
     }
   }
 
-  double? get _right {
+  double? _right(BuildContext context) {
     switch (position) {
       case OrbPosition.topRight:
       case OrbPosition.centerRight:
       case OrbPosition.bottomRight:
-        return -_radius.w;
+        return -radius(context);
       default:
         return null;
     }

@@ -1,7 +1,6 @@
 import 'package:bookreading/core/enums/orb_position.dart';
-
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../widget/auth_redirect_prompt.dart';
@@ -33,7 +32,9 @@ class LogInPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.setSp(16),
+                        ),
                         child: LoginCard(),
                       ),
                       AuthRedirectPrompt(
