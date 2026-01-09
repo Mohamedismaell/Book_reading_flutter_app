@@ -1,6 +1,6 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/features/book/presentation/screens/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/enums/orb_position.dart';
 import '../../../core/routes/app_routes.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +21,11 @@ class HomeRoutes {
               SafeArea(
                 bottom: false,
                 child: Padding(
-                  padding: EdgeInsets.only(right: 20.w, left: 20.w, top: 5.h),
+                  padding: EdgeInsets.only(
+                    right: context.setWidth(20),
+                    left: context.setWidth(20),
+                    top: context.setHeight(5),
+                  ),
                   child: child,
                 ),
               ),

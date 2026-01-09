@@ -1,3 +1,4 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
@@ -33,7 +34,9 @@ class FogetPasswordPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.setWidth(16),
+                        ),
                         //here chanfe
                         child: ForgetPasswordCard(),
                       ),

@@ -33,7 +33,7 @@ class LogInPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: context.setSp(16),
+                          horizontal: context.setWidth(16),
                         ),
                         child: LoginCard(),
                       ),

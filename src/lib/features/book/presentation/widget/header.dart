@@ -1,4 +1,6 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +18,9 @@ class Header extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Wednesday, 24 Oct", style: context.textTheme.bodyMedium),
-              SizedBox(height: 4.h),
-              Text(
-                "Good Morning, Alex",
-                style: context.textTheme.headlineMedium,
-              ),
+              Text("Wednesday, 24 Oct", style: context.bodyMedium()),
+              SizedBox(height: context.setHeight(4)),
+              Text("Good Morning, Alex", style: context.headlineMedium()),
             ],
           ),
         ),
@@ -36,7 +35,7 @@ class Header extends StatelessWidget {
             icon: const Icon(Icons.notifications_outlined),
           ),
         ),
-        SizedBox(width: 12.w),
+        SizedBox(width: context.setWidth(12)),
         //! Profile Icon
         InkWell(
           onTap: () => context.read<AuthCubit>().logout(),

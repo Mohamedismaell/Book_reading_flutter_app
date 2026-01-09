@@ -1,5 +1,6 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/params/params.dart';
+import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
@@ -12,6 +13,7 @@ import 'package:bookreading/features/auth/presentation/widget/seperator_line.dar
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 
 class SignUpCard extends StatelessWidget {
@@ -83,11 +85,12 @@ class _ContentState extends State<_Content> {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => const AuthDialog(
+                builder: (_) => AuthDialog(
                   title: "Password Reset",
                   description:
                       "We’ve sent a verification link to your email address.\nPlease verify your email before logging in.",
                   actionText: 'Log In',
+                  onPressed: () => context.go(AppRoutes.login),
                 ),
               );
             }
@@ -99,13 +102,11 @@ class _ContentState extends State<_Content> {
                 _formKey.currentState!.save();
                 context.read<AuthCubit>().signUpWithEmail(
                   params: SignupParams(
-                    name: _name,
-                    email: _email,
-                    password: _password,
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    password: _passwordController.text,
                   ),
                 );
-
-                // _formKey.currentState!.reset();
               }
             },
           ),
@@ -146,21 +147,21 @@ class _SignUpForm extends StatelessWidget {
           AuthInput(
             hintText: 'Full Name',
             validationType: ValidationType.fullName,
-            onSaved: (value) => nameController.text = value ?? '',
+            controller: nameController,
             isPassword: false,
           ),
           SizedBox(height: context.setHeight(16)),
           AuthInput(
             hintText: 'Email Address',
             validationType: ValidationType.email,
-            onSaved: (value) => emailController.text = value ?? '',
+            controller: emailController,
             isPassword: false,
           ),
           SizedBox(height: context.setHeight(16)),
           AuthInput(
             hintText: 'Password',
             validationType: ValidationType.password,
-            onSaved: (value) => passwordController.text = value ?? '',
+            controller: passwordController,
             isPassword: true,
           ),
         ],

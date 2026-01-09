@@ -16,29 +16,29 @@ class HomePage extends StatelessWidget {
       children: [
         //! Header
         const Header(),
-        SizedBox(height: 16.h),
-        //! Search
-        // const Search(),
         // SizedBox(height: 16.h),
-        //! Button
-        // const CategoryButton(),
-        // SizedBox(height: 35.h),
-        //! Continue Reading
-        Stack(children: [const ContinueReading()]),
-        SizedBox(height: 32.h),
-        //! Books
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        // //! Search
+        // // const Search(),
+        // // SizedBox(height: 16.h),
+        // //! Button
+        // // const CategoryButton(),
+        // // SizedBox(height: 35.h),
+        // //! Continue Reading
+        // Stack(children: [const ContinueReading()]),
+        // SizedBox(height: 32.h),
+        // //! Books
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
 
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 6.0.w),
-              child: Text("For you", style: context.textTheme.headlineMedium),
-            ),
-            SizedBox(height: 16.h),
-            const BooksGrid(),
-          ],
-        ),
+        //   children: [
+        //     Padding(
+        //       padding: EdgeInsets.only(left: 6.0.w),
+        //       child: Text("For you", style: context.textTheme.headlineMedium),
+        //     ),
+        //     SizedBox(height: 16.h),
+        //     const BooksGrid(),
+        //   ],
+        // ),
       ],
     );
   }

@@ -6,9 +6,10 @@ import 'package:bookreading/features/auth/presentation/widget/main_banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
-import 'package:flutter/material.dart' hide Banner;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 import '../../../../core/params/params.dart';
 import 'action_auth_button.dart';
@@ -46,13 +47,13 @@ class _ContentState extends State<_Content> {
       children: [
         //! Banner
         MainBanner(),
-        SizedBox(height: 16.h),
+        SizedBox(height: context.setHeight(16)),
         //! Titel
         HeadTitle(headText: 'Change Password', hashText: ''),
-        SizedBox(height: 10.h),
+        SizedBox(height: context.setHeight(10)),
         //! Form
         _ForgetForm(formKey: _formKey, emailController: _emailController),
-        SizedBox(height: 4.h),
+        SizedBox(height: context.setHeight(4)),
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return state is AuthError
@@ -60,7 +61,7 @@ class _ContentState extends State<_Content> {
                 : const SizedBox.shrink();
           },
         ),
-        SizedBox(height: 20.h),
+        SizedBox(height: context.setHeight(20)),
         //! Action button
         BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
@@ -71,6 +72,7 @@ class _ContentState extends State<_Content> {
                   title: "Reset Link Sent",
                   description: "Check your inbox for the password reset link.",
                   actionText: 'Continue',
+                  onPressed: () => context.pop(),
                 ),
               );
             }
