@@ -11,9 +11,9 @@ class ContinueReading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizeProvider(
-      baseSize: const Size(350, 180),
+      baseSize: const Size(350, 310),
       width: context.setWidth(350),
-      height: context.setHeight(230),
+      height: context.setHeight(310),
       child: Builder(
         builder: (context) {
           return Container(
@@ -22,7 +22,7 @@ class ContinueReading extends StatelessWidget {
             decoration: BoxDecoration(
               color: context.colorTheme.surfaceContainer,
               // shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(context.setMinSize(16)),
+              borderRadius: BorderRadius.circular(context.setMinSize(24)),
             ),
             child: Padding(
               padding: EdgeInsets.all(context.setMinSize(16)),
@@ -45,16 +45,22 @@ class _CardItem extends StatelessWidget {
         _BookCover(),
         SizedBox(width: context.setMinSize(16)),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Book Class", style: context.bodyMedium()),
-              SizedBox(height: context.setMinSize(2)),
-              Text("Book Title", style: context.headlineMedium()),
-              Expanded(child: Text("Book Author", style: context.bodyMedium())),
-              SizedBox(height: context.setMinSize(10)),
-              _Progress(),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: context.setMinSize(15)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Book Class", style: context.bodyLarge()),
+                SizedBox(height: context.setMinSize(10)),
+                Text("Book Title", style: context.headlineMedium()),
+                SizedBox(height: context.setMinSize(10)),
+                Text("Book Author", style: context.bodyLarge()),
+                SizedBox(height: context.setMinSize(10)),
+                Expanded(child: _Progress()),
+              ],
+            ),
           ),
         ),
       ],
@@ -71,7 +77,14 @@ class _BookCover extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.circular(context.setMinSize(16)),
 
-      child: Image.asset("assets/images/dune.png", fit: BoxFit.cover),
+      child: SizedBox(
+        width: context.sizeProvider.width / 2.3,
+        height: double.infinity,
+        child: Image.asset(
+          "assets/images/back_ground_auth.jpg",
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
@@ -82,9 +95,11 @@ class _Progress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      // crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(child: Text("Chapter 4", style: context.bodySmall())),
             Container(

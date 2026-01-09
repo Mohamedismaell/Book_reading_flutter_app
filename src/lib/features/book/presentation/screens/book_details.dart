@@ -14,20 +14,20 @@ class BookDetails extends StatelessWidget {
         CustomHeader(),
         Expanded(child: _BookCover()),
         // SizedBox(height: 35.h),
-        _BookOverview(
-          title: 'About the author',
-          description:
-              'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-        ),
-        SizedBox(height: 18.h),
-        _BookOverview(
-          title: 'Overview',
-          description:
-              'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......',
-        ),
-        SizedBox(height: 20.h),
-        _Buttons(),
-        SizedBox(height: 25.h),
+        // _BookOverview(
+        //   title: 'About the author',
+        //   description:
+        //       'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
+        // ),
+        // SizedBox(height: 18.h),
+        // _BookOverview(
+        //   title: 'Overview',
+        //   description:
+        //       'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......',
+        // ),
+        // SizedBox(height: 20.h),
+        // _Buttons(),
+        // SizedBox(height: 25.h),
       ],
     );
   }

@@ -1,6 +1,8 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/presentation/widget/books.dart';
+import 'package:bookreading/features/book/presentation/widget/horizontal_view.dart';
 import 'package:bookreading/features/book/presentation/widget/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,28 +20,20 @@ class HomePage extends StatelessWidget {
         //! Header
         const Header(),
         SizedBox(height: context.setHeight(16)),
-        // //! Search
-        // const Search(),
-        // SizedBox(height: context.setHeight(16),
-        // //! Button
-        // // const CategoryButton(),
-        // // SizedBox(height: 35.h),
         //! Continue Reading
+        Text("Continue Reading", style: context.headlineMedium()),
+        SizedBox(height: context.setHeight(16)),
         const ContinueReading(),
         SizedBox(height: context.setHeight(32)),
-        // //! Books
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-
-        //   children: [
-        //     Padding(
-        //       padding: EdgeInsets.only(left: 6.0.w),
-        //       child: Text("For you", style: context.textTheme.headlineMedium),
-        //     ),
-        //     SizedBox(height: 16.h),
-        //     const BooksGrid(),
-        //   ],
-        // ),
+        //! Recommended
+        SizedBox(height: context.setHeight(16)),
+        Text("Recommended", style: context.headlineMedium()),
+        SizedBox(height: context.setHeight(16)),
+        const HorizontalView(),
+        SizedBox(height: context.setHeight(50)),
+        Text("Popular", style: context.headlineMedium()),
+        SizedBox(height: context.setHeight(16)),
+        const HorizontalView(),
       ],
     );
   }

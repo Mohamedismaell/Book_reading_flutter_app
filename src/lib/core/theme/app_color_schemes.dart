@@ -10,7 +10,7 @@ final ColorScheme lightColorScheme = ColorScheme.light(
   primary: AppSemanticColors.primaryActionLight,
   onPrimary: AppSemanticColors.onPrimaryActionLight,
 
-  // Accent / highlight
+  // Accent / highlight `
   secondary: AppSemanticColors.accentLight,
   onSecondary: AppSemanticColors.textPrimaryLight,
 

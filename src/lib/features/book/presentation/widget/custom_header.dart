@@ -1,6 +1,7 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomHeader extends StatelessWidget {
@@ -16,11 +17,15 @@ class CustomHeader extends StatelessWidget {
         IconButton(
           onPressed: () => context.canPop() ? context.pop() : null,
           color: context.colorTheme.onSurface,
-          icon: Icon(Icons.arrow_back, size: 22.sp),
+          icon: Icon(Icons.arrow_back, size: context.setMinSize(22)),
         ),
         // Spacer(),
-        Text(text ?? '', style: context.textTheme.headlineMedium),
-        Icon(Icons.bookmark, size: 26.sp, color: context.colorTheme.primary),
+        Text(text ?? '', style: context.headlineMedium()),
+        Icon(
+          Icons.bookmark,
+          size: context.setMinSize(26),
+          color: context.colorTheme.primary,
+        ),
       ],
     );
   }
