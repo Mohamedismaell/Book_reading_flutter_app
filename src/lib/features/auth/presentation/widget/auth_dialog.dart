@@ -1,12 +1,10 @@
 import 'package:bookreading/core/helper/size_provider/size_provider.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 //Todo Adjust Text content in every dialog
 class AuthDialog extends StatelessWidget {

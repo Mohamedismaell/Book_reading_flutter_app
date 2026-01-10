@@ -1,6 +1,5 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class HeadTitle extends StatelessWidget {

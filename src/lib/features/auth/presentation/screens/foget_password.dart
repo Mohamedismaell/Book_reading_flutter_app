@@ -1,10 +1,6 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/core/theme/app_semantic_colors.dart';
-
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/enums/orb_position.dart';
 import '../../../../core/widget/orb.dart';

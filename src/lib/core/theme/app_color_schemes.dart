@@ -1,4 +1,3 @@
-import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'app_semantic_colors.dart';
 

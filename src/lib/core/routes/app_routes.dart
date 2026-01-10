@@ -4,7 +4,12 @@ class AppRoutes {
   static const String signUp = '/signup';
   static const String forgotPassword = '/forgotpassword';
   static const String resetPassword = '/resetpassword';
-  //! book
+  //! Main Screens
   static const String home = '/home';
+  static const String explore = '/explore';
+  static const String bookmarks = '/bookmarks';
+  static const String profile = '/profile';
+
+  //! Sub Screens
   static const String bookDetails = '/bookdetails';
 }

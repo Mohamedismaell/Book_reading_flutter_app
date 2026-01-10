@@ -95,7 +95,7 @@ class _BookOverview extends StatelessWidget {
         SizedBox(height: context.setHeight(6)),
         Text(
           description,
-          style: context.bodyMedium().copyWith(fontSize: context.setSp(14)),
+          style: context.bodyMedium().copyWith(fontSize: context.setSp(16)),
         ),
       ],
     );

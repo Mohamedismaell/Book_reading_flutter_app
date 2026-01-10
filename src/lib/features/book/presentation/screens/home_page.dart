@@ -1,12 +1,7 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book/presentation/widget/books.dart';
 import 'package:bookreading/features/book/presentation/widget/horizontal_view.dart';
-import 'package:bookreading/features/book/presentation/widget/search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../widget/category_button.dart';
 import '../widget/continue_reading.dart';
 import '../widget/header.dart';
 

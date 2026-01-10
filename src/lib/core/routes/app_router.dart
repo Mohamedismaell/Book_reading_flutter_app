@@ -15,10 +15,8 @@ class AppRouter {
     redirect: (context, state) {
       final authNotifier = sl<AuthNotifier>();
       final supabase = sl<SupabaseClient>();
-
       final user = supabase.auth.currentUser;
       final loggedIn = user != null;
-
       final isRecovering = authNotifier.isRecoveringPassword;
 
       final isAuthRoute =

@@ -4,7 +4,6 @@ import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/routes/app_routes.dart';
 
 class BottomNav extends StatelessWidget {
@@ -12,8 +11,9 @@ class BottomNav extends StatelessWidget {
 
   int _locationToIndex(String location) {
     if (location.startsWith(AppRoutes.home)) return 0;
-    if (location.startsWith(AppRoutes.bookDetails)) return 1;
-    // if (location.startsWith(AppRoutes.profile)) return 2;
+    if (location.startsWith(AppRoutes.explore)) return 1;
+    if (location.startsWith(AppRoutes.bookmarks)) return 2;
+    if (location.startsWith(AppRoutes.profile)) return 3;
     return 0;
   }
 
@@ -29,7 +29,11 @@ class BottomNav extends StatelessWidget {
             context.go(AppRoutes.home);
             break;
           case 1:
-            context.go(AppRoutes.bookDetails);
+            context.go(AppRoutes.explore);
+          case 2:
+            context.go(AppRoutes.bookmarks);
+          case 3:
+            context.go(AppRoutes.profile);
             break;
         }
       },
@@ -54,20 +58,33 @@ class _CustomBottomNav extends StatelessWidget {
         color: context.colorTheme.surface,
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.setMinSize(40)),
+        padding: EdgeInsets.symmetric(horizontal: context.setWidth(50)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _NavSvgIcon(
-              path: 'assets/icons/home.svg',
+              path: 'assets/icons/home.min.svg',
+              // icon: Icons.home_outlined,
               onTap: () => onTap(0),
               isActive: currentIndex == 0,
             ),
 
             _NavSvgIcon(
-              path: 'assets/icons/book.svg',
+              icon: Icons.explore_outlined,
               onTap: () => onTap(1),
               isActive: currentIndex == 1,
+            ),
+            _NavSvgIcon(
+              // path: 'assets/icons/logo.svg',
+              icon: Icons.bookmark,
+              onTap: () => onTap(2),
+              isActive: currentIndex == 2,
+            ),
+            _NavSvgIcon(
+              // path: 'assets/icons/setting.svg',
+              icon: Icons.settings_outlined,
+              onTap: () => onTap(3),
+              isActive: currentIndex == 3,
             ),
           ],
         ),
@@ -78,34 +95,51 @@ class _CustomBottomNav extends StatelessWidget {
 
 class _NavSvgIcon extends StatelessWidget {
   const _NavSvgIcon({
-    required this.path,
-
+    this.path,
     required this.onTap,
     required this.isActive,
+    this.icon,
   });
-  final String path;
+  final String? path;
+  final IconData? icon;
   final VoidCallback onTap;
   final bool isActive;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.setMinSize(80),
+      // width: context.sizeProvider.width / 5,
+      // height: context.sizeProvider.width / 5,
       child: InkWell(
-        onTap: () => onTap(),
-        child: TweenAnimationBuilder<Color?>(
-          duration: const Duration(milliseconds: 220),
-          tween: ColorTween(
-            begin: AppColors.grayLighter,
-            end: isActive ? context.colorTheme.primary : AppColors.grayLighter,
+        onTap: onTap,
+        child: AnimatedScale(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          scale: isActive ? 1.2 : 1.0,
+          child: TweenAnimationBuilder<Color?>(
+            duration: const Duration(milliseconds: 220),
+            tween: ColorTween(
+              begin: AppColors.grayLighter,
+              end: isActive
+                  ? context.colorTheme.primary
+                  : AppColors.grayLighter,
+            ),
+            builder: (BuildContext context, Color? value, Widget? child) {
+              return path == null
+                  ? Icon(icon, size: context.setMinSize(30), color: value)
+                  : SvgPicture.asset(
+                      path!,
+                      width: context.setMinSize(23),
+                      fit: BoxFit.contain,
+                      colorFilter: ColorFilter.mode(
+                        value ?? AppColors.grayLighter,
+                        BlendMode.srcIn,
+                      ),
+                    );
+            },
           ),
-          builder: (BuildContext context, Color? value, Widget? child) {
-            return SvgPicture.asset(
-              path,
-              colorFilter: ColorFilter.mode(value!, BlendMode.srcIn),
-            );
-          },
         ),
       ),
     );
   }
 }
+// Icons.explore_outlined
