@@ -72,7 +72,6 @@ This application is being developed step by step with emphasis on maintainabilit
 
 ## Project Structure (Simplified)
 
-```text
 lib/
 │
 ├── core/
@@ -148,15 +147,6 @@ Mohamed Ismael
 Flutter Developer
 Egypt
 
-Status
+## Status
 
 This project is actively maintained and continuously improved.
-
-If you want next:
-- A **short GitHub repo description**
-- A **commit message style guide**
-- `CONTRIBUTING.md`
-- `CHANGELOG.md`
-- GitHub badges section
-
-Tell me what to add and I’ll format it the same way.
