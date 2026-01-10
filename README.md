@@ -1,4 +1,4 @@
-📖 ## Book Reading App (Flutter)
+## 📖  Book Reading App (Flutter)
 
 A modern Book Reading and Listening application built with Flutter.  
 The project focuses on clean architecture, scalable theming, and real-world production practices.
