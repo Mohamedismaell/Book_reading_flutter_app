@@ -25,7 +25,7 @@ ThemeData getLightTheme() {
       style: ElevatedButton.styleFrom(
         backgroundColor: lightColorScheme.primary,
         foregroundColor: lightColorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
     ),
   );

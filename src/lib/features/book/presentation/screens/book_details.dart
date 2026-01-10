@@ -110,8 +110,15 @@ class _Buttons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        //Todo fix the Button Later
         ElevatedButton(
           onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.setMinSize(35),
+              vertical: context.setMinSize(17),
+            ),
+          ),
           child: Text("button 1", style: context.labelSmall()),
         ),
         SizedBox(width: context.setWidth(20)),

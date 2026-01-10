@@ -30,7 +30,7 @@ ThemeData getDarkTheme() {
         backgroundColor: darkColorScheme.primary,
         foregroundColor: darkColorScheme.onPrimary,
         // padding: EdgeInsets.symmetric(horizontal: 34, vertical: 14),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
     ),
   );
