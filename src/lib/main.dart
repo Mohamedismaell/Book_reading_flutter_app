@@ -1,3 +1,6 @@
+import 'package:bookreading/core/helper/hydrated_storage.dart';
+import 'package:bookreading/core/helper/size_provider/size_provider.dart';
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/routes/app_router.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
@@ -5,6 +8,7 @@ import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,37 +20,34 @@ import 'core/di/service_locator.dart';
 import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
-import 'package:path_provider/path_provider.dart';
 import 'features/auth/domain/usecases/forget_password.dart';
-
-// import 'core/theme/theme_data/dark_theme_data.dart';
-// import 'core/routes/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorageDirectory.web
-        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
-  );
+  HydratedBloc.storage = await buildHydratedStorage();
   await initServiceLocator();
   await Supabase.initialize(
     url: 'https://iszsxfqfmsjotmdnszyi.supabase.co',
     anonKey: 'sb_publishable_yNt2YfuCVSrFuS53esNU4A_HtIhv9j0',
   );
 
-  // final uri = Uri.base;
-  // if (uri.hasQuery || uri.fragment.isNotEmpty) {
-  //   await Supabase.instance.client.auth.getSessionFromUrl(uri);
-  // }
-
   runApp(
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) => const MyApp(), // Wrap your app
-    // ),
-    MultiBlocProvider(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => AppBootstrap(), // Wrap your app
+    ),
+    // AppBootstrap(),
+  );
+}
+
+//!providers
+class AppBootstrap extends StatelessWidget {
+  const AppBootstrap({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
           create: (_) => AuthCubit(
@@ -61,32 +62,37 @@ Future<void> main() async {
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
       ],
       child: const MyApp(),
-    ),
-  );
+    );
+  }
 }
 
+//! ScreenUtil + MaterialApp
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) {
+      print(
+        "USER EMAIL ===> **** ${sl<SupabaseClient>().auth.currentUser?.email} ****",
+      );
+    }
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, mode) {
-        return ScreenUtilInit(
-          designSize: const Size(390, 884),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return MaterialApp.router(
-              // locale: DevicePreview.locale(context),
-              // builder: DevicePreview.appBuilder,
-              debugShowCheckedModeBanner: false,
-              theme: getLightTheme(),
-              darkTheme: getDarkTheme(),
-              themeMode: mode.themeMode,
-              routerConfig: AppRouter.router,
-            );
-          },
+        return SizeProvider(
+          baseSize: const Size(428, 926),
+          height: context.screenHeight,
+          width: context.screenWidth,
+          child: MaterialApp.router(
+            // locale: DevicePreview.locale(context),
+            // builder: DevicePreview.appBuilder,
+            debugShowCheckedModeBanner: false,
+            theme: getLightTheme(),
+            darkTheme: getDarkTheme(),
+            themeMode: mode.themeMode,
+            routerConfig: AppRouter.router,
+            builder: DevicePreview.appBuilder,
+          ),
         );
       },
     );

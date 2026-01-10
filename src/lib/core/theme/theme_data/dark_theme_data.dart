@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../app_color_schemes.dart';
 import '../app_semantic_colors.dart';
 import '../app_text_theme.dart';
@@ -12,16 +10,16 @@ ThemeData getDarkTheme() {
     useMaterial3: true,
     colorScheme: darkColorScheme,
     textTheme: textTheme,
-    scaffoldBackgroundColor: Colors.transparent,
+    scaffoldBackgroundColor: AppSemanticColors.backgroundDark,
     //!input
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppSemanticColors.surfaceMutedLight,
+      fillColor: AppSemanticColors.surfaceMutedDark,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(60.r),
+        borderRadius: BorderRadius.circular(60),
         borderSide: BorderSide.none,
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16),
       hintStyle: textTheme.bodySmall?.copyWith(
         color: darkColorScheme.onSurface,
       ),
@@ -31,6 +29,8 @@ ThemeData getDarkTheme() {
       style: ElevatedButton.styleFrom(
         backgroundColor: darkColorScheme.primary,
         foregroundColor: darkColorScheme.onPrimary,
+        // padding: EdgeInsets.symmetric(horizontal: 34, vertical: 14),
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
     ),
   );

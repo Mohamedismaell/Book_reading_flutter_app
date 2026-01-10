@@ -4,7 +4,7 @@ import 'package:bookreading/features/book/routes/home_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../features/auth/routes/home_routes.dart';
+import '../../features/auth/routes/auth_routes.dart';
 import '../di/service_locator.dart';
 
 class AppRouter {
@@ -14,11 +14,9 @@ class AppRouter {
     refreshListenable: sl<AuthNotifier>(),
     redirect: (context, state) {
       final authNotifier = sl<AuthNotifier>();
-      final supabase = Supabase.instance.client;
-
+      final supabase = sl<SupabaseClient>();
       final user = supabase.auth.currentUser;
       final loggedIn = user != null;
-
       final isRecovering = authNotifier.isRecoveringPassword;
 
       final isAuthRoute =

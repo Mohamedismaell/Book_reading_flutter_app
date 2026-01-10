@@ -1,6 +1,6 @@
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/enums/validation_type.dart';
 import '../../../../core/utils/validators/form_validators.dart';
 
@@ -47,11 +47,11 @@ class _AuthInputState extends State<AuthInput> {
       decoration: InputDecoration(
         //! Hint Text
         hintText: widget.hintText,
-
+        hintStyle: context.bodyMedium(),
         //! Eye icon
         suffixIcon: widget.isPassword
             ? Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: EdgeInsets.only(right: context.setWidth(8)),
                 child: IconButton(
                   icon: Icon(
                     _obscure ? Icons.visibility_off : Icons.visibility,
@@ -61,9 +61,7 @@ class _AuthInputState extends State<AuthInput> {
               )
             : null,
       ),
-      style: context.textTheme.bodyMedium!.copyWith(
-        fontWeight: FontWeight.w600,
-      ),
+      style: context.bodyMedium().copyWith(fontWeight: FontWeight.w600),
     );
   }
 }

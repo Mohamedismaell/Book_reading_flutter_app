@@ -19,15 +19,21 @@ import '../connections/network_info.dart';
 import '../database/api/dio_consumer.dart';
 import '../database/cache/cache_helper.dart';
 
+import 'package:flutter/foundation.dart';
+
 final sl = GetIt.instance;
 
 Future<void> initServiceLocator() async {
   //! Core
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => DioConsumer(dio: sl<Dio>()));
-  sl.registerLazySingleton(() => DataConnectionChecker());
+  if (!kIsWeb) {
+    sl.registerLazySingleton(() => DataConnectionChecker());
+  }
   sl.registerLazySingleton<NetworkInfo>(
-    () => NetworkInfoImpl(connectionChecker: sl<DataConnectionChecker>()),
+    () => NetworkInfoImpl(
+      connectionChecker: kIsWeb ? null : sl<DataConnectionChecker>(),
+    ),
   );
   sl.registerLazySingleton(() => CacheHelper());
   sl.registerLazySingleton(() => AuthNotifier());

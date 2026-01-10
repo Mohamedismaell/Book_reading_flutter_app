@@ -1,18 +1,19 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/routes/app_routes.dart';
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
-import 'package:bookreading/features/auth/presentation/widget/banner.dart';
+import 'package:bookreading/features/auth/presentation/widget/main_banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
 import 'package:bookreading/features/auth/presentation/widget/google_button.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/seperator_line.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Banner;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 
@@ -35,46 +36,36 @@ class _Content extends StatefulWidget {
 
 class _ContentState extends State<_Content> {
   final _formKey = GlobalKey<FormState>();
-
-  String _email = '';
-  String _password = '';
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         //! Banner
-        Banner(),
-        SizedBox(height: 16.h),
+        MainBanner(),
+        SizedBox(height: context.setHeight(24)),
         //! Title
         HeadTitle(
           headText: 'Welcome Back',
           hashText: 'Start your reading journey today.',
         ),
-        SizedBox(height: 32.h),
+        SizedBox(height: context.setHeight(40)),
         //! Form
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              AuthInput(
-                hintText: 'Email Address',
-                validationType: ValidationType.email,
-                onSaved: (value) => _email = value ?? '',
-                isPassword: false,
-              ),
-              SizedBox(height: 16),
-              AuthInput(
-                hintText: 'Password',
-                validationType: ValidationType.password,
-                onSaved: (value) => _password = value ?? '',
-                isPassword: true,
-              ),
-            ],
-          ),
+        _LoginForm(
+          formKey: _formKey,
+          emailController: _emailController,
+          passwordController: _passwordController,
         ),
-        SizedBox(height: 5.h),
-        //! Error Message
+        SizedBox(height: context.setHeight(24)),
+        // //! Error Message
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return state is AuthError
@@ -89,41 +80,81 @@ class _ContentState extends State<_Content> {
             onPressed: () {
               context.push(AppRoutes.forgotPassword);
             },
-            child: Text(
-              "Forgot Password?",
-              style: context.textTheme.headlineSmall!.copyWith(fontSize: 14.sp),
-            ),
+            child: Text("Forgot Password?", style: context.headlineSmall()),
           ),
         ),
-        SizedBox(height: 6.h),
+        SizedBox(height: context.setHeight(6)),
 
         //! Action button
-        ActionAuthButton(
-          myText: "Log In",
-
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-              context.read<AuthCubit>().logInWithEmail(
-                params: LoginParams(email: _email, password: _password),
-              );
-
-              _formKey.currentState!.reset();
-            }
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            state is AuthSuccess ? _formKey.currentState!.reset() : null;
           },
+          child: ActionAuthButton(
+            myText: "Log In",
+
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                context.read<AuthCubit>().logInWithEmail(
+                  params: LoginParams(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  ),
+                );
+              }
+            },
+          ),
         ),
-        SizedBox(height: 12.h),
-        //! hash Line
+        SizedBox(height: context.setHeight(24)),
+        // //! hash Line
         SeperatorLine(),
-        SizedBox(height: 12.h),
-        //! Google Sign
+        SizedBox(height: context.setHeight(24)),
+        // //! Google Sign
         GoogleButton(
           onPressed: () {
-            print("GoogleLogIn");
+            if (kDebugMode) {
+              print("GoogleLogIn");
+            }
             context.read<AuthCubit>().logInWithGoogle();
           },
         ),
       ],
+    );
+  }
+}
+
+class _LoginForm extends StatelessWidget {
+  const _LoginForm({
+    required this.formKey,
+    required this.emailController,
+    required this.passwordController,
+  });
+  final GlobalKey<FormState> formKey;
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          AuthInput(
+            hintText: 'Email Address',
+            validationType: ValidationType.email,
+            onSaved: (value) => emailController.text = value ?? '',
+            isPassword: false,
+          ),
+          SizedBox(height: context.setHeight(20)),
+          AuthInput(
+            hintText: 'Password',
+            validationType: ValidationType.password,
+            onSaved: (value) => passwordController.text = value ?? '',
+            isPassword: true,
+          ),
+        ],
+      ),
     );
   }
 }

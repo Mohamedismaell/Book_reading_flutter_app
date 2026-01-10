@@ -1,13 +1,14 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
-import 'package:bookreading/features/auth/presentation/widget/banner.dart';
+import 'package:bookreading/features/auth/presentation/widget/main_banner.dart';
 import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
 import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
 import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
-import 'package:flutter/material.dart' hide Banner;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/enums/validation_type.dart';
 import '../../../../core/params/params.dart';
 import 'action_auth_button.dart';
@@ -31,12 +32,11 @@ class _Content extends StatefulWidget {
 
 class _ContentState extends State<_Content> {
   final _formKey = GlobalKey<FormState>();
-  final _newPasswordController = TextEditingController();
-  String _email = '';
+  final _emailController = TextEditingController();
 
   @override
   void dispose() {
-    _newPasswordController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -45,26 +45,14 @@ class _ContentState extends State<_Content> {
     return Column(
       children: [
         //! Banner
-        Banner(),
-        SizedBox(height: 16.h),
+        MainBanner(),
+        SizedBox(height: context.setHeight(16)),
         //! Titel
         HeadTitle(headText: 'Change Password', hashText: ''),
-        SizedBox(height: 10.h),
+        SizedBox(height: context.setHeight(10)),
         //! Form
-        BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return Form(
-              key: _formKey,
-              child: AuthInput(
-                hintText: 'Email Address',
-                validationType: ValidationType.email,
-                onSaved: (value) => _email = value ?? '',
-                isPassword: false,
-              ),
-            );
-          },
-        ),
-        SizedBox(height: 4.h),
+        _ForgetForm(formKey: _formKey, emailController: _emailController),
+        SizedBox(height: context.setHeight(4)),
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return state is AuthError
@@ -72,7 +60,7 @@ class _ContentState extends State<_Content> {
                 : const SizedBox.shrink();
           },
         ),
-        SizedBox(height: 20.h),
+        SizedBox(height: context.setHeight(20)),
         //! Action button
         BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
@@ -83,6 +71,7 @@ class _ContentState extends State<_Content> {
                   title: "Reset Link Sent",
                   description: "Check your inbox for the password reset link.",
                   actionText: 'Continue',
+                  onPressed: () => context.pop(),
                 ),
               );
             }
@@ -93,7 +82,7 @@ class _ContentState extends State<_Content> {
               if (_formKey.currentState?.validate() ?? false) {
                 _formKey.currentState!.save();
                 context.read<AuthCubit>().requestResetPassword(
-                  params: ForgotPasswordParams(email: _email),
+                  params: ForgotPasswordParams(email: _emailController.text),
                 );
                 _formKey.currentState!.reset();
               }
@@ -101,6 +90,29 @@ class _ContentState extends State<_Content> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ForgetForm extends StatelessWidget {
+  const _ForgetForm({required this.formKey, required this.emailController});
+  final GlobalKey<FormState> formKey;
+
+  final TextEditingController emailController;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          AuthInput(
+            hintText: 'Email Address',
+            validationType: ValidationType.email,
+            onSaved: (value) => emailController.text = value ?? '',
+            isPassword: false,
+          ),
+        ],
+      ),
     );
   }
 }
