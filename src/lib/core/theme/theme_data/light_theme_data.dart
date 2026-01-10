@@ -13,7 +13,7 @@ ThemeData getLightTheme() {
     scaffoldBackgroundColor: AppSemanticColors.backgroundLight,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppSemanticColors.surfaceMutedLight,
+      fillColor: AppSemanticColors.surfaceMutedLight.withOpacity(0.5),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60),
         borderSide: BorderSide.none,
@@ -25,9 +25,7 @@ ThemeData getLightTheme() {
       style: ElevatedButton.styleFrom(
         backgroundColor: lightColorScheme.primary,
         foregroundColor: lightColorScheme.onPrimary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24), 
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
     ),
   );

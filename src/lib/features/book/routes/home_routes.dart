@@ -1,5 +1,6 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/features/book/presentation/screens/home_page.dart';
+import 'package:bookreading/features/book/presentation/widget/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import '../../../core/enums/orb_position.dart';
 import '../../../core/routes/app_routes.dart';
@@ -13,6 +14,7 @@ class HomeRoutes {
     ShellRoute(
       builder: (context, state, child) {
         return Scaffold(
+          extendBody: true,
           body: Stack(
             children: [
               Orb(position: OrbPosition.topLeft),
@@ -31,6 +33,7 @@ class HomeRoutes {
               ),
             ],
           ),
+          bottomNavigationBar: BottomNav(),
         );
       },
 
