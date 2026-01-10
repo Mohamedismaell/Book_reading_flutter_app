@@ -1,6 +1,6 @@
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Star extends StatefulWidget {
   const Star({super.key});
@@ -40,13 +40,13 @@ class StarState extends State<Star> {
                 end: isActive ? activatedColor : deactivatedColor,
               ),
               builder: (context, value, child) {
-                return Icon(Icons.star, size: 20.sp, color: value);
+                return Icon(Icons.star, size: context.setSp(23), color: value);
               },
             ),
           ),
         ),
-        SizedBox(width: 4.w),
-        Text("4.0", style: context.textTheme.labelSmall),
+        SizedBox(width: context.setWidth(8)),
+        Text("4.0", style: context.bodyLarge()),
       ],
     );
   }

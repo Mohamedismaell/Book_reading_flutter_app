@@ -17,13 +17,13 @@ class CustomHeader extends StatelessWidget {
         IconButton(
           onPressed: () => context.canPop() ? context.pop() : null,
           color: context.colorTheme.onSurface,
-          icon: Icon(Icons.arrow_back, size: context.setMinSize(22)),
+          icon: Icon(Icons.arrow_back, size: context.setMinSize(26)),
         ),
         // Spacer(),
         Text(text ?? '', style: context.headlineMedium()),
         Icon(
           Icons.bookmark,
-          size: context.setMinSize(26),
+          size: context.setMinSize(32),
           color: context.colorTheme.primary,
         ),
       ],
