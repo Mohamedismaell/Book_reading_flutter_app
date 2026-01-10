@@ -1,4 +1,4 @@
-## 📖  Book Reading App (Flutter)
+## 📖 Book Reading App (Flutter)
 
 A modern Book Reading and Listening application built with Flutter.  
 The project focuses on clean architecture, scalable theming, and real-world production practices.
@@ -72,6 +72,7 @@ This application is being developed step by step with emphasis on maintainabilit
 
 ## Project Structure (Simplified)
 
+```text
 lib/
 │
 ├── core/
@@ -90,58 +91,40 @@ lib/
 │   └── reader/
 │
 └── main.dart
-Roadmap
-Short Term
+```
+## Roadmap
+# Short Term
+-Complete authentication flow
+-Implement auth guards using GoRouter
+-Book listing screen
+-Favorite books feature
 
-Complete authentication flow
+## Mid Term
 
-Implement auth guards using GoRouter
+- Audiobook support
+- Reading and listening statistics
+- Notes and highlights
+- Search and filtering
 
-Book listing screen
+## Long Term
 
-Favorite books feature
+- Smart reading analytics
+- AI-based book recommendations
+- Offline support with cloud sync
+- Localization and multi-language support
+- Design Direction
+- Clean and minimal UI
+- Smooth animations
+- Light and dark mode parity
+- Mobile and tablet responsive layouts
 
-Mid Term
+## Purpose of This Project
+- Demonstrate real-world Flutter architecture
+- Apply scalable theming strategies
+- Practice production-level state management
+- Serve as a strong portfolio project
 
-Audiobook support
-
-Reading and listening statistics
-
-Notes and highlights
-
-Search and filtering
-
-Long Term
-
-Smart reading analytics
-
-AI-based book recommendations
-
-Offline support with cloud sync
-
-Localization and multi-language support
-
-Design Direction
-
-Clean and minimal UI
-
-Smooth animations
-
-Light and dark mode parity
-
-Mobile and tablet responsive layouts
-
-Purpose of This Project
-
-Demonstrate real-world Flutter architecture
-
-Apply scalable theming strategies
-
-Practice production-level state management
-
-Serve as a strong portfolio project
-
-Author
+## Author
 
 Mohamed Ismael
 Flutter Developer
@@ -150,3 +133,7 @@ Egypt
 ## Status
 
 This project is actively maintained and continuously improved.
+
+
+
+
