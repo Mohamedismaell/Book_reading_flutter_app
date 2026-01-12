@@ -125,11 +125,12 @@ class _Progress extends StatelessWidget {
           ],
         ),
         SizedBox(height: context.setMinSize(8)),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return ProgressBar(progress: 45, width: constraints.maxWidth);
-          },
-        ),
+        ProgressBar(progress: 30),
+        // LayoutBuilder(
+        //   builder: (context, constraints) {
+        //     return  ProgressBar(progress: 50) ;
+        //   },
+        // ),
       ],
     );
   }

@@ -3,40 +3,17 @@ import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../core/routes/app_routes.dart';
 
 class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
-
-  int _locationToIndex(String location) {
-    if (location.startsWith(AppRoutes.home)) return 0;
-    if (location.startsWith(AppRoutes.explore)) return 1;
-    if (location.startsWith(AppRoutes.bookmarks)) return 2;
-    if (location.startsWith(AppRoutes.profile)) return 3;
-    return 0;
-  }
+  const BottomNav({super.key, required this.currentIndex, required this.onTap});
+  final int currentIndex;
+  final ValueChanged<int> onTap;
 
   @override
   Widget build(BuildContext context) {
-    final location = GoRouterState.of(context).uri.toString();
-    final currentIndex = _locationToIndex(location);
     return _CustomBottomNav(
       currentIndex: currentIndex,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            context.go(AppRoutes.home);
-            break;
-          case 1:
-            context.go(AppRoutes.explore);
-          case 2:
-            context.go(AppRoutes.bookmarks);
-          case 3:
-            context.go(AppRoutes.profile);
-            break;
-        }
-      },
+      onTap: (index) => onTap(index),
     );
   }
 }
@@ -106,6 +83,7 @@ class _NavSvgIcon extends StatelessWidget {
   final bool isActive;
   @override
   Widget build(BuildContext context) {
+    Color color = isActive ? context.colorTheme.primary : AppColors.grayLighter;
     return SizedBox(
       // width: context.sizeProvider.width / 5,
       // height: context.sizeProvider.width / 5,
@@ -113,29 +91,19 @@ class _NavSvgIcon extends StatelessWidget {
         onTap: onTap,
         child: AnimatedScale(
           duration: const Duration(milliseconds: 180),
+          key: ValueKey(isActive),
           curve: Curves.easeOut,
           scale: isActive ? 1.2 : 1.0,
-          child: TweenAnimationBuilder<Color?>(
+          child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
-            tween: ColorTween(
-              begin: AppColors.grayLighter,
-              end: isActive
-                  ? context.colorTheme.primary
-                  : AppColors.grayLighter,
-            ),
-            builder: (BuildContext context, Color? value, Widget? child) {
-              return path == null
-                  ? Icon(icon, size: context.setMinSize(30), color: value)
-                  : SvgPicture.asset(
-                      path!,
-                      width: context.setMinSize(23),
-                      fit: BoxFit.contain,
-                      colorFilter: ColorFilter.mode(
-                        value ?? AppColors.grayLighter,
-                        BlendMode.srcIn,
-                      ),
-                    );
-            },
+            child: path == null
+                ? Icon(icon, size: context.setMinSize(30), color: color)
+                : SvgPicture.asset(
+                    path!,
+                    width: context.setMinSize(23),
+                    fit: BoxFit.contain,
+                    colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+                  ),
           ),
         ),
       ),
