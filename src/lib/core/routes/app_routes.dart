@@ -6,9 +6,9 @@ class AppRoutes {
   static const String resetPassword = '/resetpassword';
   //! Main Screens
   static const String home = '/home';
-  static const String explore = '/explore';
-  static const String bookmarks = '/bookmarks';
-  static const String profile = '/profile';
+  // static const String explore = '/explore';
+  // static const String bookmarks = '/bookmarks';
+  // static const String profile = '/profile';
 
   //! Sub Screens
   static const String bookDetails = '/bookdetails';
