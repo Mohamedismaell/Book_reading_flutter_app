@@ -12,4 +12,5 @@ class AppRoutes {
 
   //! Sub Screens
   static const String bookDetails = '/bookdetails';
+  static const String readPage = '/readpage';
 }

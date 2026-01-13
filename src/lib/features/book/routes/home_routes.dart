@@ -1,6 +1,7 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
+import 'package:bookreading/features/book/presentation/screens/read_page.dart';
 import 'package:flutter/material.dart';
 import '../../../core/enums/orb_position.dart';
 import '../../../core/routes/app_routes.dart';
@@ -27,8 +28,27 @@ class HomeRoutes {
         GoRoute(
           path: AppRoutes.bookDetails,
 
-          builder: (context, state) =>
-              BookDetails(book: state.extra as BookModel),
+          builder: (context, state) {
+            final extra = state.extra;
+            BookModel book;
+            Object? heroTag;
+
+            if (extra is BookModel) {
+              book = extra;
+            } else if (extra is Map) {
+              book = extra['book'] as BookModel;
+              heroTag = extra['heroTag'];
+            } else {
+              // Handle unexpected type or null, possibly show error or fallback
+              throw Exception('Invalid extra for BookDetails');
+            }
+            return BookDetails(book: book, heroTag: heroTag);
+          },
+        ),
+        GoRoute(
+          path: AppRoutes.readPage,
+
+          builder: (context, state) => ReadPage(book: state.extra as BookModel),
         ),
       ],
       builder: (context, state, child) => _MainShell(child: child),

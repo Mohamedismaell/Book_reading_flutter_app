@@ -50,7 +50,7 @@ class _CardItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text("Book Class", style: context.bodyLarge()),
                 SizedBox(height: context.setMinSize(10)),

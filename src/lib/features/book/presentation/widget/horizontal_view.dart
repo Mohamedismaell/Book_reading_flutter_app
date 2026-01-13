@@ -2,14 +2,14 @@ import 'package:bookreading/core/helper/size_provider/size_provider.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class HorizontalView extends StatefulWidget {
-  const HorizontalView({super.key});
+  const HorizontalView({super.key, required this.category});
+  final String category;
 
   @override
   State<HorizontalView> createState() => _HorizontalViewState();
@@ -37,7 +37,6 @@ class _HorizontalViewState extends State<HorizontalView> {
           if (state is BooksIsLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (state is BooksIsFailed) {
             return Center(child: Text("Error: ${state.message}"));
           }
@@ -50,6 +49,7 @@ class _HorizontalViewState extends State<HorizontalView> {
                 scrollDirection: Axis.horizontal,
                 itemCount: state.books.length,
                 itemBuilder: (context, index) {
+                  final book = state.books[index];
                   return Padding(
                     padding: EdgeInsets.only(right: context.setMinSize(16)),
                     child: Column(
@@ -59,7 +59,10 @@ class _HorizontalViewState extends State<HorizontalView> {
                           child: InkWell(
                             onTap: () => context.push(
                               AppRoutes.bookDetails,
-                              extra: state.books[index],
+                              extra: {
+                                'book': book,
+                                'heroTag': '${widget.category}_${book.id}',
+                              },
                             ),
                             child: Container(
                               width: context.sizeProvider.width,
@@ -67,9 +70,12 @@ class _HorizontalViewState extends State<HorizontalView> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(24),
                               ),
-                              child: Image.asset(
-                                "assets/images/back_ground_auth.jpg",
-                                fit: BoxFit.cover,
+                              child: Hero(
+                                tag: '${widget.category}_${book.id}',
+                                child: Image.network(
+                                  book.coverUrl!,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
@@ -81,13 +87,13 @@ class _HorizontalViewState extends State<HorizontalView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.books[index].title,
+                                book.title,
                                 style: context.headlineSmall(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                state.books[index].author ?? "Unknown",
+                                book.author ?? "Unknown",
                                 style: context.bodyMedium(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,

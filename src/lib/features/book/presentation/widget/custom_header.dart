@@ -5,14 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomHeader extends StatelessWidget {
-  const CustomHeader({super.key, this.text});
+  const CustomHeader({
+    super.key,
+    required this.isheader,
+    this.title,
+    this.author,
+  });
 
-  final String? text;
+  final String? title;
+  final String? author;
+  final bool isheader;
   @override
   Widget build(BuildContext context) {
     //Todo fix theme
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         IconButton(
           onPressed: () => context.canPop() ? context.pop() : null,
@@ -20,7 +28,34 @@ class CustomHeader extends StatelessWidget {
           icon: Icon(Icons.arrow_back, size: context.setMinSize(26)),
         ),
         // Spacer(),
-        Text(text ?? '', style: context.headlineMedium()),
+        isheader
+            ? Expanded(
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(width: context.setWidth(30)),
+                    Text(
+                      title!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: context.headlineMedium().copyWith(
+                        color: context.colorTheme.onSurface.withOpacity(0.9),
+                      ),
+                    ),
+                    SizedBox(height: context.setHeight(10)),
+                    Text(
+                      author!,
+                      style: context.bodyLarge().copyWith(
+                        fontSize: context.setSp(20),
+                      ),
+                    ),
+                    SizedBox(width: context.setWidth(30)),
+                  ],
+                ),
+              )
+            : const SizedBox.shrink(),
+
         Icon(
           Icons.bookmark,
           size: context.setMinSize(32),

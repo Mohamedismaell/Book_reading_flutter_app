@@ -1,34 +1,42 @@
 import 'package:bookreading/core/helper/size_provider/size_provider.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/routes/app_routes.dart';
+import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/presentation/widget/custom_header.dart';
 import 'package:bookreading/features/book/presentation/widget/star_rate.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class BookDetails extends StatelessWidget {
-  const BookDetails({super.key});
+class BookDetails extends StatefulWidget {
+  final BookModel book;
+  final Object? heroTag;
+  const BookDetails({super.key, required this.book, this.heroTag});
+  @override
+  State<BookDetails> createState() => _BookDetailsState();
+}
 
+class _BookDetailsState extends State<BookDetails> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final book = widget.book;
+    return ListView(
       children: [
-        CustomHeader(),
-        Expanded(child: _BookCover()),
+        CustomHeader(isheader: false),
+        _BookCover(
+          coverUrl: book.coverUrl!,
+          title: book.title,
+          author: book.author!,
+          id: book.id,
+          heroTag: widget.heroTag,
+        ),
         SizedBox(height: context.setHeight(35)),
-        _BookOverview(
-          title: 'About the author',
-          description:
-              'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-        ),
+        _BookOverview(title: 'Overview', description: book.summary!),
         SizedBox(height: context.setHeight(18)),
-        _BookOverview(
-          title: 'Overview',
-          description:
-              'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......',
-        ),
         SizedBox(height: context.setHeight(20)),
-        _Buttons(),
+        _Buttons(book: book),
         SizedBox(height: context.setHeight(25)),
       ],
     );
@@ -36,8 +44,18 @@ class BookDetails extends StatelessWidget {
 }
 
 class _BookCover extends StatelessWidget {
-  const _BookCover();
-
+  const _BookCover({
+    required this.coverUrl,
+    required this.author,
+    required this.title,
+    required this.id,
+    this.heroTag,
+  });
+  final String coverUrl;
+  final String author;
+  final String title;
+  final int id;
+  final Object? heroTag;
   @override
   Widget build(BuildContext context) {
     return SizeProvider(
@@ -47,30 +65,37 @@ class _BookCover extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return SizedBox(
-            width: context.sizeProvider.width,
-            height: context.sizeProvider.height,
+            // width: context.sizeProvider.width,
+            // height: context.sizeProvider.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: SizedBox(
-                      width: context.sizeProvider.width,
-                      height: context.sizeProvider.height * 0.8,
-                      child: Image.asset(
-                        'assets/images/dune.png',
-                        fit: BoxFit.cover,
-                      ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: SizedBox(
+                    width: context.sizeProvider.width,
+                    // height: context.sizeProvider.height * 0.1,
+                    child: Hero(
+                      tag: heroTag ?? id,
+                      child: Image.network(coverUrl, fit: BoxFit.cover),
                     ),
                   ),
                 ),
                 SizedBox(height: context.setHeight(15)),
-                Text('Book title', style: context.headlineMedium()),
-                SizedBox(height: context.setHeight(6)),
-                Text('Book author', style: context.bodyLarge()),
-                SizedBox(height: context.setHeight(6)),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: context.headlineMedium(),
+                ),
+                SizedBox(height: context.setHeight(10)),
+                Text(
+                  author,
+                  style: context.bodyLarge().copyWith(
+                    fontSize: context.setSp(20),
+                  ),
+                ),
+                SizedBox(height: context.setHeight(10)),
                 const Star(),
               ],
             ),
@@ -91,8 +116,8 @@ class _BookOverview extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: context.labelLarge()),
-        SizedBox(height: context.setHeight(6)),
+        Text(title, style: context.headlineMedium()),
+        SizedBox(height: context.setHeight(10)),
         Text(
           description,
           style: context.bodyMedium().copyWith(fontSize: context.setSp(16)),
@@ -103,8 +128,8 @@ class _BookOverview extends StatelessWidget {
 }
 
 class _Buttons extends StatelessWidget {
-  const _Buttons();
-
+  const _Buttons({required this.book});
+  final BookModel book;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -112,22 +137,30 @@ class _Buttons extends StatelessWidget {
       children: [
         //Todo fix the Button Later
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () => context.push(AppRoutes.readPage, extra: book),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(
-              horizontal: context.setMinSize(35),
+              horizontal: context.setMinSize(50),
               vertical: context.setMinSize(17),
             ),
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.circular(12),
+            // ),
           ),
-          child: Text("button 1", style: context.labelSmall()),
+          child: Text("Read", style: context.labelMedium()),
         ),
         SizedBox(width: context.setWidth(20)),
         ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            backgroundColor: context.colorTheme.surface,
+            padding: EdgeInsets.symmetric(
+              horizontal: context.setMinSize(50),
+              vertical: context.setMinSize(17),
+            ),
+            backgroundColor: AppSemanticColors.secondaryActionDark,
           ),
-          child: Text("button 2", style: context.labelSmall()),
+
+          child: Text("Listen", style: context.labelMedium()),
         ),
       ],
     );

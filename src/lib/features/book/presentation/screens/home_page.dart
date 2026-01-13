@@ -33,11 +33,11 @@ class _HomePageState extends State<HomePage>
         SizedBox(height: context.setHeight(16)),
         Text("Recommended", style: context.headlineMedium()),
         SizedBox(height: context.setHeight(16)),
-        const HorizontalView(),
+        const HorizontalView(category: "recommended"),
         SizedBox(height: context.setHeight(50)),
         Text("Popular", style: context.headlineMedium()),
         SizedBox(height: context.setHeight(16)),
-        const HorizontalView(),
+        const HorizontalView(category: "popular"),
       ],
     );
   }
