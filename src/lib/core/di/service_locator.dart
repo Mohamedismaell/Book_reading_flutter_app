@@ -3,6 +3,12 @@ import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/otp.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
+import 'package:bookreading/features/book/data/datasources/Books_remote_data_source.dart';
+import 'package:bookreading/features/book/data/repositories/book_repository_impl.dart';
+import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
+import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
+import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -42,14 +48,24 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
   //! Data Sources
+  //* Auth
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(supabase: sl<SupabaseClient>()),
   );
-
+  //* Books
+  sl.registerLazySingleton<BooksRemoteDataSource>(
+    () => BooksRemoteDataSource(supabase: sl<SupabaseClient>()),
+  );
   //! Repositories
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remoteDataSource: sl<AuthRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+  sl.registerLazySingleton<BookRepository>(
+    () => BookRepositoryImpl(
+      remoteDataSource: sl<BooksRemoteDataSource>(),
       networkInfo: sl<NetworkInfo>(),
     ),
   );
@@ -72,9 +88,14 @@ Future<void> initServiceLocator() async {
     () => UpdatePassword(repository: sl<AuthRepository>()),
   );
   sl.registerLazySingleton(() => Logout(repository: sl<AuthRepository>()));
-
+  //* Books
+  sl.registerLazySingleton(
+    () => GetBooksUseCase(repository: sl<BookRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => GetChaptersUseCase(repository: sl<BookRepository>()),
+  );
   //! Cubits
-  //TODO Register ==> "AuthCubit" later
   sl.registerLazySingleton(
     () => AuthCubit(
       sl<LoginWithGoogle>(),
@@ -84,6 +105,9 @@ Future<void> initServiceLocator() async {
       sl<ForgetPassword>(),
       sl<UpdatePassword>(),
     ),
+  );
+  sl.registerLazySingleton(
+    () => BooksCubit(sl<GetBooksUseCase>(), sl<GetChaptersUseCase>()),
   );
   sl.registerLazySingleton(() => ThemeCubit());
 }

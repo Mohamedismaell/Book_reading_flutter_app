@@ -8,6 +8,9 @@ import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
+import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +63,10 @@ class AppBootstrap extends StatelessWidget {
           ),
         ),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+        BlocProvider<BooksCubit>(
+          create: (context) =>
+              BooksCubit(sl<GetBooksUseCase>(), sl<GetChaptersUseCase>()),
+        ),
       ],
       child: const MyApp(),
     );

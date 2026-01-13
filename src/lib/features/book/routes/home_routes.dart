@@ -1,5 +1,6 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
+import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:flutter/material.dart';
 import '../../../core/enums/orb_position.dart';
 import '../../../core/routes/app_routes.dart';
@@ -25,7 +26,9 @@ class HomeRoutes {
       routes: [
         GoRoute(
           path: AppRoutes.bookDetails,
-          builder: (context, state) => const BookDetails(),
+
+          builder: (context, state) =>
+              BookDetails(book: state.extra as BookModel),
         ),
       ],
       builder: (context, state, child) => _MainShell(child: child),
