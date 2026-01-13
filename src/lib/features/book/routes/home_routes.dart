@@ -75,7 +75,7 @@ class _MainShell extends StatelessWidget {
               padding: EdgeInsets.only(
                 right: context.setWidth(20),
                 left: context.setWidth(20),
-                top: context.setHeight(5),
+                // top: context.setHeight(5),
               ),
               child: child,
             ),

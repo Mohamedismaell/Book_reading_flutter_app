@@ -1,5 +1,6 @@
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/chapters_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,8 +36,9 @@ class _ExplorePageState extends State<ExplorePage>
                       children: [
                         Text(state.books[index].title),
                         TextButton(
-                          onPressed: () =>
-                              context.read<BooksCubit>().getChapters(index),
+                          onPressed: () => context
+                              .read<ChaptersCubit>()
+                              .getChapters(state.books[index].id),
                           child: Text("Chapters....."),
                         ),
                       ],

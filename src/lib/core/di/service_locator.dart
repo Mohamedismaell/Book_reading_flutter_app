@@ -9,6 +9,7 @@ import 'package:bookreading/features/book/domain/repositories/book_repository.da
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
 import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/chapters_cubit.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -106,8 +107,7 @@ Future<void> initServiceLocator() async {
       sl<UpdatePassword>(),
     ),
   );
-  sl.registerLazySingleton(
-    () => BooksCubit(sl<GetBooksUseCase>(), sl<GetChaptersUseCase>()),
-  );
+  sl.registerLazySingleton(() => BooksCubit(sl<GetBooksUseCase>()));
+  sl.registerLazySingleton(() => ChaptersCubit(sl<GetChaptersUseCase>()));
   sl.registerLazySingleton(() => ThemeCubit());
 }

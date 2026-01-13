@@ -18,17 +18,3 @@ final class BooksIsFailed extends BooksState {
 
   BooksIsFailed({required this.message});
 }
-
-final class ChapterIsLoading extends BooksState {}
-
-final class ChapterIsLoaded extends BooksState {
-  final List<ChapterModel> chapters;
-
-  ChapterIsLoaded({required this.chapters});
-}
-
-final class ChapterIsFaild extends BooksState {
-  final String message;
-
-  ChapterIsFaild({required this.message});
-}
