@@ -91,7 +91,7 @@ class _BookCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: GestureDetector(
         onTap: () => context.push(
           AppRoutes.bookDetails,
           extra: {
