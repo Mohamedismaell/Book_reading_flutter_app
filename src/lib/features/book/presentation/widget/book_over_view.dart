@@ -31,11 +31,14 @@ class BookOverview extends StatelessWidget {
           Text(title, style: context.headlineMedium()),
           SizedBox(height: context.setHeight(10)),
 
-          Text(
-            description,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: context.bodyMedium().copyWith(fontSize: context.setSp(18)),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.setWidth(7)),
+            child: Text(
+              description,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: context.bodyMedium().copyWith(fontSize: context.setSp(18)),
+            ),
           ),
 
           Center(
@@ -76,7 +79,7 @@ void _showReadMoreDialog(
     barrierDismissible: true,
     barrierLabel: "Read more",
     barrierColor: Colors.transparent,
-    transitionDuration: const Duration(milliseconds: 400),
+    transitionDuration: const Duration(milliseconds: 300),
 
     pageBuilder: (_, _, _) {
       return _ReadMore(title: title, description: description);
@@ -139,10 +142,15 @@ class _ReadMore extends StatelessWidget {
                 children: [
                   Text(title, style: context.headlineMedium()),
                   SizedBox(height: context.setHeight(10)),
-                  Text(
-                    description,
-                    style: context.bodyMedium().copyWith(
-                      fontSize: context.setSp(18),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.setWidth(7),
+                    ),
+                    child: Text(
+                      description,
+                      style: context.bodyMedium().copyWith(
+                        fontSize: context.setSp(18),
+                      ),
                     ),
                   ),
                 ],

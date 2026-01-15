@@ -30,28 +30,31 @@ class CustomHeader extends StatelessWidget {
         // Spacer(),
         isheader
             ? Expanded(
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(width: context.setWidth(30)),
-                    Text(
-                      title!,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: context.headlineMedium().copyWith(
-                        color: context.colorTheme.onSurface.withOpacity(0.9),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.setMinSize(30),
+                  ),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        title!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: context.headlineMedium().copyWith(
+                          color: context.colorTheme.onSurface.withOpacity(0.9),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: context.setHeight(10)),
-                    Text(
-                      author!,
-                      style: context.bodyLarge().copyWith(
-                        fontSize: context.setSp(20),
+                      SizedBox(height: context.setHeight(10)),
+                      Text(
+                        author!,
+                        style: context.bodyLarge().copyWith(
+                          fontSize: context.setSp(20),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: context.setWidth(30)),
-                  ],
+                    ],
+                  ),
                 ),
               )
             : const SizedBox.shrink(),
