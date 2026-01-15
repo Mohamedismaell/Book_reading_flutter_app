@@ -1,12 +1,11 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/core/utils/text_paginator.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/model/page_data.dart';
-import 'package:bookreading/features/book/presentation/model/reader.dart';
+import 'package:bookreading/features/book/presentation/model/reader_paginator.dart';
 import 'package:bookreading/features/book/presentation/widget/custom_header.dart';
 import 'package:flutter/material.dart';
 
@@ -20,38 +19,14 @@ class ChapterReaderScreen extends StatefulWidget {
 }
 
 class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
-  final _pageControllers = PageController();
-
+  final PageController _pageControllers = PageController();
   final ValueNotifier<int> _currentChapterIndex = ValueNotifier(1);
 
-  List<PageData> _allPages = [];
-  void calculateAllPages({
-    required String fullText,
-    required double width,
-    required double height,
-    required List<ChapterModel> chapters,
-    required TextStyle style,
-  }) {
-    List<PageData> tempList = [];
-    for (final chapter in chapters) {
-      final chapterPages = TextPaginator(
-        fullText: chapter.text,
-        width: width,
-        height: height,
-      ).paginate(style: style);
-      for (int i = 0; i < chapterPages.length; i++) {
-        tempList.add(
-          PageData(
-            text: chapterPages[i],
-            chapterIndex: chapter.chapterIndex,
-            pageNumber: i + 1,
-          ),
-        );
-      }
-      _allPages = tempList;
-    }
-  }
-
+  final ReaderPaginator _paginator = ReaderPaginator();
+  List<PageData> _pages = [];
+  double? _lastSize;
+  double? _lastFontSize;
+  double? _lastLineHeight;
   @override
   void initState() {
     context.read<ChaptersCubit>().getChapters(widget.book.id);
@@ -85,14 +60,7 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           }
           return Column(
             children: [
-              ValueListenableBuilder<int>(
-                valueListenable: _currentChapterIndex,
-                builder: (context, chapterIndex, _) => CustomHeader(
-                  isheader: true,
-                  title: book.title,
-                  author: "Chapter $chapterIndex ",
-                ),
-              ),
+              _Header(book: book, currentChapterIndex: _currentChapterIndex),
               Expanded(
                 child: SafeArea(
                   top: false,
@@ -102,31 +70,29 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
                         fontSize: context.setSp(20),
                         height: 1.6,
                       );
-                      calculateAllPages(
-                        fullText: '',
-                        width: constraints.maxWidth,
-                        height: constraints.maxHeight,
-                        chapters: chapters,
-                        style: style,
-                      );
-                      return PageView.builder(
-                        controller: _pageControllers,
-                        scrollDirection: Axis.horizontal,
-                        physics: const PageScrollPhysics(),
-                        itemCount: _allPages.length,
+                      final shouldRebuild = _lastSize != constraints.maxHeight;
+
+                      if (shouldRebuild) {
+                        _pages = _paginator.buildPages(
+                          size: Size(
+                            constraints.maxWidth,
+                            constraints.maxHeight,
+                          ),
+                          chapters: chapters,
+                          style: style,
+                        );
+
+                        _lastSize = constraints.maxHeight;
+                      }
+
+                      return _Content(
+                        pages: _pages,
                         onPageChanged: (index) {
                           _currentChapterIndex.value =
-                              _allPages[index].chapterIndex;
+                              _pages[index].chapterIndex;
                         },
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: context.setWidth(18),
-                              vertical: context.setHeight(24),
-                            ),
-                            child: Text(_allPages[index].text, style: style),
-                          );
-                        },
+                        pageController: _pageControllers,
+                        style: style,
                       );
                     },
                   ),
@@ -141,6 +107,54 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     );
   }
 }
-/*
-  
-*/
+
+class _Header extends StatelessWidget {
+  const _Header({required this.book, required this.currentChapterIndex});
+  final BookModel book;
+  final ValueNotifier<int> currentChapterIndex;
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<int>(
+      valueListenable: currentChapterIndex,
+      builder: (context, chapterIndex, _) => CustomHeader(
+        isheader: true,
+        title: book.title,
+        author: "Chapter $chapterIndex ",
+      ),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content({
+    required this.pages,
+
+    required this.onPageChanged,
+    required this.pageController,
+    required this.style,
+  });
+  final List<PageData> pages;
+  final PageController pageController;
+  final ValueChanged<int> onPageChanged;
+  final TextStyle style;
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      controller: pageController,
+      scrollDirection: Axis.horizontal,
+      physics: const PageScrollPhysics(),
+      itemCount: pages.length,
+      onPageChanged: onPageChanged,
+
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.setWidth(18),
+            vertical: context.setHeight(24),
+          ),
+          child: Text(pages[index].text, style: style),
+        );
+      },
+    );
+  }
+}

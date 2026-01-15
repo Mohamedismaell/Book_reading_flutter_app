@@ -32,7 +32,7 @@ class CustomHeader extends StatelessWidget {
             ? Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: context.setMinSize(30),
+                    horizontal: context.setMinSize(40),
                   ),
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.center,
