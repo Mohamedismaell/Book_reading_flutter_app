@@ -36,14 +36,14 @@ class TextPaginator {
       // final position = textPainter.getPositionForOffset(Offset(width, height));
       final lines = textPainter.computeLineMetrics();
       final lastLine = lines.lastWhere(
-        (line) => line.baseline + line.descent < height,
+        (line) => (line.baseline - line.ascent + line.height) <= height,
         orElse: () => lines.first,
       );
-      print('Lastline here ${lastLine.baseline}');
-      print('Lastline here ${lastLine.descent}');
-      print('Lastline here ${lastLine.height}');
+      // print('Lastline here ${lastLine.baseline}');
+      // print('Lastline here ${lastLine.descent}');
+      // print('Lastline here ${lastLine.height}');
       final pos = textPainter.getPositionForOffset(
-        Offset(width, lastLine.baseline + lastLine.descent),
+        Offset(width, lastLine.baseline),
       );
 
       int endIndex = startIndex + pos.offset;

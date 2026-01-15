@@ -30,17 +30,26 @@ class HomeRoutes {
 
           builder: (context, state) {
             final extra = state.extra;
-            BookModel book;
+            BookModel? book;
             Object? heroTag;
 
             if (extra is BookModel) {
               book = extra;
             } else if (extra is Map) {
-              book = extra['book'] as BookModel;
+              book = extra['book'] as BookModel?;
               heroTag = extra['heroTag'];
-            } else {
-              // Handle unexpected type or null, possibly show error or fallback
-              throw Exception('Invalid extra for BookDetails');
+            }
+
+            if (book == null) {
+              return Scaffold(
+                appBar: AppBar(leading: const BackButton()),
+                body: Center(
+                  child: Text(
+                    'Book data not found.',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              );
             }
             return BookDetails(book: book, heroTag: heroTag);
           },
@@ -48,8 +57,21 @@ class HomeRoutes {
         GoRoute(
           path: AppRoutes.readPage,
 
-          builder: (context, state) =>
-              ChapterReaderScreen(book: state.extra as BookModel),
+          builder: (context, state) {
+            final book = state.extra as BookModel?;
+            if (book == null) {
+              return Scaffold(
+                appBar: AppBar(leading: const BackButton()),
+                body: Center(
+                  child: Text(
+                    'Chapter data not found.',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              );
+            }
+            return ChapterReaderScreen(book: book);
+          },
         ),
       ],
       builder: (context, state, child) => _MainShell(child: child),

@@ -23,6 +23,15 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
     super.initState();
   }
 
+  final Map<int, PageController> pageControllers = {};
+  @override
+  void dispose() {
+    for (final controller in pageControllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final book = widget.book;
@@ -35,67 +44,72 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
           return Center(child: Text(state.message));
         }
         if (state is ChaptersIsLoaded) {
-          final chapter = state.chapters;
-          if (chapter.isEmpty) {
+          final chapters = state.chapters;
+          if (chapters.isEmpty) {
             return Center(child: Text("No chapters found"));
           }
           return SizedBox(
             height: context.sizeProvider.height,
-            child: Column(
-              children: [
-                CustomHeader(
-                  isheader: true,
-                  title: book.title,
-                  author: book.author,
-                ),
-                SizedBox(height: context.setHeight(20)),
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      // The height of the Status Bar (Top)
-                      double topPadding = MediaQuery.of(context).padding.top;
+            child: PageView.builder(
+              itemCount: chapters.length,
+              itemBuilder: (context, index) => Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomHeader(
+                    isheader: true,
+                    title: book.title,
+                    author: "Chapter ${index + 1}",
+                  ),
+                  SizedBox(height: context.setHeight(20)),
+                  Expanded(
+                    child: SafeArea(
+                      top: false,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          final pages =
+                              TextPaginator(
+                                fullText: chapters[index].text,
+                                width: constraints.maxWidth,
+                                height: constraints.maxHeight,
+                              ).paginate(
+                                style: context.bodyLarge().copyWith(
+                                  height: 1.6,
+                                  fontSize: context.setSp(20),
+                                ),
+                              );
+                          final pageController = pageControllers[index] ??=
+                              PageController();
+                          bool isAtStart = false;
+                          bool isAtEnd = false;
 
-                      // The height of the Home Indicator (Bottom)
-                      double bottomPadding = MediaQuery.of(
-                        context,
-                      ).padding.bottom;
+                          if (pageController.hasClients) {
+                            final position = pageController.position;
+                            isAtStart =
+                                position.pixels <= position.minScrollExtent;
+                            isAtEnd =
+                                position.pixels >= position.maxScrollExtent;
+                          }
+                          return PageView.builder(
+                            controller: pageController,
+                            physics: (isAtEnd || isAtStart)
+                                ? const NeverScrollableScrollPhysics()
+                                : const PageScrollPhysics(),
+                            itemCount: pages.length,
 
-                      // Total vertical safe area (Top + Bottom)
-                      double totalSafeHeight = topPadding + bottomPadding;
-                      //Todo fix the heghit of the text
-                      final pages =
-                          TextPaginator(
-                            fullText: chapter[0].text,
-                            width: context.sizeProvider.width,
-                            height:
-                                constraints.maxHeight -
-                                MediaQuery.of(context).padding.top -
-                                MediaQuery.of(context).padding.bottom,
-                            // totalSafeHeight -
-                            // context.setHeight(200),
-                          ).paginate(
-                            style: context.bodyLarge().copyWith(
-                              height: 1.6,
-                              fontSize: context.setSp(20),
+                            itemBuilder: (context, index) => Text(
+                              pages[index],
+                              style: context.bodyLarge().copyWith(
+                                fontSize: context.setSp(20),
+                                height: 1.6,
+                              ),
                             ),
                           );
-                      return PageView(
-                        children: pages
-                            .map(
-                              (page) => Text(
-                                page,
-                                style: context.bodyLarge().copyWith(
-                                  fontSize: context.setSp(20),
-                                  height: 1.6,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      );
-                    },
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
