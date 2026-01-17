@@ -26,10 +26,8 @@ class _BookmarksPageState extends State<BookmarksPage>
     return Scaffold(
       body: Stack(
         children: [
-          // LAYER 1: The Book Content
-          // We wrap it in a GestureDetector to catch the "1 click"
           GestureDetector(
-            onTap: _toggleTools, // Tapping the page toggles the tool
+            onTap: _toggleTools,
             child: PageView.builder(
               itemBuilder: (context, index) {
                 return Center(child: Text("Page Text Here..."));
@@ -37,19 +35,16 @@ class _BookmarksPageState extends State<BookmarksPage>
             ),
           ),
 
-          // LAYER 2: The "Disappearing Tool" (Bottom Right)
-          // We use AnimatedOpacity so it fades in/out smoothly
           IgnorePointer(
-            // Important: If it's invisible, don't let it block touches
             ignoring: !_areToolsVisible,
             child: AnimatedOpacity(
               opacity: _areToolsVisible ? 1.0 : 0.0,
               duration: Duration(milliseconds: 200),
               child: FloatingActionButton(
                 onPressed: () {
-                  print("Tool Clicked!");
+                  // print("Tool Clicked!");
                 },
-                child: Icon(Icons.settings), // Your tool icon
+                child: Icon(Icons.settings),
               ),
             ),
           ),

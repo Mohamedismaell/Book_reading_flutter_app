@@ -133,7 +133,9 @@ class _Buttons extends StatelessWidget {
       children: [
         //Todo fix the Button Later
         ElevatedButton(
-          onPressed: () => context.push(AppRoutes.readPage, extra: book),
+          onPressed: () => context.push(
+            AppRoutes.read.replaceFirst(':bookId', book.id.toString()),
+          ),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(
               horizontal: context.setMinSize(50),

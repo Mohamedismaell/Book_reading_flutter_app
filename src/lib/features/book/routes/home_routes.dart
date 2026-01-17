@@ -41,7 +41,7 @@ class HomeRoutes {
           },
         ),
         GoRoute(
-          path: AppRoutes.readPage,
+          path: AppRoutes.read,
 
           builder: (context, state) {
             final bookId = int.parse(state.pathParameters['bookId']!);

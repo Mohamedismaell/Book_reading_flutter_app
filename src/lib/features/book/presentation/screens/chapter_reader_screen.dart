@@ -5,12 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChapterReaderScreen extends StatelessWidget {
-  const ChapterReaderScreen({
-    super.key,
-    // required this.bookId,
-  });
-
-  // final int bookId;
+  const ChapterReaderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
