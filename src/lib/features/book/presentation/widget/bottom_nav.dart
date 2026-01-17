@@ -25,6 +25,7 @@ class _CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // clipBehavior: Clip.none,
       // width: context.sizeProvider.width,
       height: context.setMinSize(80),
       decoration: BoxDecoration(
@@ -33,6 +34,7 @@ class _CustomBottomNav extends StatelessWidget {
           topRight: Radius.circular(60),
         ),
         color: context.colorTheme.surface,
+        // color: Colors.yellow,
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.setWidth(50)),

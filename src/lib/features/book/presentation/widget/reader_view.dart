@@ -3,11 +3,9 @@ import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
-import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/model/page_data.dart';
 import 'package:bookreading/features/book/presentation/model/reader_paginator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ReaderView extends StatefulWidget {
@@ -205,12 +203,13 @@ class _Footer extends StatelessWidget {
       builder: (context, visible, _) {
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
-          opacity: visible ? 0 : 1,
+          opacity: !visible ? 0 : 1,
           child: IgnorePointer(
-            ignoring: visible,
+            ignoring: !visible,
             child: Container(
               color: Colors.red,
               width: context.sizeProvider.width,
+              height: context.setMinSize(56),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -232,9 +231,10 @@ class _Footer extends StatelessWidget {
 
                   // Right-aligned icon
                   Positioned(
-                    right: 8,
+                    right: 0,
+                    bottom: 0,
                     child: IconButton(
-                      icon: const Icon(Icons.list),
+                      icon: Icon(Icons.list, size: context.setMinSize(40)),
                       onPressed: () {},
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/features/book/presentation/screens/bookmarks_page.dart';
 import 'package:bookreading/features/book/presentation/screens/explore_page.dart';
 import 'package:bookreading/features/book/presentation/screens/home_page.dart';
@@ -41,22 +42,29 @@ class _TabsShellState extends State<TabsShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       backgroundColor: Colors.transparent,
-      body: PageView(
-        controller: pageController,
-        onPageChanged: (index) {
-          if (mounted) {
-            setState(() {
-              _currentIndex = index;
-            });
-          }
-        },
-        children: [
-          const HomePage(),
-          const ExplorePage(),
-          const BookmarksPage(),
-          const ProfilePage(),
-        ],
+      body: Padding(
+        padding: EdgeInsets.only(
+          right: context.setWidth(20),
+          left: context.setWidth(20),
+        ),
+        child: PageView(
+          controller: pageController,
+          onPageChanged: (index) {
+            if (mounted) {
+              setState(() {
+                _currentIndex = index;
+              });
+            }
+          },
+          children: [
+            const HomePage(),
+            const ExplorePage(),
+            const BookmarksPage(),
+            const ProfilePage(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNav(
         currentIndex: _currentIndex,

@@ -1,8 +1,7 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart'
-    show BookCubit;
+import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
+
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/screens/chapter_reader_screen.dart';
 import 'package:flutter/material.dart';
@@ -74,8 +73,8 @@ class _MainShell extends StatelessWidget {
             bottom: false,
             child: Padding(
               padding: EdgeInsets.only(
-                right: context.setWidth(20),
-                left: context.setWidth(20),
+                // right: context.setWidth(20),
+                // left: context.setWidth(20),
                 // top: context.setHeight(5),
               ),
               child: child,
