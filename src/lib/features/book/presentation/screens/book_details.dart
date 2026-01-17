@@ -4,16 +4,18 @@ import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/widget/book_over_view.dart';
 import 'package:bookreading/features/book/presentation/widget/custom_header.dart';
 import 'package:bookreading/features/book/presentation/widget/star_rate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class BookDetails extends StatefulWidget {
-  final BookModel book;
+  // final BookModel book;
   final Object? heroTag;
-  const BookDetails({super.key, required this.book, this.heroTag});
+  const BookDetails({super.key, this.heroTag});
   @override
   State<BookDetails> createState() => _BookDetailsState();
 }
@@ -21,24 +23,39 @@ class BookDetails extends StatefulWidget {
 class _BookDetailsState extends State<BookDetails> {
   @override
   Widget build(BuildContext context) {
-    final book = widget.book;
-    return Column(
-      children: [
-        CustomHeader(isheader: false),
-        _BookCover(
-          coverUrl: book.coverUrl!,
-          title: book.title,
-          author: book.author!,
-          id: book.id,
-          heroTag: widget.heroTag,
-        ),
-        SizedBox(height: context.setHeight(35)),
-        BookOverview(title: 'Overview', description: book.summary!),
-        SizedBox(height: context.setHeight(18)),
-        // SizedBox(height: context.setHeight()),
-        _Buttons(book: book),
-        // SizedBox(height: context.setHeight(25)),
-      ],
+    return BlocBuilder<BookCubit, BookState>(
+      builder: (context, bookState) {
+        if (bookState is BookLoading || bookState is BookInitial) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (bookState is BookError) {
+          return Center(child: Text(bookState.message));
+        }
+
+        if (bookState is BookLoaded) {
+          final book = bookState.book;
+          return Column(
+            children: [
+              CustomHeader(isheader: false),
+              _BookCover(
+                coverUrl: book.coverUrl!,
+                title: book.title,
+                author: book.author!,
+                id: book.id,
+                heroTag: widget.heroTag,
+              ),
+              SizedBox(height: context.setHeight(35)),
+              BookOverview(title: 'Overview', description: book.summary!),
+              SizedBox(height: context.setHeight(18)),
+              // SizedBox(height: context.setHeight()),
+              _Buttons(book: book),
+              // SizedBox(height: context.setHeight(25)),
+            ],
+          );
+        }
+        return Text("Error");
+      },
     );
   }
 }

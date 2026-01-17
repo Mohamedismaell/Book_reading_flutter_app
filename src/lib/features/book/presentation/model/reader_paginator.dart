@@ -27,6 +27,7 @@ class ReaderPaginator {
           ),
         );
       }
+      return pages;
     }
 
     return pages;

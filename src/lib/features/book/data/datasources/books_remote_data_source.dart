@@ -8,10 +8,22 @@ class BooksRemoteDataSource {
 
   Future<List<BookModel>> getBooks() async {
     final response = await supabase.from('books').select('*');
-    print(" Books **1** ===> $response");
+    // print(" Books **1** ===> $response");
     final resulte = response.map((e) => BookModel.fromJson(e)).toList();
-    print("Books **2**  ===> $resulte");
+    // print("Books **2**  ===> $resulte");
     return resulte;
+  }
+
+  Future<BookModel?> getBookById(int bookId) async {
+    final response = await supabase
+        .from('books')
+        .select('*')
+        .eq('id', bookId)
+        .maybeSingle();
+
+    if (response == null) return null;
+
+    return BookModel.fromJson(response);
   }
 
   Future<List<ChapterModel>> getChapters(int bookId) async {

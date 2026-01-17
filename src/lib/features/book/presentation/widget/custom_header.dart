@@ -46,7 +46,6 @@ class CustomHeader extends StatelessWidget {
                           color: context.colorTheme.onSurface.withOpacity(0.9),
                         ),
                       ),
-                      SizedBox(height: context.setHeight(10)),
                       Text(
                         author!,
                         style: context.bodyLarge().copyWith(

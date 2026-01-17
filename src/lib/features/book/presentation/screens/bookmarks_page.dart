@@ -39,21 +39,17 @@ class _BookmarksPageState extends State<BookmarksPage>
 
           // LAYER 2: The "Disappearing Tool" (Bottom Right)
           // We use AnimatedOpacity so it fades in/out smoothly
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: IgnorePointer(
-              // Important: If it's invisible, don't let it block touches
-              ignoring: !_areToolsVisible,
-              child: AnimatedOpacity(
-                opacity: _areToolsVisible ? 1.0 : 0.0,
-                duration: Duration(milliseconds: 200),
-                child: FloatingActionButton(
-                  onPressed: () {
-                    print("Tool Clicked!");
-                  },
-                  child: Icon(Icons.settings), // Your tool icon
-                ),
+          IgnorePointer(
+            // Important: If it's invisible, don't let it block touches
+            ignoring: !_areToolsVisible,
+            child: AnimatedOpacity(
+              opacity: _areToolsVisible ? 1.0 : 0.0,
+              duration: Duration(milliseconds: 200),
+              child: FloatingActionButton(
+                onPressed: () {
+                  print("Tool Clicked!");
+                },
+                child: Icon(Icons.settings), // Your tool icon
               ),
             ),
           ),

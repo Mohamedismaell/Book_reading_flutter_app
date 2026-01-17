@@ -1,8 +1,12 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart'
+    show BookCubit;
+import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/screens/chapter_reader_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/enums/orb_position.dart';
 import '../../../core/routes/app_routes.dart';
 import 'package:go_router/go_router.dart';
@@ -29,48 +33,23 @@ class HomeRoutes {
           path: AppRoutes.bookDetails,
 
           builder: (context, state) {
-            final extra = state.extra;
-            BookModel? book;
-            Object? heroTag;
+            final bookId = int.parse(state.pathParameters['bookId']!);
 
-            if (extra is BookModel) {
-              book = extra;
-            } else if (extra is Map) {
-              book = extra['book'] as BookModel?;
-              heroTag = extra['heroTag'];
-            }
+            context.read<BookCubit>().loadBook(bookId);
 
-            if (book == null) {
-              return Scaffold(
-                appBar: AppBar(leading: const BackButton()),
-                body: Center(
-                  child: Text(
-                    'Book data not found.',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-              );
-            }
-            return BookDetails(book: book, heroTag: heroTag);
+            return BookDetails();
           },
         ),
         GoRoute(
           path: AppRoutes.readPage,
 
           builder: (context, state) {
-            final book = state.extra as BookModel?;
-            if (book == null) {
-              return Scaffold(
-                appBar: AppBar(leading: const BackButton()),
-                body: Center(
-                  child: Text(
-                    'Chapter data not found.',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-              );
-            }
-            return ChapterReaderScreen(book: book);
+            final bookId = int.parse(state.pathParameters['bookId']!);
+
+            context.read<BookCubit>().loadBook(bookId);
+            context.read<ChaptersCubit>().getChapters(bookId);
+
+            return ChapterReaderScreen();
           },
         ),
       ],

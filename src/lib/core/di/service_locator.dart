@@ -6,10 +6,12 @@ import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart'
 import 'package:bookreading/features/book/data/datasources/Books_remote_data_source.dart';
 import 'package:bookreading/features/book/data/repositories/book_repository_impl.dart';
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
+import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
-import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/chapters_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -96,6 +98,9 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => GetChaptersUseCase(repository: sl<BookRepository>()),
   );
+  sl.registerLazySingleton(
+    () => GetBooksIdUseCase(repository: sl<BookRepository>()),
+  );
   //! Cubits
   sl.registerLazySingleton(
     () => AuthCubit(
@@ -108,6 +113,8 @@ Future<void> initServiceLocator() async {
     ),
   );
   sl.registerLazySingleton(() => BooksCubit(sl<GetBooksUseCase>()));
+  sl.registerLazySingleton(() => BookCubit(sl<GetBooksIdUseCase>()));
+
   sl.registerLazySingleton(() => ChaptersCubit(sl<GetChaptersUseCase>()));
   sl.registerLazySingleton(() => ThemeCubit());
 }

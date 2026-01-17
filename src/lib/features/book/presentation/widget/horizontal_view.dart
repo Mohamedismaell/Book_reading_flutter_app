@@ -3,7 +3,7 @@ import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dar
 import 'package:bookreading/core/routes/app_routes.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -65,15 +65,15 @@ class _Content extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: books.length,
         itemBuilder: (context, index) {
-          final currentBook = books[index];
+          final book = books[index];
           return Padding(
             padding: EdgeInsets.only(right: context.setMinSize(16)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _BookCover(currentBook: currentBook, category: category),
+                _BookCover(book: book, category: category),
                 SizedBox(height: context.setMinSize(16)),
-                _BookHeader(currentBook: currentBook),
+                _BookHeader(book: book),
               ],
             ),
           );
@@ -84,28 +84,24 @@ class _Content extends StatelessWidget {
 }
 
 class _BookCover extends StatelessWidget {
-  const _BookCover({required this.currentBook, required this.category});
+  const _BookCover({required this.book, required this.category});
 
-  final BookModel currentBook;
+  final BookModel book;
   final String category;
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
         onTap: () => context.push(
-          AppRoutes.bookDetails,
-          extra: {
-            'book': currentBook,
-            'heroTag': '${category}_${currentBook.id}',
-          },
+          AppRoutes.bookDetails.replaceFirst(':bookId', book.id.toString()),
         ),
         child: Container(
           width: context.sizeProvider.width,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
           child: Hero(
-            tag: '${category}_${currentBook.id}',
-            child: Image.network(currentBook.coverUrl!, fit: BoxFit.cover),
+            tag: '${category}_${book.id}',
+            child: Image.network(book.coverUrl!, fit: BoxFit.cover),
           ),
         ),
       ),
@@ -114,8 +110,8 @@ class _BookCover extends StatelessWidget {
 }
 
 class _BookHeader extends StatelessWidget {
-  const _BookHeader({required this.currentBook});
-  final BookModel currentBook;
+  const _BookHeader({required this.book});
+  final BookModel book;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -124,13 +120,13 @@ class _BookHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            currentBook.title,
+            book.title,
             style: context.headlineSmall(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            currentBook.author ?? "Unknown",
+            book.author ?? "Unknown",
             style: context.bodyMedium(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

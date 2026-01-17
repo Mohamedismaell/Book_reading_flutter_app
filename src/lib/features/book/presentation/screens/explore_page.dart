@@ -1,6 +1,6 @@
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/features/book/presentation/cubit/books_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/chapters_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

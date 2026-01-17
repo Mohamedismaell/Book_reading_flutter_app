@@ -1,11 +1,10 @@
+import 'package:bookreading/core/connections/network_info.dart';
 import 'package:bookreading/core/connections/result.dart';
-import 'package:bookreading/features/auth/data/sources/auth_remote_data_source.dart';
+import 'package:bookreading/core/errors/failure.dart';
 import 'package:bookreading/features/book/data/datasources/Books_remote_data_source.dart';
+
+import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../core/connections/network_info.dart';
-import '../../../../core/errors/failure.dart';
-import '../../../../core/params/params.dart';
-import '../../domain/repositories/book_repository.dart';
 
 class BookRepositoryImpl extends BookRepository {
   final NetworkInfo networkInfo;
@@ -32,6 +31,21 @@ class BookRepositoryImpl extends BookRepository {
       return Result.ok(result);
     } catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> getBookById(int bookId) async {
+    try {
+      final result = await remoteDataSource.getBookById(bookId);
+
+      if (result == null) {
+        return Result.error(Failure(errMessage: 'Book not found'));
+      }
+
+      return Result.ok(result);
+    } on PostgrestException catch (e) {
+      return Result.error(Failure(errMessage: e.message));
     }
   }
 }
