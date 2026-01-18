@@ -76,6 +76,7 @@ class TextPaginator {
       startIndex = endIndex;
     }
 
+    textPainter.dispose();
     return pages;
   }
 }
