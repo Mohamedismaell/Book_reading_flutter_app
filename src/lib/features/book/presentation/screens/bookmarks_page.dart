@@ -1,4 +1,3 @@
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:flutter/material.dart';
 
 class BookmarksPage extends StatefulWidget {

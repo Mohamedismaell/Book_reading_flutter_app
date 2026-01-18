@@ -25,13 +25,14 @@ class _CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // padding: EdgeInsets.zero,
       // clipBehavior: Clip.none,
       // width: context.sizeProvider.width,
       height: context.setMinSize(80),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(60),
-          topRight: Radius.circular(60),
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50),
         ),
         color: context.colorTheme.surface,
         // color: Colors.yellow,

@@ -1,7 +1,6 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
-
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/screens/chapter_reader_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class HomeRoutes {
   static List<RouteBase> routes = [
     ShellRoute(
       builder: (context, state, child) {
-        return _MainShell(child: child);
+        return _MainShell(usePadding: false, child: child);
       },
 
       routes: [
@@ -58,8 +57,9 @@ class HomeRoutes {
 }
 
 class _MainShell extends StatelessWidget {
-  const _MainShell({required this.child});
+  const _MainShell({required this.child, this.usePadding = true});
   final Widget child;
+  final bool usePadding;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,8 +73,8 @@ class _MainShell extends StatelessWidget {
             bottom: false,
             child: Padding(
               padding: EdgeInsets.only(
-                // right: context.setWidth(20),
-                // left: context.setWidth(20),
+                right: usePadding ? context.setWidth(20) : 0,
+                left: usePadding ? context.setWidth(20) : 0,
                 // top: context.setHeight(5),
               ),
               child: child,

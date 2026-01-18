@@ -45,10 +45,7 @@ class _TabsShellState extends State<TabsShell> {
       extendBody: true,
       backgroundColor: Colors.transparent,
       body: Padding(
-        padding: EdgeInsets.only(
-          right: context.setWidth(20),
-          left: context.setWidth(20),
-        ),
+        padding: EdgeInsets.symmetric(horizontal: context.setWidth(20)),
         child: PageView(
           controller: pageController,
           onPageChanged: (index) {
