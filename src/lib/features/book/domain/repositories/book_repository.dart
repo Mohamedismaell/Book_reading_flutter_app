@@ -11,4 +11,5 @@ abstract class BookRepository {
     required String chapterId,
     required int pageIndex,
   });
+  Future<Result> getProgress();
 }

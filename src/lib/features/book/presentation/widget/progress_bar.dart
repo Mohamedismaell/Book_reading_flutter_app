@@ -8,7 +8,7 @@ class ProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
-      value: (progress / 100),
+      value: (progress),
       color: context.colorTheme.onSurface,
       backgroundColor: context.colorTheme.surface,
     );

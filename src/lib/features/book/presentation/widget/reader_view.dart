@@ -43,6 +43,7 @@ class _ReaderViewState extends State<ReaderView> {
   void _handleBack() {
     _saveProgress();
     if (context.canPop()) {
+      // context.read<ReadingProgressCubit>().setProgress(_progress);
       context.pop();
     }
   }
@@ -58,7 +59,7 @@ class _ReaderViewState extends State<ReaderView> {
 
     final user = sl<SupabaseClient>().auth.currentUser;
     if (user == null) {
-      print("⚠️ Cannot save progress: User not logged in.");
+      print(" Cannot save progress: User not logged in.");
       return;
     }
 
@@ -68,17 +69,17 @@ class _ReaderViewState extends State<ReaderView> {
       chapterId: widget.chapters[chapterIndex].id!,
       currentPage: currentPage,
       totalPages: _pages.length,
+      activeBook: widget.book,
+      activeChapter: widget.chapters[chapterIndex],
     );
     print("Saved ");
     _lastSavedPage = currentPage;
-    final progress = (_lastSavedPage / _pages.length) * 100;
-    _progress = progress;
   }
 
   @override
   void initState() {
     _progressTimer = Timer.periodic(
-      Duration(seconds: 10),
+      Duration(seconds: 5),
       (_) => _currentPageIndex.value != _lastSavedPage ? _saveProgress() : null,
     );
     super.initState();

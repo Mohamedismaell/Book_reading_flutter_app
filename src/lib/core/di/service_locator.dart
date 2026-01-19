@@ -9,6 +9,7 @@ import 'package:bookreading/features/book/domain/repositories/book_repository.da
 import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
@@ -51,7 +52,7 @@ Future<void> initServiceLocator() async {
 
   //! Register SupabaseClient
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-
+  sl.registerLazySingleton<User>(() => sl<SupabaseClient>().auth.currentUser!);
   //! Data Sources
   //* Auth
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -106,6 +107,9 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => InsertReadingPregress(repository: sl<BookRepository>()),
   );
+  sl.registerLazySingleton(
+    () => GetReadingProgress(repository: sl<BookRepository>()),
+  );
   //! Cubits
   sl.registerLazySingleton(
     () => AuthCubit(
@@ -122,7 +126,10 @@ Future<void> initServiceLocator() async {
 
   sl.registerLazySingleton(() => ChaptersCubit(sl<GetChaptersUseCase>()));
   sl.registerLazySingleton(
-    () => ReadingProgressCubit(sl<InsertReadingPregress>()),
+    () => ReadingProgressCubit(
+      sl<InsertReadingPregress>(),
+      sl<GetReadingProgress>(),
+    ),
   );
   sl.registerLazySingleton(() => ThemeCubit());
 }

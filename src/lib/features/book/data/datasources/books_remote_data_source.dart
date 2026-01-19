@@ -1,3 +1,4 @@
+import 'package:bookreading/features/book/data/models/user_progress.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/books.dart';
@@ -49,7 +50,24 @@ class BooksRemoteDataSource {
       'book_id': bookId,
       'chapter_id': chapterId,
       'page_index': pageIndex,
-      'updated_at': DateTime.now().toIso8601String(),
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
     });
+  }
+
+  Future<UserProgressModel?> getProgress({
+    required String userId,
+    // required int bookId,
+  }) async {
+    final response = await supabase
+        .from('user_progress')
+        .select('*, books(*), chapters(*)')
+        .eq('user_id', userId)
+        .order('updated_at', ascending: false)
+        .limit(1)
+        .maybeSingle();
+
+    if (response == null) return null;
+    print("Last Active Book Row: $response");
+    return UserProgressModel.fromJson(response);
   }
 }

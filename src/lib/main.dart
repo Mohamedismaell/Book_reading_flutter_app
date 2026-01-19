@@ -11,6 +11,7 @@ import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.da
 import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
@@ -82,8 +83,10 @@ class AppBootstrap extends StatelessWidget {
           create: (context) => ChaptersCubit(sl<GetChaptersUseCase>()),
         ),
         BlocProvider<ReadingProgressCubit>(
-          create: (context) =>
-              ReadingProgressCubit(sl<InsertReadingPregress>()),
+          create: (context) => ReadingProgressCubit(
+            sl<InsertReadingPregress>(),
+            sl<GetReadingProgress>(),
+          ),
         ),
       ],
       child: const MyApp(),
