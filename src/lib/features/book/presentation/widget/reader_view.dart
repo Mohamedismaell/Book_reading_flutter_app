@@ -33,9 +33,8 @@ class _ReaderViewState extends State<ReaderView> {
   List<PageData> _pages = [];
   double? _lastSize;
   int _lastSavedPage = 0;
-  double _progress = 0;
-  // bool _areToolsVisible = false;
 
+  // bool _areToolsVisible = false;
   void _toggleTools() {
     _areToolsVisible.value = !_areToolsVisible.value;
   }
@@ -43,7 +42,6 @@ class _ReaderViewState extends State<ReaderView> {
   void _handleBack() {
     _saveProgress();
     if (context.canPop()) {
-      // context.read<ReadingProgressCubit>().setProgress(_progress);
       context.pop();
     }
   }
@@ -56,7 +54,18 @@ class _ReaderViewState extends State<ReaderView> {
     final currentPage = _currentPageIndex.value;
     final chapterIndex = _currentChapterIndex.value - 1;
     if (chapterIndex < 0 || chapterIndex >= widget.chapters.length) return;
+    int charactersRead = 0;
+    for (int i = 0; i <= currentPage - 1; i++) {
+      charactersRead += _pages[i].contentLength;
+    }
+    int totalCharacters = 0;
+    for (var page in _pages) {
+      totalCharacters += page.contentLength;
+    }
+    final progress = charactersRead / totalCharacters;
+    print('charactersRead ===>>> $charactersRead');
 
+    print('totalCharacters ===>>> $totalCharacters');
     final user = sl<SupabaseClient>().auth.currentUser;
     if (user == null) {
       print(" Cannot save progress: User not logged in.");
@@ -64,15 +73,14 @@ class _ReaderViewState extends State<ReaderView> {
     }
 
     context.read<ReadingProgressCubit>().saveProgress(
-      bookId: widget.book.id!,
-      userId: user.id,
-      chapterId: widget.chapters[chapterIndex].id!,
+      bookId: widget.book.id,
+      chapterId: widget.chapters[chapterIndex].id,
       currentPage: currentPage,
-      totalPages: _pages.length,
       activeBook: widget.book,
       activeChapter: widget.chapters[chapterIndex],
+      progressPercentage: progress,
     );
-    print("Saved ");
+    print("✅ Progress Saved Successfully");
     _lastSavedPage = currentPage;
   }
 

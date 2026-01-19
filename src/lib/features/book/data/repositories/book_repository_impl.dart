@@ -53,16 +53,17 @@ class BookRepositoryImpl extends BookRepository {
   @override
   Future<Result> saveProgress({
     required int bookId,
-    required String userId,
     required String chapterId,
     required int pageIndex,
+    required double progressPercentage,
   }) async {
     try {
       await remoteDataSource.saveProgress(
-        userId: userId,
+        userId: sl<User>().id,
         bookId: bookId,
         chapterId: chapterId,
         pageIndex: pageIndex,
+        progressPercentage: progressPercentage,
       );
       return Result.ok(null);
     } catch (e) {

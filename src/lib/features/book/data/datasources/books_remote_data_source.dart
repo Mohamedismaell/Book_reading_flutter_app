@@ -44,6 +44,7 @@ class BooksRemoteDataSource {
     required int bookId,
     required String chapterId,
     required int pageIndex,
+    required double progressPercentage,
   }) async {
     await supabase.from('user_progress').upsert({
       'user_id': userId,
@@ -51,6 +52,7 @@ class BooksRemoteDataSource {
       'chapter_id': chapterId,
       'page_index': pageIndex,
       'updated_at': DateTime.now().toUtc().toIso8601String(),
+      'progress': progressPercentage,
     });
   }
 

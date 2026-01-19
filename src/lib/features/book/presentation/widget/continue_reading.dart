@@ -135,10 +135,12 @@ class _CardItemState extends State<_CardItem> {
                               ],
                             ),
                             SizedBox(height: context.setMinSize(8)),
-                            // ProgressBar(progress: progress),
+                            ProgressBar(
+                              progress: state.progress.progressPercentage,
+                            ),
                             // LayoutBuilder(
                             //   builder: (context, constraints) {
-                            //     return  ProgressBar(progress: 50) ;
+                            //     return ProgressBar(progress: 50);
                             //   },
                             // ),
                           ],

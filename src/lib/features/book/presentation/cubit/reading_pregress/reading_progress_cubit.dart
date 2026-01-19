@@ -15,19 +15,17 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
   final GetReadingProgress getReadingProgress;
   Future<void> saveProgress({
     required int bookId,
-    required String userId,
     required String chapterId,
     required int currentPage,
-    required int totalPages,
-    // 1. ADD THESE PARAMETERS
+    required double progressPercentage,
     BookModel? activeBook,
     ChapterModel? activeChapter,
   }) async {
     final result = await insertReadingPregress.call(
-      bookId,
-      userId,
-      chapterId,
-      currentPage,
+      bookId: bookId,
+      chapterId: chapterId,
+      pageIndex: currentPage,
+      progressPercentage: progressPercentage,
     );
 
     result.when(
@@ -35,25 +33,23 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
         BookModel? bookToSave = activeBook;
         ChapterModel? chapterToSave = activeChapter;
 
-        // 2. LOGIC: If the UI gave us the book, use it!
-        // Only fall back to 'state' if we didn't get new info.
+        //! last progress if there is no new progress
         if (bookToSave == null && state is ReadingProgressLoaded) {
-          bookToSave = (state as ReadingProgressLoaded).progress?.bookDetails;
+          bookToSave = (state as ReadingProgressLoaded).progress.bookDetails;
           chapterToSave =
-              (state as ReadingProgressLoaded).progress?.chapterDetails;
+              (state as ReadingProgressLoaded).progress.chapterDetails;
         }
 
-        print('Saving Book Title: ${bookToSave?.title}'); // Check this print
+        print('Saving Book Title: ${bookToSave?.title}');
 
         final newProgress = UserProgressModel(
-          userId: userId,
           bookId: bookId,
           chapterId: chapterId,
           pageIndex: currentPage,
           updatedAt: DateTime.now(),
-          // 3. Use the resolved variables
           bookDetails: bookToSave,
           chapterDetails: chapterToSave,
+          progressPercentage: progressPercentage,
         );
 
         emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));

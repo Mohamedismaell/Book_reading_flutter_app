@@ -4,17 +4,17 @@ import 'package:bookreading/features/book/domain/repositories/book_repository.da
 class InsertReadingPregress {
   final BookRepository repository;
   InsertReadingPregress({required this.repository});
-  Future<Result> call(
-    int bookId,
-    String userId,
-    String chapterId,
-    int pageIndex,
-  ) async {
+  Future<Result> call({
+    required int bookId,
+    required String chapterId,
+    required int pageIndex,
+    required double progressPercentage,
+  }) async {
     return await repository.saveProgress(
       bookId: bookId,
-      userId: userId,
       chapterId: chapterId,
       pageIndex: pageIndex,
+      progressPercentage: progressPercentage,
     );
   }
 }
