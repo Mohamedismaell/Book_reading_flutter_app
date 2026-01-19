@@ -11,15 +11,15 @@ import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.da
 import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart'
-    show BookCubit;
+import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/observers/app_bloc_observer.dart';
@@ -31,20 +31,25 @@ import 'features/auth/domain/usecases/forget_password.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print('Step 1: ensureInitialized done');
   Bloc.observer = AppBlocObserver();
+  print('Step 2: Bloc observer set');
   HydratedBloc.storage = await buildHydratedStorage();
+  print('Step 3: HydratedStorage built');
   await initServiceLocator();
+  print('Step 4: Service Locator initialized');
   await Supabase.initialize(
     url: 'https://iszsxfqfmsjotmdnszyi.supabase.co',
     anonKey: 'sb_publishable_yNt2YfuCVSrFuS53esNU4A_HtIhv9j0',
   );
+  print('Step 5: Supabase initialized');
 
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => AppBootstrap(), // Wrap your app
-    ),
-    // AppBootstrap(),
+    // DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) => AppBootstrap(), // Wrap your app
+    // ),
+    AppBootstrap(),
   );
 }
 
@@ -76,13 +81,16 @@ class AppBootstrap extends StatelessWidget {
         BlocProvider<ChaptersCubit>(
           create: (context) => ChaptersCubit(sl<GetChaptersUseCase>()),
         ),
+        BlocProvider<ReadingProgressCubit>(
+          create: (context) =>
+              ReadingProgressCubit(sl<InsertReadingPregress>()),
+        ),
       ],
       child: const MyApp(),
     );
   }
 }
 
-//! ScreenUtil + MaterialApp
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

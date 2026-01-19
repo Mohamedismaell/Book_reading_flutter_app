@@ -1,7 +1,7 @@
 import 'package:bookreading/core/connections/network_info.dart';
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/core/errors/failure.dart';
-import 'package:bookreading/features/book/data/datasources/Books_remote_data_source.dart';
+import 'package:bookreading/features/book/data/datasources/books_remote_data_source.dart';
 
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -46,6 +46,26 @@ class BookRepositoryImpl extends BookRepository {
       return Result.ok(result);
     } on PostgrestException catch (e) {
       return Result.error(Failure(errMessage: e.message));
+    }
+  }
+
+  @override
+  Future<Result> saveProgress({
+    required int bookId,
+    required String userId,
+    required String chapterId,
+    required int pageIndex,
+  }) async {
+    try {
+      await remoteDataSource.saveProgress(
+        userId: userId,
+        bookId: bookId,
+        chapterId: chapterId,
+        pageIndex: pageIndex,
+      );
+      return Result.ok(null);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
     }
   }
 }

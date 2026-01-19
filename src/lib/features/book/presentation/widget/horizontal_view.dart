@@ -39,6 +39,7 @@ class _HorizontalViewState extends State<HorizontalView> {
             return const Center(child: CircularProgressIndicator());
           }
           if (state is BooksIsFailed) {
+            print("❌ Error Saving Progress: ${state.message}");
             return Center(child: Text("Error: ${state.message}"));
           }
           if (state is BooksIsLoaded) {
