@@ -93,9 +93,19 @@ class _BookCover extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => context.push(
-          AppRoutes.bookDetails.replaceFirst(':bookId', book.id.toString()),
-        ),
+        onTap: () {
+          print("herotag in Home : ${'${category}_${book.id}'}");
+
+          context.push(
+            AppRoutes.bookDetails.replaceFirst(':bookId', book.id.toString()),
+            extra: {
+              'heroTag': '${category}_${book.id}',
+              'coverUrl': book.coverUrl,
+              'title': book.title,
+              'author': book.author,
+            },
+          );
+        },
         child: Container(
           width: context.sizeProvider.width,
           clipBehavior: Clip.antiAlias,

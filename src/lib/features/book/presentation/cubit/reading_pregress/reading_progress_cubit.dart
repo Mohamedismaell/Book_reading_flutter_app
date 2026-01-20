@@ -4,6 +4,7 @@ import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/data/models/user_progress.dart';
 import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'reading_progress_state.dart';

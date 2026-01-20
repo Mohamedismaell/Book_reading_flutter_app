@@ -9,7 +9,7 @@ import '../../../core/enums/orb_position.dart';
 import '../../../core/routes/app_routes.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/widget/orb.dart';
-import '../presentation/screens/book_details.dart';
+import '../presentation/screens/book_details_page.dart';
 
 class HomeRoutes {
   static List<RouteBase> routes = [
@@ -32,10 +32,16 @@ class HomeRoutes {
 
           builder: (context, state) {
             final bookId = int.parse(state.pathParameters['bookId']!);
-
-            context.read<BookCubit>().loadBook(bookId);
-
-            return BookDetails();
+            final extra = state.extra as Map<String, dynamic>?;
+            final herotag = extra?['herotag'];
+            // context.read<BookCubit>().loadBook(bookId);
+            return BookDetails(
+              bookId: bookId,
+              heroTag: extra?['heroTag'],
+              previewCover: extra?['coverUrl'],
+              previewTitle: extra?['title'],
+              previewAuthor: extra?['author'],
+            );
           },
         ),
         GoRoute(

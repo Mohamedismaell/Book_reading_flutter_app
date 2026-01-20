@@ -1,8 +1,6 @@
-/// Represents a single page of content in the reader.
-///
-/// This is a value object in DDD terms - it's immutable and
-/// identified by its attributes rather than an ID.
-class PageData {
+import 'package:equatable/equatable.dart';
+
+class PageData extends Equatable {
   final String text;
   final int chapterIndex;
   final int pageNumber;
@@ -14,7 +12,6 @@ class PageData {
     required this.pageNumber,
   }) : contentLength = text.length;
 
-  /// Creates a copy of this [PageData] with the given fields replaced.
   PageData copyWith({String? text, int? chapterIndex, int? pageNumber}) {
     return PageData(
       text: text ?? this.text,
@@ -24,17 +21,7 @@ class PageData {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is PageData &&
-        other.text == text &&
-        other.chapterIndex == chapterIndex &&
-        other.pageNumber == pageNumber;
-  }
-
-  @override
-  int get hashCode => Object.hash(text, chapterIndex, pageNumber);
-
+  List<Object?> get props => [text, chapterIndex, pageNumber, contentLength];
   @override
   String toString() =>
       'PageData(chapterIndex: $chapterIndex, pageNumber: $pageNumber, length: $contentLength)';

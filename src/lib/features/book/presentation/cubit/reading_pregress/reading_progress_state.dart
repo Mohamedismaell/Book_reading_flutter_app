@@ -1,29 +1,47 @@
 part of 'reading_progress_cubit.dart';
 
 @immutable
-sealed class ReadingProgressState {}
+sealed class ReadingProgressState extends Equatable {
+  const ReadingProgressState();
 
-class ReadingProgressInitial extends ReadingProgressState {}
+  @override
+  List<Object?> get props => [];
+}
+
+class ReadingProgressInitial extends ReadingProgressState {
+  const ReadingProgressInitial();
+}
 
 class ReadingProgressLoading extends ReadingProgressState {
-  ReadingProgressLoading();
+  const ReadingProgressLoading();
 }
 
 class ReadingProgressSaved extends ReadingProgressState {
   final double progress;
 
-  ReadingProgressSaved({required this.progress});
+  const ReadingProgressSaved({required this.progress});
+  @override
+  List<Object?> get props => [progress];
 }
 
 class ReadingProgressLoaded extends ReadingProgressState {
   final UserProgressModel progress;
   final bool justSaved;
-  ReadingProgressLoaded({required this.progress, required this.justSaved});
-}
 
-class ReadingProgressSaving extends ReadingProgressState {}
+  const ReadingProgressLoaded({
+    required this.progress,
+    required this.justSaved,
+  });
+
+  @override
+  List<Object?> get props => [progress, justSaved];
+}
 
 class ReadingProgressError extends ReadingProgressState {
   final String message;
-  ReadingProgressError({required this.message});
+
+  const ReadingProgressError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }

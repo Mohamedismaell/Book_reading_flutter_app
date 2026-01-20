@@ -60,7 +60,6 @@ class ReaderPaginationService {
     for (int i = 0; i <= safeIndex; i++) {
       charactersRead += pages[i].contentLength;
     }
-    //! Ask later about fold
     final totalCharacters = pages.fold<int>(
       0,
       (sum, page) => sum + page.contentLength,
