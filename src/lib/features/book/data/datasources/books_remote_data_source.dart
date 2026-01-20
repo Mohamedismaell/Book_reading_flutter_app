@@ -43,14 +43,14 @@ class BooksRemoteDataSource {
     required String userId,
     required int bookId,
     required String chapterId,
-    required int pageIndex,
+    // required int pageIndex,
     required double progressPercentage,
   }) async {
     await supabase.from('user_progress').upsert({
       'user_id': userId,
       'book_id': bookId,
       'chapter_id': chapterId,
-      'page_index': pageIndex,
+      // 'page_index': pageIndex,
       'updated_at': DateTime.now().toUtc().toIso8601String(),
       'progress': progressPercentage,
     });
@@ -69,7 +69,6 @@ class BooksRemoteDataSource {
         .maybeSingle();
 
     if (response == null) return null;
-    print("Last Active Book Row: $response");
     return UserProgressModel.fromJson(response);
   }
 }

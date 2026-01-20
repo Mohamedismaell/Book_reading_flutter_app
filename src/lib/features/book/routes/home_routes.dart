@@ -33,8 +33,6 @@ class HomeRoutes {
           builder: (context, state) {
             final bookId = int.parse(state.pathParameters['bookId']!);
             final extra = state.extra as Map<String, dynamic>?;
-            final herotag = extra?['herotag'];
-            // context.read<BookCubit>().loadBook(bookId);
             return BookDetails(
               bookId: bookId,
               heroTag: extra?['heroTag'],
@@ -81,7 +79,6 @@ class _MainShell extends StatelessWidget {
               padding: EdgeInsets.only(
                 right: usePadding ? context.setWidth(20) : 0,
                 left: usePadding ? context.setWidth(20) : 0,
-                // top: context.setHeight(5),
               ),
               child: child,
             ),

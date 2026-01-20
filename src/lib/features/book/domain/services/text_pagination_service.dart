@@ -75,13 +75,11 @@ class TextPaginationService {
 
       final fittingResult = _findLastFittingLine(lines);
 
-      // Need more text to fill the screen
       if (!fittingResult.didFillScreen && guessLimit < fullText.length) {
         chunkSize = (chunkSize * _chunkSizeMultiplier).toInt();
         continue;
       }
 
-      // Edge case: no line fits
       if (fittingResult.lastFittingLineIndex == -1) {
         return _PageExtractionResult(
           pageContent: fullText[startIndex],
@@ -90,7 +88,6 @@ class TextPaginationService {
         );
       }
 
-      // Calculate the end position
       final globalEndIndex = _calculatePageEndIndex(
         textPainter: textPainter,
         lines: lines,
@@ -141,7 +138,6 @@ class TextPaginationService {
     int chunkEndIndex = endPosition.offset;
     int globalEndIndex = startIndex + chunkEndIndex;
 
-    // Try to break at a word boundary
     if (globalEndIndex < fullText.length) {
       final lastSpace = fullText.lastIndexOf(' ', globalEndIndex);
       if (lastSpace > startIndex) {

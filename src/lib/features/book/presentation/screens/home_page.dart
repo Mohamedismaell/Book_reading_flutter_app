@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage>
       children: [
         //! Header
         const Header(),
-        SizedBox(height: context.setHeight(16)),
+        SizedBox(height: context.setHeight(20)),
         //! Continue Reading
         Text("Continue Reading", style: context.headlineMedium()),
         SizedBox(height: context.setHeight(16)),

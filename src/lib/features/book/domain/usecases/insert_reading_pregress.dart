@@ -7,13 +7,13 @@ class InsertReadingPregress {
   Future<Result> call({
     required int bookId,
     required String chapterId,
-    required int pageIndex,
+    // required int pageIndex,
     required double progressPercentage,
   }) async {
     return await repository.saveProgress(
       bookId: bookId,
       chapterId: chapterId,
-      pageIndex: pageIndex,
+      // pageIndex: pageIndex,
       progressPercentage: progressPercentage,
     );
   }

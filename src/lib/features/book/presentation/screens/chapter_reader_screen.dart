@@ -19,7 +19,7 @@ class ChapterReaderScreen extends StatelessWidget {
       BookLoading() || BookInitial() => _buildLoadingIndicator(),
       BookError(:final message) => _buildErrorMessage(message),
       BookLoaded(:final book) => _buildChaptersContent(context, book),
-      _ => const SizedBox.shrink(),
+      // _ => const SizedBox.shrink(),
     };
   }
 

@@ -54,7 +54,7 @@ class BookRepositoryImpl extends BookRepository {
   Future<Result> saveProgress({
     required int bookId,
     required String chapterId,
-    required int pageIndex,
+    // required int pageIndex,
     required double progressPercentage,
   }) async {
     try {
@@ -62,7 +62,7 @@ class BookRepositoryImpl extends BookRepository {
         userId: sl<User>().id,
         bookId: bookId,
         chapterId: chapterId,
-        pageIndex: pageIndex,
+        // pageIndex: pageIndex,
         progressPercentage: progressPercentage,
       );
       return Result.ok(null);

@@ -17,56 +17,56 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
   Future<void> saveProgress({
     required int bookId,
     required String chapterId,
-    required int currentPage,
     required double progressPercentage,
     BookModel? activeBook,
     ChapterModel? activeChapter,
   }) async {
     double progressToSave = progressPercentage;
+    String chapterIdToSave = chapterId;
+    BookModel? bookDetailsToSave = activeBook;
+    ChapterModel? chapterDetailsToSave = activeChapter;
 
     if (state is ReadingProgressLoaded) {
       final oldState = (state as ReadingProgressLoaded).progress;
-
       if (oldState.bookId == bookId) {
         final oldPercentage = oldState.progressPercentage;
 
         if (oldPercentage > progressToSave) {
           progressToSave = oldPercentage;
+
+          if (oldState.chapterDetails != null) {
+            chapterDetailsToSave = oldState.chapterDetails;
+          }
         }
       }
     }
-
     final result = await insertReadingPregress.call(
       bookId: bookId,
-      chapterId: chapterId,
-      pageIndex: currentPage,
+      chapterId: chapterIdToSave,
       progressPercentage: progressToSave,
     );
 
     result.when(
       success: (_) {
-        BookModel? bookToSave = activeBook;
-        ChapterModel? chapterToSave = activeChapter;
-
-        //! last progress if there is no new progress
-        if (bookToSave == null && state is ReadingProgressLoaded) {
-          bookToSave = (state as ReadingProgressLoaded).progress.bookDetails;
-          chapterToSave =
+        if (bookDetailsToSave == null && state is ReadingProgressLoaded) {
+          bookDetailsToSave =
+              (state as ReadingProgressLoaded).progress.bookDetails;
+          chapterDetailsToSave =
               (state as ReadingProgressLoaded).progress.chapterDetails;
         }
 
-        print('Saving Book Title: ${bookToSave?.title}');
+        // print(
+        //   'Saving: Ch $chapterIdToSave at ${(progressToSave * 100).toStringAsFixed(1)}%',
+        // );
 
         final newProgress = UserProgressModel(
           bookId: bookId,
-          chapterId: chapterId,
-          pageIndex: currentPage,
           updatedAt: DateTime.now(),
-          bookDetails: bookToSave,
-          chapterDetails: chapterToSave,
+          chapterId: chapterIdToSave,
           progressPercentage: progressToSave,
+          bookDetails: bookDetailsToSave,
+          chapterDetails: chapterDetailsToSave,
         );
-
         emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));
       },
       failure: (failure) =>
@@ -75,7 +75,6 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
   }
 
   Future<void> loadProgress() async {
-    // print("progress $progress");
     emit(ReadingProgressLoading());
     final result = await getReadingProgress.call();
     result.when(
