@@ -21,11 +21,25 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     BookModel? activeBook,
     ChapterModel? activeChapter,
   }) async {
+    double progressToSave = progressPercentage;
+
+    if (state is ReadingProgressLoaded) {
+      final oldState = (state as ReadingProgressLoaded).progress;
+
+      if (oldState.bookId == bookId) {
+        final oldPercentage = oldState.progressPercentage;
+
+        if (oldPercentage > progressToSave) {
+          progressToSave = oldPercentage;
+        }
+      }
+    }
+
     final result = await insertReadingPregress.call(
       bookId: bookId,
       chapterId: chapterId,
       pageIndex: currentPage,
-      progressPercentage: progressPercentage,
+      progressPercentage: progressToSave,
     );
 
     result.when(
@@ -49,7 +63,7 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
           updatedAt: DateTime.now(),
           bookDetails: bookToSave,
           chapterDetails: chapterToSave,
-          progressPercentage: progressPercentage,
+          progressPercentage: progressToSave,
         );
 
         emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));

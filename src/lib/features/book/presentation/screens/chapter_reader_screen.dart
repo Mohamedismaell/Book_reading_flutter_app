@@ -10,45 +10,52 @@ class ChapterReaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BookCubit, BookState>(
-      builder: (context, bookState) {
-        if (bookState is BookLoading || bookState is BookInitial) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (bookState is BookError) {
-          return Center(child: Text(bookState.message));
-        }
-
-        if (bookState is BookLoaded) {
-          return BlocBuilder<ChaptersCubit, ChaptersState>(
-            builder: (context, chaptersState) {
-              if (chaptersState is ChaptersIsLoading ||
-                  chaptersState is ChaptersInitial) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              if (chaptersState is ChaptersIsFailed) {
-                return Center(child: Text(chaptersState.message));
-              }
-
-              if (chaptersState is ChaptersIsLoaded) {
-                if (chaptersState.chapters.isEmpty) {
-                  return const Center(child: Text('No chapters found'));
-                }
-
-                return ReaderView(
-                  book: bookState.book,
-                  chapters: chaptersState.chapters,
-                );
-              }
-
-              return const SizedBox.shrink();
-            },
-          );
-        }
-
-        return const SizedBox.shrink();
-      },
+      builder: (context, bookState) => _buildBookStateUI(context, bookState),
     );
+  }
+
+  Widget _buildBookStateUI(BuildContext context, BookState state) {
+    return switch (state) {
+      BookLoading() || BookInitial() => _buildLoadingIndicator(),
+      BookError(:final message) => _buildErrorMessage(message),
+      BookLoaded(:final book) => _buildChaptersContent(context, book),
+      _ => const SizedBox.shrink(),
+    };
+  }
+
+  Widget _buildChaptersContent(BuildContext context, book) {
+    return BlocBuilder<ChaptersCubit, ChaptersState>(
+      builder: (context, state) => _buildChaptersStateUI(context, state, book),
+    );
+  }
+
+  Widget _buildChaptersStateUI(
+    BuildContext context,
+    ChaptersState state,
+    book,
+  ) {
+    return switch (state) {
+      ChaptersIsLoading() || ChaptersInitial() => _buildLoadingIndicator(),
+      ChaptersIsFailed(:final message) => _buildErrorMessage(message),
+      ChaptersIsLoaded(:final chapters) when chapters.isEmpty =>
+        _buildEmptyMessage('No chapters found'),
+      ChaptersIsLoaded(:final chapters) => ReaderView(
+        book: book,
+        chapters: chapters,
+      ),
+      // _ => const SizedBox.shrink(),
+    };
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  Widget _buildErrorMessage(String message) {
+    return Center(child: Text(message));
+  }
+
+  Widget _buildEmptyMessage(String message) {
+    return Center(child: Text(message));
   }
 }
