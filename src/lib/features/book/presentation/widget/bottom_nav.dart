@@ -25,9 +25,6 @@ class _CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.zero,
-      // clipBehavior: Clip.none,
-      // width: context.sizeProvider.width,
       height: context.setMinSize(80),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -35,7 +32,6 @@ class _CustomBottomNav extends StatelessWidget {
           topRight: Radius.circular(50),
         ),
         color: context.colorTheme.surface,
-        // color: Colors.yellow,
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.setWidth(50)),
@@ -44,7 +40,6 @@ class _CustomBottomNav extends StatelessWidget {
           children: [
             _NavSvgIcon(
               path: 'assets/icons/home.min.svg',
-              // icon: Icons.home_outlined,
               onTap: () => onTap(0),
               isActive: currentIndex == 0,
             ),
@@ -55,14 +50,12 @@ class _CustomBottomNav extends StatelessWidget {
               isActive: currentIndex == 1,
             ),
             _NavSvgIcon(
-              // path: 'assets/icons/logo.svg',
               icon: Icons.bookmark,
               onTap: () => onTap(2),
               isActive: currentIndex == 2,
             ),
             _NavSvgIcon(
-              // path: 'assets/icons/setting.svg',
-              icon: Icons.settings_outlined,
+              icon: Icons.person_sharp,
               onTap: () => onTap(3),
               isActive: currentIndex == 3,
             ),
@@ -88,8 +81,6 @@ class _NavSvgIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     Color color = isActive ? context.colorTheme.primary : AppColors.grayLighter;
     return SizedBox(
-      // width: context.sizeProvider.width / 5,
-      // height: context.sizeProvider.width / 5,
       child: InkWell(
         onTap: onTap,
         child: AnimatedScale(
@@ -113,4 +104,3 @@ class _NavSvgIcon extends StatelessWidget {
     );
   }
 }
-// Icons.explore_outlined
