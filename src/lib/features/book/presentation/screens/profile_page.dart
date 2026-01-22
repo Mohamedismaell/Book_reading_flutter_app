@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:bookreading/core/di/service_locator.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/core/widget/theme_icon.dart';
+import 'package:bookreading/features/book/data/models/user_stats.dart';
+import 'package:bookreading/features/book/presentation/controllers/pick_image_controller.dart';
+import 'package:bookreading/features/book/presentation/cubit/profile/user_stats_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,12 +22,65 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with AutomaticKeepAliveClientMixin {
   final user = sl<SupabaseClient>().auth.currentUser;
+  late PickImageController _pickImageController;
   @override
   bool get wantKeepAlive => true;
   @override
+  void initState() {
+    _pickImageController = PickImageController();
+    // context.read<UserStatsCubit>().saveUserStats();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // _pickImageController.dispose();
+    super.dispose();
+  }
+
+  void _showPickImageDialog(
+    BuildContext context,
+    PickImageController controller,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) {
+        return TweenAnimationBuilder<double>(
+          duration: const Duration(milliseconds: 250),
+          tween: Tween(begin: 0, end: 1),
+          curve: Curves.easeOut,
+          builder: (context, value, child) {
+            return Transform.translate(
+              offset: Offset(0, 80 * (1 - value)),
+              child: Opacity(opacity: value, child: child),
+            );
+          },
+          child: _PickImageSheet(controller: controller),
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print('appMetadata ===> ${user!.userMetadata}');
+    // print('userMetadata ===> ${user!.userMetadata}');
     super.build(context);
+    return BlocBuilder<UserStatsCubit, UserStatsState>(
+      builder: (context, state) {
+        return switch (state) {
+          UserStatsLoading() || UserStatsInitial() => _buildLoadingIndicator(),
+          UserStatsError(:final message) => _buildErrorMessage(message),
+          UserStatsLoaded(:final userStats) ||
+          UserStatsLoaded(:final userStats) => _buildStateUI(userStats),
+          // _ => const SizedBox.shrink(),
+        };
+      },
+    );
+  }
+
+  Widget _buildStateUI(UserStatsModel userStats) {
     return Stack(
       children: [
         ListView(
@@ -31,7 +90,10 @@ class _ProfilePageState extends State<ProfilePage>
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  _buildImageProfile(context),
+                  _buildImageProfile(
+                    context,
+                    () => _showPickImageDialog(context, _pickImageController),
+                  ),
                   SizedBox(height: context.setHeight(10)),
                   Text(
                     user!.userMetadata!['full_name'],
@@ -41,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage>
               ),
             ),
             SizedBox(height: context.setHeight(25)),
-            _buildStatus(context),
+            _buildStatus(context, userStats),
             SizedBox(height: context.setHeight(35)),
             _buildReadingPreference(context),
             SizedBox(height: context.setHeight(20)),
@@ -54,12 +116,17 @@ class _ProfilePageState extends State<ProfilePage>
   }
 }
 
-Widget _buildImageProfile(BuildContext context) {
+Widget _buildImageProfile(
+  BuildContext context,
+  VoidCallback onTap,
+  File image,
+) {
   return Stack(
     children: [
       CircleAvatar(
         radius: 50,
-        backgroundImage: AssetImage('assets/images/back_ground_auth.jpg'),
+        backgroundImage: FileImage(image),
+        //  AssetImage('assets/images/back_ground_auth.jpg'),
         backgroundColor: Colors.transparent,
       ),
       Positioned(
@@ -67,9 +134,7 @@ Widget _buildImageProfile(BuildContext context) {
         right: 0,
         child: InkWell(
           customBorder: const CircleBorder(),
-          onTap: () {
-            print("Edit profile");
-          },
+          onTap: onTap,
           child: Container(
             height: 35,
             width: 35,
@@ -90,7 +155,76 @@ Widget _buildImageProfile(BuildContext context) {
   );
 }
 
-Widget _buildStatus(BuildContext context) {
+class _PickImageSheet extends StatelessWidget {
+  final PickImageController controller;
+
+  const _PickImageSheet({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: context.colorTheme.surface,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _PickOption(
+            icon: Icons.camera_alt_rounded,
+            title: 'Take photo',
+            onTap: () async {
+              Navigator.pop(context);
+              await controller.takePhoto();
+            },
+          ),
+          _PickOption(
+            icon: Icons.photo_library_rounded,
+            title: 'Choose from gallery',
+            onTap: () async {
+              Navigator.pop(context);
+              await controller.pickFromGallery();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PickOption extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  const _PickOption({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Row(
+          children: [
+            Icon(icon, size: 26),
+            const SizedBox(width: 16),
+            Text(title, style: context.bodyLarge()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Widget _buildStatus(BuildContext context, UserStatsModel userStats) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -123,7 +257,10 @@ Widget _buildStatus(BuildContext context) {
 
         child: Column(
           children: [
-            Text('128', style: context.headlineLarge()),
+            Text(
+              (userStats.totalReadingMinutes / 60).ceil().toString(),
+              style: context.headlineLarge(),
+            ),
             Text('HOURS READ', style: context.bodyMedium()),
           ],
         ),
@@ -263,4 +400,12 @@ Widget _buildSetting(BuildContext context) {
       ),
     ],
   );
+}
+
+Widget _buildLoadingIndicator() {
+  return const Center(child: CircularProgressIndicator());
+}
+
+Widget _buildErrorMessage(String message) {
+  return Center(child: Text(message));
 }

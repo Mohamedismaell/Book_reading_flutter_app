@@ -14,6 +14,7 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     : super(ReadingProgressInitial());
   final InsertReadingPregress insertReadingPregress;
   final GetReadingProgress getReadingProgress;
+
   Future<void> saveProgress({
     required int bookId,
     required String chapterId,
@@ -54,11 +55,6 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
           chapterDetailsToSave =
               (state as ReadingProgressLoaded).progress.chapterDetails;
         }
-
-        // print(
-        //   'Saving: Ch $chapterIdToSave at ${(progressToSave * 100).toStringAsFixed(1)}%',
-        // );
-
         final newProgress = UserProgressModel(
           bookId: bookId,
           updatedAt: DateTime.now(),

@@ -16,13 +16,13 @@ class ReadingProgressLoading extends ReadingProgressState {
   const ReadingProgressLoading();
 }
 
-class ReadingProgressSaved extends ReadingProgressState {
-  final double progress;
+// class ReadingProgressSaved extends ReadingProgressState {
+//   final double progress;
 
-  const ReadingProgressSaved({required this.progress});
-  @override
-  List<Object?> get props => [progress];
-}
+//   const ReadingProgressSaved({required this.progress});
+//   @override
+//   List<Object?> get props => [progress];
+// }
 
 class ReadingProgressLoaded extends ReadingProgressState {
   final UserProgressModel progress;

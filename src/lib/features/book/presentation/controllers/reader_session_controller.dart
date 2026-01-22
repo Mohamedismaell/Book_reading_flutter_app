@@ -19,10 +19,6 @@ class ReaderSessionController {
        _book = book,
        _chapters = chapters;
 
-  // ─────────────────────────────
-  // Dependencies (injected)
-  // ─────────────────────────────
-
   final ReadingProgressCubit _readingProgressCubit;
   final UserStatsCubit _userStatsCubit;
   final BookModel _book;
@@ -72,7 +68,6 @@ class ReaderSessionController {
     }
   }
 
-  // {bool force = false}
   void _trySaveProgress() {
     if (_pages.isEmpty) return;
 
@@ -96,13 +91,6 @@ class ReaderSessionController {
     print("✅ Progress Saved Successfully");
     _lastSavedPage = currentPage;
   }
-
-  // void _initializeProgressTimer() {
-  //   _progressTimer = Timer.periodic(
-  //     Duration(seconds: 5),
-  //     (_) => controller.currentPageIndex.value != _lastSavedPage ? _saveProgress() : null,
-  //   );
-  // }
 
   void start() {
     _progressTimer = Timer.periodic(

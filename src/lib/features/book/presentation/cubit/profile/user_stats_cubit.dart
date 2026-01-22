@@ -26,18 +26,29 @@ class UserStatsCubit extends Cubit<UserStatsState> {
     int? readingDays,
     int? booksCompleted,
     int? totalReadingMinutes,
-    DateTime? lastReadAt,
+    required DateTime lastReadAt,
   }) async {
-    emit(UserStatsLoading());
-    final result = await updateUserStats.call(
-      // readingStreak: readingStreak,
-      readingDays: readingDays,
-      booksCompleted: booksCompleted,
-      totalReadingMinutes: totalReadingMinutes,
+    // emit(UserStatsLoading());
+    if (state is! UserStatsLoaded) return;
+    final old = (state as UserStatsLoaded).userStats;
+
+    final newStats = old.copyWith(
+      readingStreak: old.readingStreak + (readingStreak ?? 0),
+      readingDays: old.readingDays + (readingDays ?? 0),
+      booksCompleted: old.booksCompleted + (booksCompleted ?? 0),
+      totalReadingMinutes: old.totalReadingMinutes + (totalReadingMinutes ?? 0),
       lastReadAt: lastReadAt,
     );
+
+    final result = await updateUserStats.call(
+      readingStreak: newStats.readingStreak,
+      readingDays: newStats.readingDays,
+      booksCompleted: newStats.booksCompleted,
+      totalReadingMinutes: newStats.totalReadingMinutes,
+      lastReadAt: newStats.lastReadAt!,
+    );
     result.when(
-      success: (_) => emit(UserStatsSaved()),
+      success: (_) => emit(UserStatsLoaded(userStats: newStats)),
       failure: (error) => emit(UserStatsError(message: error.errMessage)),
     );
   }

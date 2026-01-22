@@ -75,11 +75,11 @@ class _ReaderViewState extends State<ReaderView> {
   }
 
   void _handleProgressState(BuildContext context, ReadingProgressState state) {
-    if (state is ReadingProgressSaved) {
-      print("✅ Progress Saved Successfully via Cubit");
-    } else if (state is ReadingProgressError) {
-      print("❌ Error Saving Progress: ${state.message}");
-    }
+    // if (state is ReadingProgressSaved) {
+    //   print("✅ Progress Saved Successfully via Cubit");
+    // } else if (state is ReadingProgressError) {
+    //   print("❌ Error Saving Progress: ${state.message}");
+    // }
   }
 
   Widget _buildHeader() {

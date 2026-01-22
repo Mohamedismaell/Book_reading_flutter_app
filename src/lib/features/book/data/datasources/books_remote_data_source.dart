@@ -107,7 +107,7 @@ class BooksRemoteDataSource {
     await supabase.from('user_stats').update(updates).eq('user_id', userId);
   }
 
-  Future<UserStats?> getUserStats({required String userId}) async {
+  Future<UserStatsModel?> getUserStats({required String userId}) async {
     final response = await supabase
         .from('user_stats')
         .select()
@@ -115,6 +115,6 @@ class BooksRemoteDataSource {
         .maybeSingle();
 
     if (response == null) return null;
-    return UserStats.fromJson(response);
+    return UserStatsModel.fromJson(response);
   }
 }

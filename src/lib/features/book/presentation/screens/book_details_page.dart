@@ -111,6 +111,7 @@ class _BookCover extends StatelessWidget {
                 SizedBox(height: context.setHeight(15)),
                 Text(
                   title ?? '',
+                  maxLines: 1,
                   textAlign: TextAlign.center,
                   style: context.headlineMedium(),
                 ),

@@ -1,28 +1,43 @@
-class UserStats {
+class UserStatsModel {
   final int readingStreak;
   final int readingDays;
   final int booksCompleted;
   final int totalReadingMinutes;
-  final DateTime lastReadAt;
-  final DateTime updatedAt;
+  final DateTime? lastReadAt;
 
-  UserStats({
+  UserStatsModel({
     required this.readingStreak,
     required this.readingDays,
     required this.booksCompleted,
     required this.totalReadingMinutes,
-    required this.lastReadAt,
-    required this.updatedAt,
+    this.lastReadAt,
   });
 
-  factory UserStats.fromJson(Map<String, dynamic> json) {
-    return UserStats(
-      readingStreak: json['reading_streak'] as int,
-      readingDays: json['reading_days'] as int,
-      booksCompleted: json['books_completed'] as int,
-      totalReadingMinutes: json['total_reading_minutes'] as int,
-      lastReadAt: DateTime.parse(json['last_read_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+  factory UserStatsModel.fromJson(Map<String, dynamic> json) {
+    return UserStatsModel(
+      readingStreak: json['reading_streak'] ?? 0,
+      readingDays: json['reading_days'] ?? 0,
+      booksCompleted: json['books_completed'] ?? 0,
+      totalReadingMinutes: json['total_reading_minutes'] ?? 0,
+      lastReadAt: json['last_read_at'] != null
+          ? DateTime.parse(json['last_read_at'].toString())
+          : null,
+    );
+  }
+
+  UserStatsModel copyWith({
+    int? readingStreak,
+    int? readingDays,
+    int? booksCompleted,
+    int? totalReadingMinutes,
+    DateTime? lastReadAt,
+  }) {
+    return UserStatsModel(
+      readingStreak: readingStreak ?? this.readingStreak,
+      readingDays: readingDays ?? this.readingDays,
+      booksCompleted: booksCompleted ?? this.booksCompleted,
+      totalReadingMinutes: totalReadingMinutes ?? this.totalReadingMinutes,
+      lastReadAt: lastReadAt ?? this.lastReadAt,
     );
   }
 }
