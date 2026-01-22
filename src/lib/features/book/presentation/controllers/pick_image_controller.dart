@@ -20,7 +20,7 @@ class PickImageController {
       imageQuality: 80,
     );
 
-    return image != null ? File(image.path) : null;
+    return image != null ? cropImage(File(image.path)) : null;
   }
 
   Future<File?> cropImage(File file) async {

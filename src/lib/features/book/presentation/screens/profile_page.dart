@@ -23,11 +23,13 @@ class _ProfilePageState extends State<ProfilePage>
     with AutomaticKeepAliveClientMixin {
   final user = sl<SupabaseClient>().auth.currentUser;
   late PickImageController _pickImageController;
+  late final ValueNotifier<File?> avatarNotifier;
   @override
   bool get wantKeepAlive => true;
   @override
   void initState() {
     _pickImageController = PickImageController();
+    avatarNotifier = ValueNotifier(null);
     // context.read<UserStatsCubit>().saveUserStats();
     super.initState();
   }
@@ -35,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   void dispose() {
     // _pickImageController.dispose();
+    avatarNotifier.dispose();
     super.dispose();
   }
 
@@ -57,7 +60,10 @@ class _ProfilePageState extends State<ProfilePage>
               child: Opacity(opacity: value, child: child),
             );
           },
-          child: _PickImageSheet(controller: controller),
+          child: _PickImageSheet(
+            controller: controller,
+            avatarNotifier: avatarNotifier,
+          ),
         );
       },
     );
@@ -93,6 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
                   _buildImageProfile(
                     context,
                     () => _showPickImageDialog(context, _pickImageController),
+                    avatarNotifier,
                   ),
                   SizedBox(height: context.setHeight(10)),
                   Text(
@@ -119,15 +126,19 @@ class _ProfilePageState extends State<ProfilePage>
 Widget _buildImageProfile(
   BuildContext context,
   VoidCallback onTap,
-  File image,
+  ValueNotifier<File?> avatarNotifier,
 ) {
   return Stack(
     children: [
-      CircleAvatar(
-        radius: 50,
-        backgroundImage: FileImage(image),
-        //  AssetImage('assets/images/back_ground_auth.jpg'),
-        backgroundColor: Colors.transparent,
+      ValueListenableBuilder<File?>(
+        valueListenable: avatarNotifier,
+        builder: (context, file, child) => CircleAvatar(
+          radius: 50,
+          backgroundImage: file != null
+              ? FileImage(file)
+              : AssetImage('assets/images/back_ground_auth.jpg'),
+          backgroundColor: Colors.transparent,
+        ),
       ),
       Positioned(
         bottom: 0,
@@ -157,8 +168,8 @@ Widget _buildImageProfile(
 
 class _PickImageSheet extends StatelessWidget {
   final PickImageController controller;
-
-  const _PickImageSheet({required this.controller});
+  ValueNotifier<File?> avatarNotifier;
+  _PickImageSheet({required this.controller, required this.avatarNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +188,10 @@ class _PickImageSheet extends StatelessWidget {
             title: 'Take photo',
             onTap: () async {
               Navigator.pop(context);
-              await controller.takePhoto();
+              final file = await controller.takePhoto();
+              if (file != null) {
+                avatarNotifier.value = file;
+              }
             },
           ),
           _PickOption(
@@ -185,7 +199,10 @@ class _PickImageSheet extends StatelessWidget {
             title: 'Choose from gallery',
             onTap: () async {
               Navigator.pop(context);
-              await controller.pickFromGallery();
+              final file = await controller.pickFromGallery();
+              if (file != null) {
+                avatarNotifier.value = file;
+              }
             },
           ),
         ],
