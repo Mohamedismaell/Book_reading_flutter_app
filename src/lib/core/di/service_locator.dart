@@ -10,10 +10,13 @@ import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
+import 'package:bookreading/features/book/domain/usecases/get_user_stats.dart';
 import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
+import 'package:bookreading/features/book/domain/usecases/update_user_stats.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/profile/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:dio/dio.dart';
@@ -52,7 +55,7 @@ Future<void> initServiceLocator() async {
 
   //! Register SupabaseClient
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-  sl.registerLazySingleton<User>(() => sl<SupabaseClient>().auth.currentUser!);
+  // sl.registerLazySingleton<User>(() => sl<SupabaseClient>().auth.currentUser!);
   //! Data Sources
   //* Auth
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -110,6 +113,12 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => GetReadingProgress(repository: sl<BookRepository>()),
   );
+  sl.registerLazySingleton(
+    () => UpdateUserStats(repository: sl<BookRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => GetUserStats(repository: sl<BookRepository>()),
+  );
   //! Cubits
   sl.registerLazySingleton(
     () => AuthCubit(
@@ -131,5 +140,9 @@ Future<void> initServiceLocator() async {
       sl<GetReadingProgress>(),
     ),
   );
+  sl.registerLazySingleton(
+    () => UserStatsCubit(sl<UpdateUserStats>(), sl<GetUserStats>()),
+  );
+
   sl.registerLazySingleton(() => ThemeCubit());
 }

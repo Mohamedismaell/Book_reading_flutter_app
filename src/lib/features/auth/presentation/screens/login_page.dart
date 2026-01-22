@@ -3,8 +3,8 @@ import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dar
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/routes/app_routes.dart';
-import '../widget/auth_redirect_prompt.dart';
-import '../widget/login_card.dart';
+import '../widgets/auth_redirect_prompt.dart';
+import '../widgets/login_card.dart';
 import '../../../../core/widget/theme_icon.dart';
 import '../../../../core/widget/orb.dart';
 

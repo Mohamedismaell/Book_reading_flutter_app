@@ -1,9 +1,9 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/features/book/presentation/widget/horizontal_view.dart';
+import 'package:bookreading/features/book/presentation/widgets/horizontal_view.dart';
 import 'package:flutter/material.dart';
-import '../widget/continue_reading.dart';
-import '../widget/header.dart';
+import '../widgets/continue_reading.dart';
+import '../widgets/header.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

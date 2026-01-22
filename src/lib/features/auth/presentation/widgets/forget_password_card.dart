@@ -1,11 +1,11 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
-import 'package:bookreading/features/auth/presentation/widget/auth_dialog.dart';
-import 'package:bookreading/features/auth/presentation/widget/auth_input.dart';
-import 'package:bookreading/features/auth/presentation/widget/main_banner.dart';
-import 'package:bookreading/features/auth/presentation/widget/error_message.dart';
-import 'package:bookreading/features/auth/presentation/widget/head_title.dart';
-import 'package:bookreading/features/auth/presentation/widget/white_contianer.dart';
+import 'package:bookreading/features/auth/presentation/widgets/auth_dialog.dart';
+import 'package:bookreading/features/auth/presentation/widgets/auth_input.dart';
+import 'package:bookreading/features/auth/presentation/widgets/main_banner.dart';
+import 'package:bookreading/features/auth/presentation/widgets/error_message.dart';
+import 'package:bookreading/features/auth/presentation/widgets/head_title.dart';
+import 'package:bookreading/features/auth/presentation/widgets/white_contianer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

@@ -12,4 +12,12 @@ abstract class BookRepository {
     required double progressPercentage,
   });
   Future<Result> getProgress();
+  Future<Result> updateUserStats({
+    int? readingStreak,
+    int? readingDays,
+    int? booksCompleted,
+    int? totalReadingMinutes,
+    DateTime? lastReadAt,
+  });
+  Future<Result> getUserStats();
 }

@@ -3,7 +3,7 @@ import 'package:bookreading/features/book/presentation/screens/bookmarks_page.da
 import 'package:bookreading/features/book/presentation/screens/explore_page.dart';
 import 'package:bookreading/features/book/presentation/screens/home_page.dart';
 import 'package:bookreading/features/book/presentation/screens/profile_page.dart';
-import 'package:bookreading/features/book/presentation/widget/bottom_nav.dart';
+import 'package:bookreading/features/book/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class TabsShell extends StatefulWidget {

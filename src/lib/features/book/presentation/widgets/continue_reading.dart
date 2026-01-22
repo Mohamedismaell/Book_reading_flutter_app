@@ -7,7 +7,7 @@ import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/data/models/user_progress.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
-import 'package:bookreading/features/book/presentation/widget/progress_bar.dart';
+import 'package:bookreading/features/book/presentation/widgets/progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

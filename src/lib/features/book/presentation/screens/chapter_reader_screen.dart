@@ -1,6 +1,6 @@
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
-import 'package:bookreading/features/book/presentation/widget/reader_view.dart';
+import 'package:bookreading/features/book/presentation/widgets/reader_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

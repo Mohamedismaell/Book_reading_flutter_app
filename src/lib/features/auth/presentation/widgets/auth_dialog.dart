@@ -3,7 +3,7 @@ import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dar
 import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/auth/presentation/widget/action_auth_button.dart';
+import 'package:bookreading/features/auth/presentation/widgets/action_auth_button.dart';
 import 'package:flutter/material.dart';
 
 //Todo Adjust Text content in every dialog

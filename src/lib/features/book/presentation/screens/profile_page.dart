@@ -1,9 +1,10 @@
+import 'package:bookreading/core/di/service_locator.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/core/widget/theme_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,16 +15,16 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with AutomaticKeepAliveClientMixin {
+  final user = sl<SupabaseClient>().auth.currentUser;
   @override
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    print('appMetadata ===> ${user!.userMetadata}');
     super.build(context);
     return Stack(
       children: [
         ListView(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             Container(
@@ -32,7 +33,10 @@ class _ProfilePageState extends State<ProfilePage>
                 children: [
                   _buildImageProfile(context),
                   SizedBox(height: context.setHeight(10)),
-                  Text('John Doe', style: context.headlineLarge()),
+                  Text(
+                    user!.userMetadata!['full_name'],
+                    style: context.headlineLarge(),
+                  ),
                 ],
               ),
             ),

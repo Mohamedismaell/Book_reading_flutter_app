@@ -59,7 +59,7 @@ class BookRepositoryImpl extends BookRepository {
   }) async {
     try {
       await remoteDataSource.saveProgress(
-        userId: sl<User>().id,
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
         bookId: bookId,
         chapterId: chapterId,
         // pageIndex: pageIndex,
@@ -74,11 +74,54 @@ class BookRepositoryImpl extends BookRepository {
   @override
   Future<Result> getProgress() async {
     try {
-      final result = await remoteDataSource.getProgress(userId: sl<User>().id);
+      final result = await remoteDataSource.getProgress(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
       //   if (result == null) {
       //   return Result.ok(null);
       // }
       return Result.ok(result);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> getUserStats() async {
+    try {
+      final result = await remoteDataSource.getUserStats(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
+      //   if (result == null) {
+      //   return Result.ok(null);
+      // }
+      return Result.ok(result);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> updateUserStats({
+    // required String userId,
+    int? readingStreak,
+    int? readingDays,
+    int? booksCompleted,
+    int? totalReadingMinutes,
+    DateTime? lastReadAt,
+    // DateTime? updatedAt,
+  }) async {
+    try {
+      await remoteDataSource.updateUserStats(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+        readingStreak: readingStreak,
+        readingDays: readingDays,
+        booksCompleted: booksCompleted,
+        totalReadingMinutes: totalReadingMinutes,
+        lastReadAt: lastReadAt,
+        // updatedAt: updatedAt,
+      );
+      return Result.ok(null);
     } catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }

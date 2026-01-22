@@ -1,18 +1,15 @@
-import 'dart:async';
-
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
-import 'package:bookreading/features/book/domain/services/reader_pagination_service.dart';
+import 'package:bookreading/features/book/presentation/controllers/reader_session_controller.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
+import 'package:bookreading/features/book/presentation/pagination/reader_pagination_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../core/di/service_locator.dart';
 
 class ReaderView extends StatefulWidget {
   const ReaderView({super.key, required this.chapters, required this.book});
@@ -25,89 +22,28 @@ class ReaderView extends StatefulWidget {
 }
 
 class _ReaderViewState extends State<ReaderView> {
-  final PageController _pageController = PageController();
-
-  final ValueNotifier<int> _currentChapterIndex = ValueNotifier(1);
-  final ValueNotifier<bool> _areToolsVisible = ValueNotifier(true);
-  final ValueNotifier<int> _currentPageIndex = ValueNotifier(1);
-
+  late final ReaderSessionController controller;
   final ReaderPaginationService _paginationService = ReaderPaginationService();
 
   List<PageData> _pages = [];
   double? _lastSize;
-  int _lastSavedPage = 0;
-  Timer? _progressTimer;
-
   @override
   void initState() {
     super.initState();
-    _initializeProgressTimer();
-    print(' _lastSavedPage in ==> $_lastSavedPage');
-  }
-
-  @override
-  void dispose() {
-    _progressTimer?.cancel();
-    _pageController.dispose();
-    _currentChapterIndex.dispose();
-    _currentPageIndex.dispose();
-    _areToolsVisible.dispose();
-    super.dispose();
-  }
-
-  void _initializeProgressTimer() {
-    _progressTimer = Timer.periodic(
-      Duration(seconds: 5),
-      (_) => _currentPageIndex.value != _lastSavedPage ? _saveProgress() : null,
+    controller = ReaderSessionController(
+      readingProgressCubit: context.read(),
+      userStatsCubit: context.read(),
+      book: widget.book,
+      chapters: widget.chapters,
     );
-  }
-
-  void _toggleTools() {
-    _areToolsVisible.value = !_areToolsVisible.value;
+    controller.start();
   }
 
   void _handleBack() {
-    _saveProgress();
+    controller.onExit();
     if (context.canPop()) {
       context.pop();
-      print(' _lastSavedPage out==> $_lastSavedPage');
     }
-  }
-
-  void _saveProgress() {
-    if (_pages.isEmpty) return;
-
-    final currentPage = _currentPageIndex.value;
-    final chapterIndex = _currentChapterIndex.value - 1;
-
-    if (chapterIndex < 0 || chapterIndex >= widget.chapters.length) return;
-
-    final progress = ReaderPaginationService.calculateProgress(
-      pages: _pages,
-      currentPageIndex: currentPage,
-    );
-
-    final user = sl<SupabaseClient>().auth.currentUser;
-    if (user == null) {
-      print(" Cannot save progress: User not logged in.");
-      return;
-    }
-
-    context.read<ReadingProgressCubit>().saveProgress(
-      bookId: widget.book.id,
-      chapterId: widget.chapters[chapterIndex].id,
-      // currentPage: currentPage,
-      activeBook: widget.book,
-      activeChapter: widget.chapters[chapterIndex],
-      progressPercentage: progress,
-    );
-    print("✅ Progress Saved Successfully");
-    _lastSavedPage = currentPage;
-  }
-
-  void _onPageChanged(int index) {
-    _currentChapterIndex.value = _pages[index].chapterIndex;
-    _currentPageIndex.value = index + 1;
   }
 
   void _buildPagesIfNeeded(BoxConstraints constraints, TextStyle style) {
@@ -119,9 +55,15 @@ class _ReaderViewState extends State<ReaderView> {
         chapters: widget.chapters,
         style: style,
       );
-
+      controller.updatePages(_pages);
       _lastSize = constraints.maxHeight;
     }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -143,8 +85,8 @@ class _ReaderViewState extends State<ReaderView> {
   Widget _buildHeader() {
     return ReaderHeader(
       book: widget.book,
-      currentChapterIndex: _currentChapterIndex,
-      areToolsVisible: _areToolsVisible,
+      currentChapterIndex: controller.currentChapterIndex,
+      areToolsVisible: controller.areToolsVisible,
       onTap: _handleBack,
     );
   }
@@ -156,7 +98,7 @@ class _ReaderViewState extends State<ReaderView> {
       left: 0,
       right: 0,
       child: GestureDetector(
-        onTap: _toggleTools,
+        onTap: controller.toggleTools,
         child: SafeArea(
           top: false,
           child: LayoutBuilder(
@@ -170,8 +112,8 @@ class _ReaderViewState extends State<ReaderView> {
 
               return ReaderContent(
                 pages: _pages,
-                onPageChanged: _onPageChanged,
-                pageController: _pageController,
+                onPageChanged: (index) => controller.onPageChanged(index),
+                pageController: controller.pageController,
                 style: style,
               );
             },
@@ -187,8 +129,8 @@ class _ReaderViewState extends State<ReaderView> {
       left: 0,
       right: 0,
       child: ReaderFooter(
-        areToolsVisible: _areToolsVisible,
-        currentIndexNotifier: _currentPageIndex,
+        areToolsVisible: controller.areToolsVisible,
+        currentIndexNotifier: controller.currentPageIndex,
         pages: _pages,
       ),
     );
