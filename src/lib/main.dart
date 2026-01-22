@@ -12,12 +12,15 @@ import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
+import 'package:bookreading/features/book/domain/usecases/get_user_profile.dart';
 import 'package:bookreading/features/book/domain/usecases/get_user_stats.dart';
 import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
+import 'package:bookreading/features/book/domain/usecases/update_user_profile.dart';
 import 'package:bookreading/features/book/domain/usecases/update_user_stats.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
 import 'package:device_preview/device_preview.dart';
@@ -91,6 +94,10 @@ class AppBootstrap extends StatelessWidget {
         BlocProvider<UserStatsCubit>(
           create: (context) =>
               UserStatsCubit(sl<UpdateUserStats>(), sl<GetUserStats>()),
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (context) =>
+              ProfileCubit(sl<GetUserProfile>(), sl<UpdateUserProfile>()),
         ),
       ],
       child: const MyApp(),

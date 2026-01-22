@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 
-class SaveUserProfile {
+class UpdateUserProfile {
   final BookRepository repository;
-  SaveUserProfile({required this.repository});
+  UpdateUserProfile({required this.repository});
   Future<Result> call({
     File? avatarFile,
     String? language,
@@ -13,6 +13,6 @@ class SaveUserProfile {
     bool? darkMode,
     // DateTime? updatedAt,
   }) async {
-    return await repository.getBooks();
+    return await repository.updateUserProfile();
   }
 }

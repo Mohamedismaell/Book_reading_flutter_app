@@ -20,4 +20,6 @@ abstract class BookRepository {
     DateTime? lastReadAt,
   });
   Future<Result> getUserStats();
+  Future<Result> getUserProfile();
+  Future<Result> updateUserProfile();
 }

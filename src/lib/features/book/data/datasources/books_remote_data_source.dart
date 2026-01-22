@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:bookreading/features/book/data/models/profile_draft.dart';
 import 'package:bookreading/features/book/data/models/user_progress.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -116,5 +119,45 @@ class BooksRemoteDataSource {
 
     if (response == null) return null;
     return UserStatsModel.fromJson(response);
+  }
+
+  Future<ProfileModel?> getUserProfile({required String userId}) async {
+    final response = await supabase
+        .from('profile')
+        .select()
+        .eq('user_id', userId)
+        .maybeSingle();
+
+    if (response == null) return null;
+    return ProfileModel.fromJson(response);
+  }
+
+  Future<void> updateUserProfile({
+    required String userId,
+    File? avatarFile,
+    String? language,
+    double? textScale,
+    bool? darkMode,
+  }) async {
+    final updates = <String, dynamic>{};
+
+    if (avatarFile != null) {
+      updates['avatar_url'] = avatarFile.path;
+    }
+    if (language != null) {
+      updates['language'] = language;
+    }
+    if (textScale != null) {
+      updates['text_scale'] = textScale;
+    }
+    if (darkMode != null) {
+      updates['dark_mode'] = darkMode;
+    }
+
+    if (updates.isEmpty) return;
+
+    // updates['updated_at'] = DateTime.now().toIso8601String();
+
+    await supabase.from('users').update(updates).eq('id', userId);
   }
 }

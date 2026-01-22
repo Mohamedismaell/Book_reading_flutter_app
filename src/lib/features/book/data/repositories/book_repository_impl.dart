@@ -130,6 +130,21 @@ class BookRepositoryImpl extends BookRepository {
   }
 
   @override
+  Future<Result> getUserProfile() async {
+    try {
+      final result = await remoteDataSource.getUserProfile(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
+      //   if (result == null) {
+      //   return Result.ok(null);
+      // }
+      return Result.ok(result);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
   Future<Result> updateUserProfile({
     File? avatarFile,
     String? language,

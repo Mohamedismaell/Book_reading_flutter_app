@@ -10,9 +10,10 @@ import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
 import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
+import 'package:bookreading/features/book/domain/usecases/get_user_profile.dart';
 import 'package:bookreading/features/book/domain/usecases/get_user_stats.dart';
 import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
-import 'package:bookreading/features/book/domain/usecases/save_user_profile.dart';
+import 'package:bookreading/features/book/domain/usecases/update_user_profile.dart';
 import 'package:bookreading/features/book/domain/usecases/update_user_stats.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
@@ -122,8 +123,12 @@ Future<void> initServiceLocator() async {
     () => GetUserStats(repository: sl<BookRepository>()),
   );
   sl.registerLazySingleton(
-    () => SaveUserProfile(repository: sl<BookRepository>()),
+    () => GetUserProfile(repository: sl<BookRepository>()),
   );
+  sl.registerLazySingleton(
+    () => UpdateUserProfile(repository: sl<BookRepository>()),
+  );
+
   //! Cubits
   sl.registerLazySingleton(
     () => AuthCubit(
@@ -148,6 +153,8 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => UserStatsCubit(sl<UpdateUserStats>(), sl<GetUserStats>()),
   );
-  sl.registerLazySingleton(() => ProfileCubit(sl<SaveUserProfile>()));
+  sl.registerLazySingleton(
+    () => ProfileCubit(sl<GetUserProfile>(), sl<UpdateUserProfile>()),
+  );
   sl.registerLazySingleton(() => ThemeCubit());
 }
