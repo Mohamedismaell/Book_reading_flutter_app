@@ -18,7 +18,7 @@ import 'package:bookreading/features/book/domain/usecases/update_user_stats.dart
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/profile/user_stats_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';

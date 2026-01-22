@@ -128,7 +128,16 @@ Widget _buildBookInfo(
   ChapterModel chapter,
   UserProgressModel progress,
 ) {
-  final lastRead = DateTime.now().difference(progress.updatedAt).inMinutes;
+  final lastRead = DateTime.now().difference(progress.updatedAt);
+  String formatTime(Duration duration) {
+    if (duration.inMinutes < 1) return 'Just now';
+    if (duration.inHours < 1) return '${duration.inMinutes}m ago';
+    if (duration.inDays < 1) return '${duration.inHours}h ago';
+    if (duration.inDays < 30) return '${duration.inDays}d ago';
+    if (duration.inDays < 365) return '${duration.inDays ~/ 30}mo ago';
+    return '${duration.inDays ~/ 365}y ago';
+  }
+
   return Expanded(
     child: Padding(
       padding: EdgeInsets.symmetric(vertical: context.setMinSize(15)),
@@ -141,9 +150,18 @@ Widget _buildBookInfo(
           SizedBox(height: context.setMinSize(12)),
           Text(chapter.title, style: context.bodyLarge()),
           SizedBox(height: context.setMinSize(12)),
-          Text(
-            'Last Read: ${lastRead.toString()} min ago',
-            style: context.bodyMedium(),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: 'Last Read: ', style: context.bodyMedium()),
+                TextSpan(
+                  text: formatTime(lastRead),
+                  style: context.bodyMedium().copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: context.setMinSize(12)),
           Expanded(child: _buildBookProgress(context, chapter, progress)),

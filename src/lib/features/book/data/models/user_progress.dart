@@ -32,7 +32,7 @@ class UserProgressModel {
           ? ChapterModel.fromJson(json['chapters'])
           : null,
       progressPercentage: json['progress'] != null
-          ? json['progress'] as double
+          ? (json['progress'] as num).toDouble()
           : 0.0,
     );
   }

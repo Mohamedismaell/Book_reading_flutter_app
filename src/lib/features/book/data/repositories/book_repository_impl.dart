@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bookreading/core/connections/network_info.dart';
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/core/di/service_locator.dart';
@@ -120,6 +122,28 @@ class BookRepositoryImpl extends BookRepository {
         totalReadingMinutes: totalReadingMinutes,
         lastReadAt: lastReadAt,
         // updatedAt: updatedAt,
+      );
+      return Result.ok(null);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> updateUserProfile({
+    File? avatarFile,
+    String? language,
+    double? textScale,
+    bool? darkMode,
+    // DateTime? updatedAt,
+  }) async {
+    try {
+      await remoteDataSource.updateUserProfile(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+        avatarFile: avatarFile,
+        language: language,
+        textScale: textScale,
+        darkMode: darkMode,
       );
       return Result.ok(null);
     } catch (e) {

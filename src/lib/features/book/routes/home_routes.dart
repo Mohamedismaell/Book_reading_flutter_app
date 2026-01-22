@@ -2,7 +2,7 @@ import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dar
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/profile/user_stats_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/screens/chapter_reader_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

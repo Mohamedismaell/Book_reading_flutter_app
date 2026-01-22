@@ -4,7 +4,7 @@ import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/book/domain/services/reading_progress_calculator.dart';
-import 'package:bookreading/features/book/presentation/cubit/profile/user_stats_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
 import 'package:flutter/material.dart';
 
