@@ -128,7 +128,7 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => UploadAvatar(repository: sl<BookRepository>()),
   );
-  sl.registerLazySingleton(() => GetAvatar(repository: sl<BookRepository>()));
+  // sl.registerLazySingleton(() => GetAvatar(repository: sl<BookRepository>()));
 
   //! Cubits
   sl.registerLazySingleton(
@@ -159,7 +159,7 @@ Future<void> initServiceLocator() async {
       sl<GetUserProfile>(),
       sl<UpdateUserProfile>(),
       sl<UploadAvatar>(),
-      sl<GetAvatar>(),
+      // sl<GetAvatar>(),
     ),
   );
   sl.registerLazySingleton(() => ThemeCubit());

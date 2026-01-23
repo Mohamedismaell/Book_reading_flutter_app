@@ -97,7 +97,7 @@ class AppBootstrap extends StatelessWidget {
             sl<GetUserProfile>(),
             sl<UpdateUserProfile>(),
             sl<UploadAvatar>(),
-            sl<GetAvatar>(),
+            // sl<GetAvatar>(),
           ),
         ),
       ],

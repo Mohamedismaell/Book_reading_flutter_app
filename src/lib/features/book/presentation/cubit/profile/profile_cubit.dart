@@ -13,17 +13,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     this.getUserProfile,
     this.updateUserProfile,
     this.uploadAvatar,
-    this.getAvatar,
+    // this.getAvatar,
   ) : super(ProfileInitial());
   final UpdateUserProfile updateUserProfile;
   final GetUserProfile getUserProfile;
   final UploadAvatar uploadAvatar;
-  final GetAvatar getAvatar;
+  // final GetAvatar getAvatar;
   final ProfileModel profileModel = const ProfileModel();
   ProfileDraft _draft = const ProfileDraft();
   Timer? _saveTimer;
   bool _isSaving = false;
   bool _needResave = false;
+
   void updateDraft({File? avatarFile, String? language, double? textScale}) {
     print(' Draft before  ====>  $_draft');
     _draft = _draft.copyWith(
@@ -98,19 +99,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     final result = await getUserProfile.call();
     result.when(
       success: (userProfile) async {
-        String? signedUrl;
-        if (userProfile.avatarUrl != null) {
-          final avatarResult = await getAvatar.call(
-            avatarPath: userProfile.avatarUrl!,
-          );
-          avatarResult.when(
-            success: (url) => signedUrl = url,
-            failure: (error) {
-              print('Get avatar failed: ${error.errMessage}');
-            },
-          );
-        }
-        emit(ProfileLoaded(profile: userProfile, avatarSignedUrl: signedUrl));
+        emit(ProfileLoaded(profile: userProfile));
       },
       failure: (error) => emit(ProfileError(message: error.errMessage)),
     );

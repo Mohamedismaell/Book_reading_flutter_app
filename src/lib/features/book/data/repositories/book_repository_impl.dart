@@ -179,16 +179,16 @@ class BookRepositoryImpl extends BookRepository {
     }
   }
 
-  @override
-  Future<Result> getAvatar({required String avatarPath}) async {
-    try {
-      final result = await remoteDataSource.getAvatar(avatarPath);
-      //   if (result == null) {
-      //   return Result.ok(null);
-      // }
-      return Result.ok(result);
-    } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
-    }
-  }
+  // @override
+  // Future<Result> getAvatar({required String avatarPath}) async {
+  //   try {
+  //     final result = await remoteDataSource.getAvatar(avatarPath);
+  //     //   if (result == null) {
+  //     //   return Result.ok(null);
+  //     // }
+  //     return Result.ok(result);
+  //   } catch (e) {
+  //     return Result.error(Failure(errMessage: e.toString()));
+  //   }
+  // }
 }

@@ -30,5 +30,5 @@ abstract class BookRepository {
     bool? darkMode,
   });
   Future<Result> uploadAvatar({required File avatarFile});
-  Future<Result> getAvatar({required String avatarPath});
+  // Future<Result> getAvatar({required String avatarPath});
 }

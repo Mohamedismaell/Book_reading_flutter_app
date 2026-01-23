@@ -11,10 +11,10 @@ class UploadAvatar {
   }
 }
 
-class GetAvatar {
-  final BookRepository repository;
-  GetAvatar({required this.repository});
-  Future<Result> call({required String avatarPath}) async {
-    return await repository.getAvatar(avatarPath: avatarPath);
-  }
-}
+// class GetAvatar {
+//   final BookRepository repository;
+//   GetAvatar({required this.repository});
+//   Future<Result> call({required String avatarPath}) async {
+//     return await repository.getAvatar(avatarPath: avatarPath);
+//   }
+// }

@@ -160,24 +160,21 @@ class BooksRemoteDataSource {
     required String userId,
   }) async {
     final ext = avatarFile.path.split('.').last;
-    final path = '$userId/avatar.$ext';
+    final path = '$userId/avatar_${DateTime.now().millisecondsSinceEpoch}.$ext';
+
     print('UPLOAD PATH => $path');
     await supabase.storage
         .from('avatars')
         .upload(path, avatarFile, fileOptions: const FileOptions(upsert: true));
     final publicUrl = supabase.storage.from('avatars').getPublicUrl(path);
-    // await supabase
-    //     .from('profiles')
-    //     .update({'avatar_url': path})
-    //     .eq('id', userId);
     return publicUrl;
   }
 
-  Future<String> getAvatar(String avatarPath) async {
-    final supabase = Supabase.instance.client;
+  // Future<String> getAvatar(String avatarPath) async {
+  //   final supabase = Supabase.instance.client;
 
-    return await supabase.storage
-        .from('avatars')
-        .createSignedUrl(avatarPath, 3600);
-  }
+  //   return await supabase.storage
+  //       .from('avatars')
+  //       .createSignedUrl(avatarPath, 3600);
+  // }
 }

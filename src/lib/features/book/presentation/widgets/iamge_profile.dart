@@ -83,7 +83,9 @@ class _ImageProfileState extends State<ImageProfile> {
             radius: 50,
             backgroundImage: file != null
                 ? FileImage(file)
-                : NetworkImage(profile.avatarUrl!),
+                : profile.avatarUrl != 'assets/images/deafult_user_cover.png'
+                ? NetworkImage(profile.avatarUrl!)
+                : AssetImage(profile.avatarUrl!),
             backgroundColor: Colors.transparent,
           ),
         ),
