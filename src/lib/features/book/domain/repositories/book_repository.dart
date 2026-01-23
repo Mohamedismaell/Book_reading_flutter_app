@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bookreading/core/connections/result.dart';
 
 abstract class BookRepository {
@@ -27,4 +29,6 @@ abstract class BookRepository {
     double? textScale,
     bool? darkMode,
   });
+  Future<Result> uploadAvatar({required File avatarFile});
+  Future<Result> getAvatar({required String avatarPath});
 }

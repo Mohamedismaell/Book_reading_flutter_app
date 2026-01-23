@@ -19,3 +19,19 @@ class UpdateUserProfile {
     );
   }
 }
+
+class GetUserProfile {
+  final BookRepository repository;
+  GetUserProfile({required this.repository});
+  Future<Result> call() async {
+    return await repository.getUserProfile();
+  }
+}
+
+class GetUserStats {
+  final BookRepository repository;
+  GetUserStats({required this.repository});
+  Future<Result> call() async {
+    return await repository.getUserStats();
+  }
+}

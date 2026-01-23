@@ -16,7 +16,8 @@ final class ProfileLoading extends ProfileState {}
 
 final class ProfileLoaded extends ProfileState {
   final ProfileModel profile;
-  ProfileLoaded({required this.profile});
+  final String? avatarSignedUrl;
+  ProfileLoaded({required this.profile, this.avatarSignedUrl});
 }
 
 final class ProfileError extends ProfileState {

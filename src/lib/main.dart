@@ -8,15 +8,12 @@ import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
-import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
-import 'package:bookreading/features/book/domain/usecases/get_books_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/get_chapters_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
-import 'package:bookreading/features/book/domain/usecases/get_user_profile.dart';
-import 'package:bookreading/features/book/domain/usecases/get_user_stats.dart';
-import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
-import 'package:bookreading/features/book/domain/usecases/update_user_profile.dart';
-import 'package:bookreading/features/book/domain/usecases/update_user_stats.dart';
+import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/chapters_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/progress_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/user_profile_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/user_stats_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/avatar_usecase.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
@@ -96,8 +93,12 @@ class AppBootstrap extends StatelessWidget {
               UserStatsCubit(sl<UpdateUserStats>(), sl<GetUserStats>()),
         ),
         BlocProvider<ProfileCubit>(
-          create: (context) =>
-              ProfileCubit(sl<GetUserProfile>(), sl<UpdateUserProfile>()),
+          create: (context) => ProfileCubit(
+            sl<GetUserProfile>(),
+            sl<UpdateUserProfile>(),
+            sl<UploadAvatar>(),
+            sl<GetAvatar>(),
+          ),
         ),
       ],
       child: const MyApp(),

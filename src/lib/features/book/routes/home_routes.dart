@@ -25,7 +25,7 @@ class HomeRoutes {
           path: AppRoutes.home,
           builder: (context, state) {
             context.read<UserStatsCubit>().saveUserStats();
-            context.read<ProfileCubit>().getProfile();
+            context.read<ProfileCubit>().getProfile(firstTime: true);
 
             return const TabsShell();
           },

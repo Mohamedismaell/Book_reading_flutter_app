@@ -5,7 +5,6 @@ import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/core/di/service_locator.dart';
 import 'package:bookreading/core/errors/failure.dart';
 import 'package:bookreading/features/book/data/datasources/books_remote_data_source.dart';
-
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -135,8 +134,9 @@ class BookRepositoryImpl extends BookRepository {
       final result = await remoteDataSource.getUserProfile(
         userId: sl<SupabaseClient>().auth.currentUser!.id,
       );
-      //   if (result == null) {
-      //   return Result.ok(null);
+
+      //    if (response['avatar_url'] != null) {
+      //   response['avatar_url'] = await getAvatar(response['avatar_url'] as String);
       // }
       return Result.ok(result);
     } catch (e) {
@@ -161,6 +161,32 @@ class BookRepositoryImpl extends BookRepository {
         darkMode: darkMode,
       );
       return Result.ok(null);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> uploadAvatar({required File avatarFile}) async {
+    try {
+      final result = await remoteDataSource.uploadAvatar(
+        avatarFile: avatarFile,
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
+      return Result.ok(result);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> getAvatar({required String avatarPath}) async {
+    try {
+      final result = await remoteDataSource.getAvatar(avatarPath);
+      //   if (result == null) {
+      //   return Result.ok(null);
+      // }
+      return Result.ok(result);
     } catch (e) {
       return Result.error(Failure(errMessage: e.toString()));
     }

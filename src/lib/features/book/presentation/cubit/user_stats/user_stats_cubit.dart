@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
-import 'package:bookreading/features/book/domain/usecases/get_user_stats.dart';
-import 'package:bookreading/features/book/domain/usecases/update_user_stats.dart';
+import 'package:bookreading/features/book/domain/usecases/user_profile_usecase.dart';
+import 'package:bookreading/features/book/domain/usecases/user_stats_usecase.dart';
 import 'package:meta/meta.dart';
 
 part 'user_stats_state.dart';

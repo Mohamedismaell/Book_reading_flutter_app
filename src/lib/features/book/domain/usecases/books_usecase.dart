@@ -8,3 +8,11 @@ class GetBooksUseCase {
     return await repository.getBooks();
   }
 }
+
+class GetBooksIdUseCase {
+  final BookRepository repository;
+  GetBooksIdUseCase({required this.repository});
+  Future<Result> call(int bookId) async {
+    return await repository.getBookById(bookId);
+  }
+}

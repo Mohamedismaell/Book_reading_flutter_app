@@ -1,19 +1,24 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
-import 'package:bookreading/features/book/domain/usecases/get_user_profile.dart';
-import 'package:bookreading/features/book/domain/usecases/update_user_profile.dart';
-import 'package:bookreading/features/book/data/models/profile_draft.dart';
+import 'package:bookreading/features/book/domain/usecases/user_profile_usecase.dart';
+import 'package:bookreading/features/book/data/models/profile.dart';
+import 'package:bookreading/features/book/domain/usecases/avatar_usecase.dart';
 import 'package:bookreading/features/book/presentation/models/profile_draft.dart';
 import 'package:meta/meta.dart';
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit(this.getUserProfile, this.updateUserProfile)
-    : super(ProfileInitial());
+  ProfileCubit(
+    this.getUserProfile,
+    this.updateUserProfile,
+    this.uploadAvatar,
+    this.getAvatar,
+  ) : super(ProfileInitial());
   final UpdateUserProfile updateUserProfile;
   final GetUserProfile getUserProfile;
+  final UploadAvatar uploadAvatar;
+  final GetAvatar getAvatar;
   final ProfileModel profileModel = const ProfileModel();
   ProfileDraft _draft = const ProfileDraft();
   Timer? _saveTimer;
@@ -30,8 +35,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     // emit(ProfileSaving(draft: _draft));
     if (_isSaving) {
       _needResave = true;
-      _scheduleSave();
     }
+    _scheduleSave();
   }
 
   void _scheduleSave() {
@@ -50,13 +55,29 @@ class ProfileCubit extends Cubit<ProfileState> {
     _needResave = false;
     final draftToSave = _draft;
     try {
+      String? avatarPath;
+
+      //this do the upload
+      if (draftToSave.avatarFile != null) {
+        final result = await uploadAvatar.call(
+          avatarFile: draftToSave.avatarFile!,
+        );
+        result.when(
+          success: (path) => avatarPath = path,
+          failure: (error) {
+            print('Avatar upload failed: ${error.errMessage}');
+            _needResave = true;
+          },
+        );
+      }
+
       await updateUserProfile.call(
-        avatarUrl: null, // real URL after upload
+        avatarUrl: avatarPath,
         language: draftToSave.language,
         textScale: draftToSave.textScale,
       );
 
-      await getProfile();
+      await getProfile(firstTime: false);
       if (!_needResave) {
         _draft = const ProfileDraft();
       }
@@ -71,11 +92,26 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> getProfile() async {
-    emit(ProfileLoading());
+  Future<void> getProfile({required bool firstTime}) async {
+    print('getProfile Called ');
+    if (firstTime) emit(ProfileLoading());
     final result = await getUserProfile.call();
     result.when(
-      success: (userProfile) => emit(ProfileLoaded(profile: userProfile)),
+      success: (userProfile) async {
+        String? signedUrl;
+        if (userProfile.avatarUrl != null) {
+          final avatarResult = await getAvatar.call(
+            avatarPath: userProfile.avatarUrl!,
+          );
+          avatarResult.when(
+            success: (url) => signedUrl = url,
+            failure: (error) {
+              print('Get avatar failed: ${error.errMessage}');
+            },
+          );
+        }
+        emit(ProfileLoaded(profile: userProfile, avatarSignedUrl: signedUrl));
+      },
       failure: (error) => emit(ProfileError(message: error.errMessage)),
     );
   }

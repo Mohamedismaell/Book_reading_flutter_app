@@ -6,7 +6,7 @@ class ProfileModel {
   const ProfileModel({this.avatarUrl, this.language, this.textScale});
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      avatarUrl: json['avatar_file'] ?? 'assets/images/deafult_user_cover.png',
+      avatarUrl: json['avatar_url'] ?? 'assets/images/deafult_user_cover.png',
       language: json['language'] ?? 'en',
       textScale: json['text_scale'] ?? 18,
     );

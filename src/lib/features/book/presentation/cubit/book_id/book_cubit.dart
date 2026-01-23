@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/domain/usecases/get_book_by_id.dart';
+import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
 import 'package:meta/meta.dart';
 
 part 'book_state.dart';

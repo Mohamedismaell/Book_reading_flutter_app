@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bookreading/features/book/data/models/profile_draft.dart';
+import 'package:bookreading/features/book/data/models/profile.dart';
 import 'package:bookreading/features/book/data/models/user_progress.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -129,6 +129,7 @@ class BooksRemoteDataSource {
         .maybeSingle();
 
     if (response == null) return null;
+
     return ProfileModel.fromJson(response);
   }
 
@@ -152,5 +153,31 @@ class BooksRemoteDataSource {
     //     if (response.isEmpty) {
     //   throw Exception('Profile row not found');
     // }
+  }
+
+  Future<String> uploadAvatar({
+    required File avatarFile,
+    required String userId,
+  }) async {
+    final ext = avatarFile.path.split('.').last;
+    final path = '$userId/avatar.$ext';
+    print('UPLOAD PATH => $path');
+    await supabase.storage
+        .from('avatars')
+        .upload(path, avatarFile, fileOptions: const FileOptions(upsert: true));
+    final publicUrl = supabase.storage.from('avatars').getPublicUrl(path);
+    // await supabase
+    //     .from('profiles')
+    //     .update({'avatar_url': path})
+    //     .eq('id', userId);
+    return publicUrl;
+  }
+
+  Future<String> getAvatar(String avatarPath) async {
+    final supabase = Supabase.instance.client;
+
+    return await supabase.storage
+        .from('avatars')
+        .createSignedUrl(avatarPath, 3600);
   }
 }

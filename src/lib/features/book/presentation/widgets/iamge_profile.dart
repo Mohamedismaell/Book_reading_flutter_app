@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book/data/models/profile_draft.dart';
+import 'package:bookreading/features/book/data/models/profile.dart';
 import 'package:bookreading/features/book/presentation/controllers/pick_image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,13 +21,12 @@ class _ImageProfileState extends State<ImageProfile> {
   void initState() {
     _pickImageController = PickImageController(profileCubit: context.read());
     avatarNotifier = ValueNotifier(null);
-    // context.read<UserStatsCubit>().saveUserStats();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    // _pickImageController.dispose();
     avatarNotifier.dispose();
     super.dispose();
   }
@@ -84,7 +83,7 @@ class _ImageProfileState extends State<ImageProfile> {
             radius: 50,
             backgroundImage: file != null
                 ? FileImage(file)
-                : AssetImage(profile.avatarUrl!),
+                : NetworkImage(profile.avatarUrl!),
             backgroundColor: Colors.transparent,
           ),
         ),

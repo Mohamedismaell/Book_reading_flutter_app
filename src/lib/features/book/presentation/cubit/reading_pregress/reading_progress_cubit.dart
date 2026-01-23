@@ -2,8 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/data/models/user_progress.dart';
-import 'package:bookreading/features/book/domain/usecases/get_reading_progress.dart';
-import 'package:bookreading/features/book/domain/usecases/insert_reading_pregress.dart';
+import 'package:bookreading/features/book/domain/usecases/progress_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 

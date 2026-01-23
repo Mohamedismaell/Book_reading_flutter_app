@@ -3,7 +3,7 @@ import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dar
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/core/widget/theme_icon.dart';
-import 'package:bookreading/features/book/data/models/profile_draft.dart';
+import 'package:bookreading/features/book/data/models/profile.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
 import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
