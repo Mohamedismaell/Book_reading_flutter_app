@@ -123,9 +123,9 @@ class BooksRemoteDataSource {
 
   Future<ProfileModel?> getUserProfile({required String userId}) async {
     final response = await supabase
-        .from('profile')
+        .from('profiles')
         .select()
-        .eq('user_id', userId)
+        .eq('id', userId)
         .maybeSingle();
 
     if (response == null) return null;
@@ -134,30 +134,23 @@ class BooksRemoteDataSource {
 
   Future<void> updateUserProfile({
     required String userId,
-    File? avatarFile,
+    String? avatarUrl,
     String? language,
     double? textScale,
     bool? darkMode,
   }) async {
     final updates = <String, dynamic>{};
 
-    if (avatarFile != null) {
-      updates['avatar_url'] = avatarFile.path;
-    }
-    if (language != null) {
-      updates['language'] = language;
-    }
-    if (textScale != null) {
-      updates['text_scale'] = textScale;
-    }
-    if (darkMode != null) {
-      updates['dark_mode'] = darkMode;
-    }
+    if (avatarUrl != null) updates['avatar_url'] = avatarUrl;
+    if (language != null) updates['language'] = language;
+    if (textScale != null) updates['text_scale'] = textScale;
+    if (darkMode != null) updates['dark_mode'] = darkMode;
 
     if (updates.isEmpty) return;
 
-    // updates['updated_at'] = DateTime.now().toIso8601String();
-
-    await supabase.from('users').update(updates).eq('id', userId);
+    await supabase.from('profiles').update(updates).eq('id', userId);
+    //     if (response.isEmpty) {
+    //   throw Exception('Profile row not found');
+    // }
   }
 }

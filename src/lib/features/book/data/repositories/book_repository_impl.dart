@@ -146,7 +146,7 @@ class BookRepositoryImpl extends BookRepository {
 
   @override
   Future<Result> updateUserProfile({
-    File? avatarFile,
+    String? avatarUrl,
     String? language,
     double? textScale,
     bool? darkMode,
@@ -155,7 +155,7 @@ class BookRepositoryImpl extends BookRepository {
     try {
       await remoteDataSource.updateUserProfile(
         userId: sl<SupabaseClient>().auth.currentUser!.id,
-        avatarFile: avatarFile,
+        avatarUrl: avatarUrl,
         language: language,
         textScale: textScale,
         darkMode: darkMode,

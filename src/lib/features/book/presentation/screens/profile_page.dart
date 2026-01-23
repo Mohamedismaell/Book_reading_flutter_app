@@ -3,10 +3,11 @@ import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dar
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/core/widget/theme_icon.dart';
+import 'package:bookreading/features/book/data/models/profile_draft.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
+import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/widgets/iamge_profile.dart';
-import 'package:bookreading/features/book/presentation/widgets/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -30,19 +31,35 @@ class _ProfilePageState extends State<ProfilePage>
     // print('userMetadata ===> ${user!.userMetadata}');
     super.build(context);
     return BlocBuilder<UserStatsCubit, UserStatsState>(
-      builder: (context, state) {
-        return switch (state) {
-          UserStatsLoading() || UserStatsInitial() => _buildLoadingIndicator(),
-          UserStatsError(:final message) => _buildErrorMessage(message),
-          UserStatsLoaded(:final userStats) ||
-          UserStatsLoaded(:final userStats) => _buildStateUI(userStats),
-          // _ => const SizedBox.shrink(),
-        };
+      builder: (context, userState) {
+        return BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, profileState) {
+            return switch ((profileState, userState)) {
+              (ProfileLoading(), _) ||
+              (_, UserStatsLoading()) ||
+              (ProfileInitial(), _) ||
+              (_, UserStatsInitial()) => _buildLoadingIndicator(),
+
+              (ProfileError(:final message), _) => _buildErrorMessage(message),
+
+              (_, UserStatsError(:final message)) => _buildErrorMessage(
+                message,
+              ),
+              (
+                ProfileLoaded(:final profile),
+                UserStatsLoaded(:final userStats),
+              ) =>
+                _buildStateUI(userStats, profile),
+
+              _ => const SizedBox.shrink(),
+            };
+          },
+        );
       },
     );
   }
 
-  Widget _buildStateUI(UserStatsModel userStats) {
+  Widget _buildStateUI(UserStatsModel userStats, ProfileModel profile) {
     return Stack(
       children: [
         ListView(
@@ -52,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage>
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  ImageProfile(),
+                  ImageProfile(profile: profile),
                   SizedBox(height: context.setHeight(10)),
                   Text(
                     user!.userMetadata!['full_name'],

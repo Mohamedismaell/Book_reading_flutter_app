@@ -21,5 +21,10 @@ abstract class BookRepository {
   });
   Future<Result> getUserStats();
   Future<Result> getUserProfile();
-  Future<Result> updateUserProfile();
+  Future<Result> updateUserProfile({
+    String? avatarUrl,
+    String? language,
+    double? textScale,
+    bool? darkMode,
+  });
 }

@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
+
 import 'package:bloc/bloc.dart';
-import 'package:bookreading/features/auth/data/models/user_app.dart';
 import 'package:bookreading/features/book/domain/usecases/get_user_profile.dart';
 import 'package:bookreading/features/book/domain/usecases/update_user_profile.dart';
 import 'package:bookreading/features/book/data/models/profile_draft.dart';
+import 'package:bookreading/features/book/presentation/models/profile_draft.dart';
 import 'package:meta/meta.dart';
 part 'profile_state.dart';
 
@@ -13,36 +15,74 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UpdateUserProfile updateUserProfile;
   final GetUserProfile getUserProfile;
   final ProfileModel profileModel = const ProfileModel();
-
-  void updateDraft({
-    File? avatarFile,
-    String? language,
-    double? textScale,
-    bool? darkMode,
-  }) {
-    profileModel.copyWith(
+  ProfileDraft _draft = const ProfileDraft();
+  Timer? _saveTimer;
+  bool _isSaving = false;
+  bool _needResave = false;
+  void updateDraft({File? avatarFile, String? language, double? textScale}) {
+    print(' Draft before  ====>  $_draft');
+    _draft = _draft.copyWith(
       avatarFile: avatarFile,
       language: language,
       textScale: textScale,
-      darkMode: darkMode,
     );
+    print(' Draft After ====>  $_draft');
+    // emit(ProfileSaving(draft: _draft));
+    if (_isSaving) {
+      _needResave = true;
+      _scheduleSave();
+    }
   }
 
-  Future<void> saveProfile() async {
-    if (profileModel.hasChanges) return;
-    emit(ProfileSaving());
-    await updateUserProfile.call(
-      avatarFile: profileModel.avatarFile,
-      language: profileModel.language,
-      textScale: profileModel.textScale,
-      darkMode: profileModel.darkMode,
-    );
+  void _scheduleSave() {
+    _saveTimer?.cancel();
 
+    _saveTimer = Timer(const Duration(milliseconds: 800), () {
+      _backgroundSave();
+    });
+  }
+
+  Future<void> _backgroundSave() async {
+    if (_isSaving) return;
+    if (!_draft.hasChanges) return;
+
+    _isSaving = true;
+    _needResave = false;
+    final draftToSave = _draft;
+    try {
+      await updateUserProfile.call(
+        avatarUrl: null, // real URL after upload
+        language: draftToSave.language,
+        textScale: draftToSave.textScale,
+      );
+
+      await getProfile();
+      if (!_needResave) {
+        _draft = const ProfileDraft();
+      }
+    } catch (e) {
+      print('Background save failed: $e');
+    } finally {
+      _isSaving = false;
+
+      if (_needResave) {
+        _backgroundSave();
+      }
+    }
+  }
+
+  Future<void> getProfile() async {
     emit(ProfileLoading());
     final result = await getUserProfile.call();
     result.when(
-      success: (userProfile) => emit(ProfileLoaded(userProfile: userProfile)),
+      success: (userProfile) => emit(ProfileLoaded(profile: userProfile)),
       failure: (error) => emit(ProfileError(message: error.errMessage)),
     );
+  }
+
+  @override
+  Future<void> close() {
+    _saveTimer?.cancel();
+    return super.close();
   }
 }

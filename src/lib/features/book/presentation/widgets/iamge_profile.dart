@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/features/book/data/models/profile_draft.dart';
 import 'package:bookreading/features/book/presentation/controllers/pick_image_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ImageProfile extends StatefulWidget {
-  const ImageProfile({super.key});
-
+  const ImageProfile({super.key, required this.profile});
+  final ProfileModel profile;
   @override
   State<ImageProfile> createState() => _ImageProfileState();
 }
@@ -17,7 +19,7 @@ class _ImageProfileState extends State<ImageProfile> {
   late final ValueNotifier<File?> avatarNotifier;
   @override
   void initState() {
-    _pickImageController = PickImageController();
+    _pickImageController = PickImageController(profileCubit: context.read());
     avatarNotifier = ValueNotifier(null);
     // context.read<UserStatsCubit>().saveUserStats();
     super.initState();
@@ -64,6 +66,7 @@ class _ImageProfileState extends State<ImageProfile> {
       context,
       () => _showPickImageDialog(context, _pickImageController),
       avatarNotifier,
+      widget.profile,
     );
   }
 
@@ -71,6 +74,7 @@ class _ImageProfileState extends State<ImageProfile> {
     BuildContext context,
     VoidCallback onTap,
     ValueNotifier<File?> avatarNotifier,
+    ProfileModel profile,
   ) {
     return Stack(
       children: [
@@ -80,7 +84,7 @@ class _ImageProfileState extends State<ImageProfile> {
             radius: 50,
             backgroundImage: file != null
                 ? FileImage(file)
-                : AssetImage('assets/images/back_ground_auth.jpg'),
+                : AssetImage(profile.avatarUrl!),
             backgroundColor: Colors.transparent,
           ),
         ),

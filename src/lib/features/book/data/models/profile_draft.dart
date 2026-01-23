@@ -1,43 +1,32 @@
-import 'dart:io';
-
 class ProfileModel {
-  final File? avatarFile;
+  final String? avatarUrl;
   final String? language;
   final double? textScale;
-  final bool? darkMode;
 
-  const ProfileModel({
-    this.avatarFile,
-    this.language,
-    this.textScale,
-    this.darkMode,
-  });
+  const ProfileModel({this.avatarUrl, this.language, this.textScale});
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      avatarFile: json['avatar_file'] as File,
-      language: json['language'] as String,
-      textScale: json['text_scale'] as double,
-      darkMode: json['dark_mode'] as bool,
+      avatarUrl: json['avatar_file'] ?? 'assets/images/deafult_user_cover.png',
+      language: json['language'] ?? 'en',
+      textScale: json['text_scale'] ?? 18,
     );
   }
 
   ProfileModel copyWith({
-    File? avatarFile,
+    String? avatarUrl,
     String? language,
     double? textScale,
-    bool? darkMode,
   }) {
     return ProfileModel(
-      avatarFile: avatarFile ?? this.avatarFile,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
       language: language ?? this.language,
       textScale: textScale ?? this.textScale,
-      darkMode: darkMode ?? this.darkMode,
     );
   }
 
+  @override
+  String toString() =>
+      'ProfileModel(avatarUrl: $avatarUrl, language: $language, textScale: $textScale)';
   bool get hasChanges =>
-      avatarFile != null ||
-      language != null ||
-      textScale != null ||
-      darkMode != null;
+      avatarUrl != null || language != null || textScale != null;
 }

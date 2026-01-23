@@ -5,16 +5,18 @@ sealed class ProfileState {}
 
 final class ProfileInitial extends ProfileState {}
 
-final class ProfileSaving extends ProfileState {}
+// final class ProfileSaving extends ProfileState {
+//   final ProfileDraft draft;
+//   ProfileSaving({required this.draft});
+// }
 
-final class ProfileSaved extends ProfileState {}
+// final class ProfileSaved extends ProfileState {}
 
 final class ProfileLoading extends ProfileState {}
 
 final class ProfileLoaded extends ProfileState {
-  final UserProfile userProfile;
-
-  ProfileLoaded({required this.userProfile});
+  final ProfileModel profile;
+  ProfileLoaded({required this.profile});
 }
 
 final class ProfileError extends ProfileState {

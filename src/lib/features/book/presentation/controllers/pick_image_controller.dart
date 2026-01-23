@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PickImageController {
+  PickImageController({required ProfileCubit profileCubit})
+    : _profileCubit = profileCubit;
+  final ProfileCubit _profileCubit;
   final ImagePicker _picker = ImagePicker();
 
   Future<File?> pickFromGallery() async {
@@ -43,6 +47,8 @@ class PickImageController {
         IOSUiSettings(title: 'Edit Photo'),
       ],
     );
-    return cropped != null ? File(cropped.path) : null;
+    if (cropped == null) return null;
+    _profileCubit.updateDraft(avatarFile: File(cropped.path));
+    return File(cropped.path);
   }
 }
