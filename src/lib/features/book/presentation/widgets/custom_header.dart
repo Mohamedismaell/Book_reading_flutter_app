@@ -1,20 +1,24 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_marks/book_marks_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomHeader extends StatelessWidget {
   const CustomHeader({
     super.key,
+    this.author,
+    required this.bookId,
     required this.isheader,
     this.title,
-    this.author,
   });
-
+  final int bookId;
   final String? title;
   final String? author;
   final bool isheader;
+
   @override
   Widget build(BuildContext context) {
     //Todo fix theme
@@ -58,10 +62,38 @@ class CustomHeader extends StatelessWidget {
               )
             : const SizedBox.shrink(),
 
-        Icon(
-          Icons.bookmark,
-          size: context.setMinSize(32),
-          color: context.colorTheme.primary,
+        BlocBuilder<BookMarksCubit, BookMarksState>(
+          builder: (context, state) {
+            final isBookMarked = state is BookMarkActive;
+            return GestureDetector(
+              onTap: () {
+                if (isBookMarked) {
+                  print('***Removed BookMarks');
+                  context.read<BookMarksCubit>().removeBookmark(bookId: bookId);
+                } else {
+                  print('***Added BookMarks');
+
+                  context.read<BookMarksCubit>().saveBookMark(bookId: bookId);
+                }
+              },
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                transitionBuilder: (child, animation) {
+                  final curved = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutBack,
+                  );
+                  return ScaleTransition(scale: curved, child: child);
+                },
+                child: Icon(
+                  isBookMarked ? Icons.bookmark : Icons.bookmark_border,
+                  key: ValueKey(isBookMarked),
+                  size: context.setMinSize(32),
+                  color: context.colorTheme.primary,
+                ),
+              ),
+            );
+          },
         ),
       ],
     );

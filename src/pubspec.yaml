@@ -53,6 +53,7 @@ dependencies:
   equatable: ^2.0.8
   image_picker: ^1.2.1
   image_cropper: ^11.0.0
+  glaze_nav_bar: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

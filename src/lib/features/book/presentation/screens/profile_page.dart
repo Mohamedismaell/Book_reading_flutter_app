@@ -7,7 +7,7 @@ import 'package:bookreading/features/book/data/models/profile.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
 import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
-import 'package:bookreading/features/book/presentation/widgets/iamge_profile.dart';
+import 'package:bookreading/features/book/presentation/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -50,8 +50,7 @@ class _ProfilePageState extends State<ProfilePage>
                 UserStatsLoaded(:final userStats),
               ) =>
                 _buildStateUI(userStats, profile),
-
-              _ => const SizedBox.shrink(),
+              // _ => const SizedBox.shrink(),
             };
           },
         );
@@ -69,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage>
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  ImageProfile(profile: profile),
+                  ProfileAvatar(profile: profile, canEdit: true, radius: 50),
                   SizedBox(height: context.setHeight(10)),
                   Text(
                     user!.userMetadata!['full_name'],
@@ -108,7 +107,7 @@ Widget _buildStatus(BuildContext context, UserStatsModel userStats) {
         ),
         child: Column(
           children: [
-            Text('24', style: context.headlineLarge()),
+            Text('12', style: context.headlineLarge()),
             Text('BOOKS READ', style: context.bodyMedium()),
           ],
         ),
@@ -130,7 +129,7 @@ Widget _buildStatus(BuildContext context, UserStatsModel userStats) {
               (userStats.totalReadingMinutes / 60).ceil().toString(),
               style: context.headlineLarge(),
             ),
-            Text('HOURS READ', style: context.bodyMedium()),
+            Text('MINUTES READ', style: context.bodyMedium()),
           ],
         ),
       ),

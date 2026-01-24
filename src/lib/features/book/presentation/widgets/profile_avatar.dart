@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/profile.dart';
@@ -7,14 +8,21 @@ import 'package:bookreading/features/book/presentation/controllers/pick_image_co
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ImageProfile extends StatefulWidget {
-  const ImageProfile({super.key, required this.profile});
+class ProfileAvatar extends StatefulWidget {
+  const ProfileAvatar({
+    super.key,
+    required this.profile,
+    required this.canEdit,
+    required this.radius,
+  });
   final ProfileModel profile;
+  final bool canEdit;
+  final double radius;
   @override
-  State<ImageProfile> createState() => _ImageProfileState();
+  State<ProfileAvatar> createState() => _ProfileAvatarState();
 }
 
-class _ImageProfileState extends State<ImageProfile> {
+class _ProfileAvatarState extends State<ProfileAvatar> {
   late PickImageController _pickImageController;
   late final ValueNotifier<File?> avatarNotifier;
   @override
@@ -61,26 +69,32 @@ class _ImageProfileState extends State<ImageProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildImageProfile(
+    return _buildProfileAvatar(
       context,
-      () => _showPickImageDialog(context, _pickImageController),
-      avatarNotifier,
       widget.profile,
+      avatarNotifier,
+      widget.canEdit,
+      widget.canEdit
+          ? () => _showPickImageDialog(context, _pickImageController)
+          : null,
+      widget.radius,
     );
   }
 
-  Widget _buildImageProfile(
+  Widget _buildProfileAvatar(
     BuildContext context,
-    VoidCallback onTap,
-    ValueNotifier<File?> avatarNotifier,
     ProfileModel profile,
+    ValueNotifier<File?> avatarNotifier,
+    bool canEdit,
+    VoidCallback? onTap,
+    double radius,
   ) {
     return Stack(
       children: [
         ValueListenableBuilder<File?>(
           valueListenable: avatarNotifier,
           builder: (context, file, child) => CircleAvatar(
-            radius: 50,
+            radius: context.setSp(radius),
             backgroundImage: file != null
                 ? FileImage(file)
                 : profile.avatarUrl != 'assets/images/deafult_user_cover.png'
@@ -89,28 +103,30 @@ class _ImageProfileState extends State<ImageProfile> {
             backgroundColor: Colors.transparent,
           ),
         ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: InkWell(
-            customBorder: const CircleBorder(),
-            onTap: onTap,
-            child: Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                color: context.colorTheme.primary,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 1.5),
-              ),
-              child: const Icon(
-                Icons.edit_outlined,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-          ),
-        ),
+        canEdit
+            ? Positioned(
+                bottom: 0,
+                right: 0,
+                child: InkWell(
+                  customBorder: const CircleBorder(),
+                  onTap: onTap,
+                  child: Container(
+                    width: context.setSp(35),
+                    height: context.setSp(35),
+                    decoration: BoxDecoration(
+                      color: context.colorTheme.primary,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 1.5),
+                    ),
+                    child: Icon(
+                      Icons.edit_outlined,
+                      color: Colors.white,
+                      size: context.setSp(20),
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

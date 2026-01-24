@@ -170,11 +170,20 @@ class BooksRemoteDataSource {
     return publicUrl;
   }
 
-  // Future<String> getAvatar(String avatarPath) async {
-  //   final supabase = Supabase.instance.client;
+  Future<void> insertBookmark({
+    // required String userId,
+    required int bookId,
+    // required double progressPercentage,
+  }) async {
+    await supabase.from('book_marks').upsert({
+      // 'user_id': userId,
+      'book_id': bookId,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+      // 'progress': progressPercentage,
+    });
+  }
 
-  //   return await supabase.storage
-  //       .from('avatars')
-  //       .createSignedUrl(avatarPath, 3600);
-  // }
+  Future<void> removeBookmark({required int bookId}) async {
+    await supabase.from('book_marks').delete().eq('book_id', bookId);
+  }
 }

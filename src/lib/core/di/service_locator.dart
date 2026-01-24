@@ -6,6 +6,7 @@ import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart'
 import 'package:bookreading/features/book/data/datasources/books_remote_data_source.dart';
 import 'package:bookreading/features/book/data/repositories/book_repository_impl.dart';
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
+import 'package:bookreading/features/book/domain/usecases/book_marks.dart';
 import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/chapters_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/progress_usecase.dart';
@@ -14,6 +15,7 @@ import 'package:bookreading/features/book/domain/usecases/user_stats_usecase.dar
 import 'package:bookreading/features/book/domain/usecases/avatar_usecase.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_marks/book_marks_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
@@ -128,8 +130,12 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(
     () => UploadAvatar(repository: sl<BookRepository>()),
   );
-  // sl.registerLazySingleton(() => GetAvatar(repository: sl<BookRepository>()));
-
+  sl.registerLazySingleton(
+    () => InsertBookMark(repository: sl<BookRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => RemoveBookMark(repository: sl<BookRepository>()),
+  );
   //! Cubits
   sl.registerLazySingleton(
     () => AuthCubit(
@@ -161,6 +167,9 @@ Future<void> initServiceLocator() async {
       sl<UploadAvatar>(),
       // sl<GetAvatar>(),
     ),
+  );
+  sl.registerLazySingleton(
+    () => BookMarksCubit(sl<InsertBookMark>(), sl<RemoveBookMark>()),
   );
   sl.registerLazySingleton(() => ThemeCubit());
 }

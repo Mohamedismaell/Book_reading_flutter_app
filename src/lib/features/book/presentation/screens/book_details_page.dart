@@ -45,7 +45,7 @@ class _BookDetailsState extends State<BookDetails> {
         final book = bookState is BookLoaded ? bookState.book : null;
         return Column(
           children: [
-            CustomHeader(isheader: false),
+            CustomHeader(isheader: false, bookId: widget.bookId),
             _BookCover(
               coverUrl: book?.coverUrl ?? widget.previewCover!,
               title: book?.title ?? widget.previewTitle!,

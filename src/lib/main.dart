@@ -8,6 +8,7 @@ import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
+import 'package:bookreading/features/book/domain/usecases/book_marks.dart';
 import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/chapters_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/progress_usecase.dart';
@@ -16,6 +17,7 @@ import 'package:bookreading/features/book/domain/usecases/user_stats_usecase.dar
 import 'package:bookreading/features/book/domain/usecases/avatar_usecase.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_marks/book_marks_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
@@ -49,8 +51,8 @@ Future<void> main() async {
   print('Step 5: Supabase initialized');
 
   runApp(
-    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    AppBootstrap(),
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    // AppBootstrap(),
   );
 }
 
@@ -99,6 +101,10 @@ class AppBootstrap extends StatelessWidget {
             sl<UploadAvatar>(),
             // sl<GetAvatar>(),
           ),
+        ),
+        BlocProvider<BookMarksCubit>(
+          create: (context) =>
+              BookMarksCubit(sl<InsertBookMark>(), sl<RemoveBookMark>()),
         ),
       ],
       child: const MyApp(),

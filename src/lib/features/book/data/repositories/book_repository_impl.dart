@@ -179,16 +179,26 @@ class BookRepositoryImpl extends BookRepository {
     }
   }
 
-  // @override
-  // Future<Result> getAvatar({required String avatarPath}) async {
-  //   try {
-  //     final result = await remoteDataSource.getAvatar(avatarPath);
-  //     //   if (result == null) {
-  //     //   return Result.ok(null);
-  //     // }
-  //     return Result.ok(result);
-  //   } catch (e) {
-  //     return Result.error(Failure(errMessage: e.toString()));
-  //   }
-  // }
+  @override
+  Future<Result> insertBookmark({
+    required int bookId,
+    // required double progressPercentage,
+  }) async {
+    try {
+      await remoteDataSource.insertBookmark(bookId: bookId);
+      return Result.ok(null);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result> removeBookmark({required int bookId}) async {
+    try {
+      await remoteDataSource.removeBookmark(bookId: bookId);
+      return Result.ok(null);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
 }

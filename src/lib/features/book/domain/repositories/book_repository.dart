@@ -30,5 +30,10 @@ abstract class BookRepository {
     bool? darkMode,
   });
   Future<Result> uploadAvatar({required File avatarFile});
-  // Future<Result> getAvatar({required String avatarPath});
+  Future<Result> insertBookmark({
+    required int bookId,
+    // required double progressPercentage,
+    // required int chapterId,
+  });
+  Future<Result> removeBookmark({required int bookId});
 }
