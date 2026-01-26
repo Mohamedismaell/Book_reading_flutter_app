@@ -1,6 +1,7 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/navigaiton/tabs_shell.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_marks/book_marks_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
@@ -26,7 +27,7 @@ class HomeRoutes {
           builder: (context, state) {
             context.read<UserStatsCubit>().saveUserStats();
             context.read<ProfileCubit>().getProfile(firstTime: true);
-
+            context.read<BookMarksCubit>().fetchAllBookmarks();
             return const TabsShell();
           },
         ),

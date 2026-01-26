@@ -103,8 +103,11 @@ class AppBootstrap extends StatelessWidget {
           ),
         ),
         BlocProvider<BookMarksCubit>(
-          create: (context) =>
-              BookMarksCubit(sl<InsertBookMark>(), sl<RemoveBookMark>()),
+          create: (context) => BookMarksCubit(
+            sl<InsertBookMarks>(),
+            sl<RemoveBookMarks>(),
+            sl<GetBookMarks>(),
+          ),
         ),
       ],
       child: const MyApp(),

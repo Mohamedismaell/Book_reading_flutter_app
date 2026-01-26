@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookreading/features/book/data/models/book_marks.dart';
 import 'package:bookreading/features/book/data/models/profile.dart';
 import 'package:bookreading/features/book/data/models/user_progress.dart';
 import 'package:bookreading/features/book/data/models/user_stats.dart';
@@ -185,5 +186,25 @@ class BooksRemoteDataSource {
 
   Future<void> removeBookmark({required int bookId}) async {
     await supabase.from('book_marks').delete().eq('book_id', bookId);
+  }
+
+  Future<List<BookMarksModel>> getBookmarks({required String userId}) async {
+    final response = await supabase
+        .from('book_marks')
+        .select('''
+   book_id,
+  created_at,
+  books (
+    id,
+    title,
+    cover_url,
+    author,
+    user_progress ( progress, user_id )
+  )
+''')
+        .eq('user_id', userId)
+        .order('created_at', ascending: false);
+    final resulte = response.map((e) => BookMarksModel.fromJson(e)).toList();
+    return resulte;
   }
 }

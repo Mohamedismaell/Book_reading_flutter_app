@@ -131,11 +131,15 @@ Future<void> initServiceLocator() async {
     () => UploadAvatar(repository: sl<BookRepository>()),
   );
   sl.registerLazySingleton(
-    () => InsertBookMark(repository: sl<BookRepository>()),
+    () => InsertBookMarks(repository: sl<BookRepository>()),
   );
   sl.registerLazySingleton(
-    () => RemoveBookMark(repository: sl<BookRepository>()),
+    () => RemoveBookMarks(repository: sl<BookRepository>()),
   );
+  sl.registerLazySingleton(
+    () => GetBookMarks(repository: sl<BookRepository>()),
+  );
+  //Todo Edit the cubit to registerFactory rather than registerLazySingleton if its not widly used and need to be reset
   //! Cubits
   sl.registerLazySingleton(
     () => AuthCubit(
@@ -169,7 +173,11 @@ Future<void> initServiceLocator() async {
     ),
   );
   sl.registerLazySingleton(
-    () => BookMarksCubit(sl<InsertBookMark>(), sl<RemoveBookMark>()),
+    () => BookMarksCubit(
+      sl<InsertBookMarks>(),
+      sl<RemoveBookMarks>(),
+      sl<GetBookMarks>(),
+    ),
   );
   sl.registerLazySingleton(() => ThemeCubit());
 }

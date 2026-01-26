@@ -36,4 +36,5 @@ abstract class BookRepository {
     // required int chapterId,
   });
   Future<Result> removeBookmark({required int bookId});
+  Future<Result> getBookmarks();
 }

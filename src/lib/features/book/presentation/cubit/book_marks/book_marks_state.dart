@@ -7,6 +7,11 @@ final class BookMarksInitial extends BookMarksState {}
 
 final class BookMarksLoading extends BookMarksState {}
 
+final class BookMarksLoaded extends BookMarksState {
+  final List<BookMarksModel> bookmarks;
+  BookMarksLoaded(this.bookmarks);
+}
+
 class BookMarkActive extends BookMarksState {
   final int bookId;
   BookMarkActive(this.bookId);

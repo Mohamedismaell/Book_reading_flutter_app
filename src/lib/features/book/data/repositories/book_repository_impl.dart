@@ -201,4 +201,16 @@ class BookRepositoryImpl extends BookRepository {
       return Result.error(Failure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Result> getBookmarks() async {
+    try {
+      final result = await remoteDataSource.getBookmarks(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
+      return Result.ok(result);
+    } catch (e) {
+      return Result.error(Failure(errMessage: e.toString()));
+    }
+  }
 }
