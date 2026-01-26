@@ -11,5 +11,6 @@ class AppRoutes {
   // static const String profile = '/profile';
 
   //! Sub Screens
-  static const String bookDetails = '/bookdetails';
+  static const String bookDetails = '/bookDetails/:bookId';
+  static const String read = '/read/:bookId';
 }

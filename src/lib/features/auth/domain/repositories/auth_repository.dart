@@ -17,19 +17,3 @@ abstract class AuthRepository {
   //*logOut
   Future<Result> logout();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//Todo add the Result to the AuthRepository above "IMPORTANT" after test 
-  // Future<Result<List<PostEntity>>> getNewsByCategory({
-  //   required NewsCategoryParams params,
-  // });

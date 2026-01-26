@@ -1,10 +1,10 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
+import 'package:bookreading/features/auth/presentation/widgets/arrow_back.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/enums/orb_position.dart';
 import '../../../../core/widget/orb.dart';
-import '../widget/forget_password_card.dart';
+import '../widgets/forget_password_card.dart';
 
 class FogetPasswordPage extends StatelessWidget {
   const FogetPasswordPage({super.key});

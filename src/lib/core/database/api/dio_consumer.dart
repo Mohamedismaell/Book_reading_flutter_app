@@ -29,6 +29,7 @@ class DioConsumer extends ApiConsumer {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await dio.delete(
@@ -48,6 +49,7 @@ class DioConsumer extends ApiConsumer {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       debugPrint('🔍 Request URL: ${dio.options.baseUrl}$path');
@@ -57,6 +59,7 @@ class DioConsumer extends ApiConsumer {
         path,
         data: isFormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
+        cancelToken: cancelToken,
       );
 
       debugPrint('📥 Total Results: ${response.data['totalResults']}');
@@ -80,6 +83,7 @@ class DioConsumer extends ApiConsumer {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await dio.patch(
@@ -99,6 +103,7 @@ class DioConsumer extends ApiConsumer {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await dio.post(

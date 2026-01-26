@@ -1,10 +1,10 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/features/auth/presentation/widget/arrow_back.dart';
+import 'package:bookreading/features/auth/presentation/widgets/arrow_back.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/enums/orb_position.dart';
 import '../../../../core/widget/orb.dart';
-import '../widget/reset_password_card.dart';
+import '../widgets/reset_password_card.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({super.key});
