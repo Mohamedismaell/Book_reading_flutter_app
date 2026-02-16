@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:bookreading/core/di/service_locator.dart';
+import 'package:bookreading/core/shared/injection/di/service_locator.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/profile.dart';

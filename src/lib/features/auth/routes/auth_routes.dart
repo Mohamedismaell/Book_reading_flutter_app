@@ -1,7 +1,7 @@
 import 'package:bookreading/features/auth/presentation/screens/login_page.dart';
 import 'package:bookreading/features/auth/presentation/screens/reset_password.dart';
 import 'package:bookreading/features/auth/presentation/screens/sign_up_page.dart';
-import '../../../core/routes/app_routes.dart';
+import '../../../core/shared/routes/app_routes.dart';
 import 'package:go_router/go_router.dart';
 
 import '../presentation/screens/foget_password.dart';

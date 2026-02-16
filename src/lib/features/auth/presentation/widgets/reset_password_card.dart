@@ -1,5 +1,5 @@
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/core/routes/app_routes.dart';
+import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_input.dart';

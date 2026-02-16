@@ -1,7 +1,10 @@
+import 'package:bookreading/core/database/cache/app_hive.dart';
 import 'package:bookreading/core/helper/hydrated_storage.dart';
 import 'package:bookreading/core/helper/size_provider/size_provider.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/core/routes/app_router.dart';
+import 'package:bookreading/core/shared/injection/service_locator.dart';
+import 'package:bookreading/core/shared/presentation/manager/app_gate_cubit/app_gate_cubit.dart';
+import 'package:bookreading/core/shared/routes/app_router.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
@@ -22,6 +25,7 @@ import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapter
 import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
+import 'package:bookreading/features/onboarding/domain/repositories/auth_repository.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +33,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/observers/app_bloc_observer.dart';
-import 'core/di/service_locator.dart';
 import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
@@ -42,7 +45,8 @@ Future<void> main() async {
   print('Step 2: Bloc observer set');
   HydratedBloc.storage = await buildHydratedStorage();
   print('Step 3: HydratedStorage built');
-  await initServiceLocator();
+  await AppHive.init();
+  await initializeDependencies(onboardingBox: AppHive.onboardingBox);
   print('Step 4: Service Locator initialized');
   await Supabase.initialize(
     url: 'https://iszsxfqfmsjotmdnszyi.supabase.co',
@@ -64,17 +68,25 @@ class AppBootstrap extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<AppGateCubit>(
+          create: (_) => AppGateCubit(
+            onboardingRepository: sl<OnboardingRepository>(),
+            client: sl<SupabaseClient>(),
+          ),
+        ),
         BlocProvider<AuthCubit>(
           create: (_) => AuthCubit(
-            sl<LoginWithGoogle>(),
-            sl<Logout>(),
-            sl<SignUpWithEmail>(),
-            sl<LoginWithEmail>(),
-            sl<ForgetPassword>(),
-            sl<UpdatePassword>(),
+            google: sl<LoginWithGoogle>(),
+            userLogout: sl<Logout>(),
+            signUpEmail: sl<SignUpWithEmail>(),
+            logInEmail: sl<LoginWithEmail>(),
+            resetPassword: sl<ForgetPassword>(),
+            updatePassword: sl<UpdatePassword>(),
+            supabaseClient: sl<SupabaseClient>(),
           ),
         ),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+
         BlocProvider<BooksCubit>(
           create: (context) => BooksCubit(sl<GetBooksUseCase>()),
         ),
@@ -138,7 +150,7 @@ class MyApp extends StatelessWidget {
             theme: getLightTheme(),
             darkTheme: getDarkTheme(),
             themeMode: mode.themeMode,
-            routerConfig: AppRouter.router,
+            routerConfig: AppRouter(appGateCubit: sl<AppGateCubit>()).appRouter,
             builder: DevicePreview.appBuilder,
           ),
         );

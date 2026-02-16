@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/shared/routes/app_routes.dart';
 
 class BooksGrid extends StatelessWidget {
   const BooksGrid({super.key});

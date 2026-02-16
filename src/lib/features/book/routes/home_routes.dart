@@ -9,7 +9,7 @@ import 'package:bookreading/features/book/presentation/screens/chapter_reader_sc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/enums/orb_position.dart';
-import '../../../core/routes/app_routes.dart';
+import '../../../core/shared/routes/app_routes.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/widget/orb.dart';
 import '../presentation/screens/book_details_page.dart';

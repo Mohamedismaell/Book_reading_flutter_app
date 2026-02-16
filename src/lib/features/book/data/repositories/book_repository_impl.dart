@@ -1,9 +1,10 @@
 import 'dart:io';
-
 import 'package:bookreading/core/connections/network_info.dart';
 import 'package:bookreading/core/connections/result.dart';
-import 'package:bookreading/core/di/service_locator.dart';
-import 'package:bookreading/core/errors/failure.dart';
+import 'package:bookreading/core/database/api/api_error_mapper.dart';
+import 'package:bookreading/core/shared/injection/di/service_locator.dart';
+import 'package:bookreading/core/errors/failure/failure.dart';
+import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/features/book/data/datasources/books_remote_data_source.dart';
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,8 +22,9 @@ class BookRepositoryImpl extends BookRepository {
     try {
       final result = await remoteDataSource.getBooks();
       return Result.ok(result);
-    } on PostgrestException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+    } catch (e) {
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -32,7 +34,8 @@ class BookRepositoryImpl extends BookRepository {
       final result = await remoteDataSource.getChapters(bookId);
       return Result.ok(result);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -42,12 +45,13 @@ class BookRepositoryImpl extends BookRepository {
       final result = await remoteDataSource.getBookById(bookId);
 
       if (result == null) {
-        return Result.error(Failure(errMessage: 'Book not found'));
+        return Result.error(UnknownFailure(debugMessage: 'Book not found'));
       }
 
       return Result.ok(result);
-    } on PostgrestException catch (e) {
-      return Result.error(Failure(errMessage: e.message));
+    } catch (e) {
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -68,7 +72,8 @@ class BookRepositoryImpl extends BookRepository {
       );
       return Result.ok(null);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -83,7 +88,8 @@ class BookRepositoryImpl extends BookRepository {
       // }
       return Result.ok(result);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -98,7 +104,8 @@ class BookRepositoryImpl extends BookRepository {
       // }
       return Result.ok(result);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -124,7 +131,8 @@ class BookRepositoryImpl extends BookRepository {
       );
       return Result.ok(null);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -140,7 +148,8 @@ class BookRepositoryImpl extends BookRepository {
       // }
       return Result.ok(result);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -162,7 +171,8 @@ class BookRepositoryImpl extends BookRepository {
       );
       return Result.ok(null);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -175,7 +185,8 @@ class BookRepositoryImpl extends BookRepository {
       );
       return Result.ok(result);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -188,7 +199,8 @@ class BookRepositoryImpl extends BookRepository {
       await remoteDataSource.insertBookmark(bookId: bookId);
       return Result.ok(null);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -198,7 +210,8 @@ class BookRepositoryImpl extends BookRepository {
       await remoteDataSource.removeBookmark(bookId: bookId);
       return Result.ok(null);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 
@@ -210,7 +223,8 @@ class BookRepositoryImpl extends BookRepository {
       );
       return Result.ok(result);
     } catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
     }
   }
 }

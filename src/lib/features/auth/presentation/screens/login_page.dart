@@ -2,7 +2,7 @@ import 'package:bookreading/core/enums/orb_position.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/shared/routes/app_routes.dart';
 import '../widgets/auth_redirect_prompt.dart';
 import '../widgets/login_card.dart';
 import '../../../../core/widget/theme_icon.dart';

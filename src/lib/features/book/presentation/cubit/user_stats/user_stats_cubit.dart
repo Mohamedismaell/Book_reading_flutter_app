@@ -17,7 +17,7 @@ class UserStatsCubit extends Cubit<UserStatsState> {
     final result = await getUserStats.call();
     result.when(
       success: (userStats) => emit(UserStatsLoaded(userStats: userStats)),
-      failure: (error) => emit(UserStatsError(message: error.errMessage)),
+      failure: (error) => emit(UserStatsError(message: error.message)),
     );
   }
 
@@ -49,7 +49,7 @@ class UserStatsCubit extends Cubit<UserStatsState> {
     );
     result.when(
       success: (_) => emit(UserStatsLoaded(userStats: newStats)),
-      failure: (error) => emit(UserStatsError(message: error.errMessage)),
+      failure: (error) => emit(UserStatsError(message: error.message)),
     );
   }
 }

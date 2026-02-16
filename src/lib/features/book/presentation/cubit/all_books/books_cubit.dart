@@ -14,7 +14,7 @@ class BooksCubit extends Cubit<BooksState> {
     final result = await getBooksUseCase.call();
     result.when(
       success: (books) => emit(BooksIsLoaded(books: books)),
-      failure: (failure) => emit(BooksIsFailed(message: failure.errMessage)),
+      failure: (failure) => emit(BooksIsFailed(message: failure.message)),
     );
   }
 }

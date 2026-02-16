@@ -1,10 +1,10 @@
+import 'package:bookreading/core/connections/network_info.dart';
 import 'package:bookreading/core/connections/result.dart';
+import 'package:bookreading/core/errors/failure/failure.dart';
+import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/features/auth/data/sources/auth_remote_data_source.dart';
+import 'package:bookreading/features/auth/domain/repositories/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../core/connections/network_info.dart';
-import '../../../../core/errors/failure.dart';
-import '../../../../core/params/params.dart';
-import '../../domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final NetworkInfo networkInfo;
@@ -20,7 +20,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await remoteDataSource.loginWithGoogle();
       return Result.ok(null);
     } on AuthApiException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      return Result.error(ServerFailure(e.toString()));
     }
   }
 
@@ -30,7 +30,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await remoteDataSource.signUpWithEmail(params: params);
       return Result.ok(null);
     } on AuthApiException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      return Result.error(ServerFailure(e.toString()));
     }
   }
 
@@ -40,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await remoteDataSource.loginWithEmail(params: params);
       return Result.ok(null);
     } on AuthApiException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      return Result.error(ServerFailure(e.toString()));
     }
   }
 
@@ -50,7 +50,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await remoteDataSource.requestPasswordReset(params: params);
       return Result.ok(null);
     } on AuthApiException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      return Result.error(ServerFailure(e.toString()));
     }
   }
 
@@ -60,7 +60,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await remoteDataSource.updatePassword(newPassword: newPassword);
       return Result.ok(null);
     } on AuthApiException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      return Result.error(ServerFailure(e.toString()));
     }
   }
 
@@ -70,7 +70,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await remoteDataSource.logout();
       return Result.ok(null);
     } on AuthApiException catch (e) {
-      return Result.error(Failure(errMessage: e.toString()));
+      return Result.error(ServerFailure(e.toString()));
     }
   }
 

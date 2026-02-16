@@ -1,6 +1,6 @@
 import 'package:bookreading/core/helper/size_provider/size_provider.dart';
 import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/core/routes/app_routes.dart';
+import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';

@@ -65,7 +65,7 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
         emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));
       },
       failure: (failure) =>
-          emit(ReadingProgressError(message: failure.errMessage)),
+          emit(ReadingProgressError(message: failure.message)),
     );
   }
 
@@ -77,7 +77,7 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
         emit(ReadingProgressLoaded(progress: progress, justSaved: false));
       },
       failure: (failure) =>
-          emit(ReadingProgressError(message: failure.errMessage)),
+          emit(ReadingProgressError(message: failure.message)),
     );
   }
 }

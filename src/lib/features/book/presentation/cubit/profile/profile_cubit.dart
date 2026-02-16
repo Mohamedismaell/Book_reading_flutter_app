@@ -66,7 +66,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         result.when(
           success: (path) => avatarPath = path,
           failure: (error) {
-            print('Avatar upload failed: ${error.errMessage}');
+            print('Avatar upload failed: ${error.message}');
             _needResave = true;
           },
         );
@@ -101,7 +101,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       success: (userProfile) async {
         emit(ProfileLoaded(profile: userProfile));
       },
-      failure: (error) => emit(ProfileError(message: error.errMessage)),
+      failure: (error) => emit(ProfileError(message: error.message)),
     );
   }
 

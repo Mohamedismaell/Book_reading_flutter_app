@@ -15,7 +15,7 @@ class BookMarksCubit extends Cubit<BookMarksState> {
     final result = await insertBookMark.call(bookId: bookId);
     result.when(
       success: (_) => emit(BookMarkActive(bookId)),
-      failure: (failure) => emit(BookMarksError(message: failure.errMessage)),
+      failure: (failure) => emit(BookMarksError(message: failure.message)),
     );
   }
 
@@ -37,7 +37,7 @@ class BookMarksCubit extends Cubit<BookMarksState> {
         // emit(
         //   BookMarksError(message: "Failed to remove bookmark. Check internet."),
         // );
-        emit(BookMarksError(message: failure.errMessage));
+        emit(BookMarksError(message: failure.message));
       },
     );
   }
@@ -48,7 +48,7 @@ class BookMarksCubit extends Cubit<BookMarksState> {
 
     result.when(
       success: (booksList) => emit(BookMarksLoaded(booksList)),
-      failure: (failure) => emit(BookMarksError(message: failure.errMessage)),
+      failure: (failure) => emit(BookMarksError(message: failure.message)),
     );
   }
 }

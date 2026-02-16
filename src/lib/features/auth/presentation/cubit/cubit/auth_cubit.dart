@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:bookreading/core/params/params.dart';
+import 'package:bookreading/features/auth/domain/usecases/forget_password.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
+import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
 import 'package:bookreading/features/auth/domain/usecases/logout.dart';
+import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
+import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../../core/di/service_locator.dart';
-import '../../../../../core/params/params.dart';
-import '../../../domain/usecases/forget_password.dart';
-import '../../../domain/usecases/login_google.dart';
-import '../../../domain/usecases/sign_up_email.dart';
-import '../../../domain/usecases/update_passwords.dart';
+
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -18,14 +18,16 @@ class AuthCubit extends Cubit<AuthState> {
   final ForgetPassword resetPassword;
   final UpdatePassword updatePassword;
   final Logout userLogout;
-  AuthCubit(
-    this.google,
-    this.userLogout,
-    this.signUpEmail,
-    this.logInEmail,
-    this.resetPassword,
-    this.updatePassword,
-  ) : super(AuthNone());
+  final SupabaseClient supabaseClient;
+  AuthCubit({
+    required this.google,
+    required this.userLogout,
+    required this.signUpEmail,
+    required this.logInEmail,
+    required this.resetPassword,
+    required this.updatePassword,
+    required this.supabaseClient,
+  }) : super(AuthNone());
 
   Future<void> logInWithGoogle() async {
     emit(AuthLoading());
@@ -35,8 +37,8 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSuccess());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        debugPrint(error.errMessage);
+        emit(AuthError(message: error.message));
+        debugPrint(error.message);
       },
     );
   }
@@ -50,8 +52,8 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthVerification());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        debugPrint(error.errMessage);
+        emit(AuthError(message: error.message));
+        debugPrint(error.message);
       },
     );
   }
@@ -61,7 +63,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await logInEmail.loginWithEmail(params: params);
     return response.when(
       success: (_) {
-        final user = sl<SupabaseClient>().auth.currentUser;
+        final user = supabaseClient.auth.currentUser;
         if (user == null) {
           emit(AuthError(message: "Something went wrong. Please try again."));
           return;
@@ -73,14 +75,14 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSuccess());
       },
       failure: (error) {
-        if (error.errMessage.contains('confirmed')) {
+        if (error.message.contains('confirmed')) {
           emit(AuthError(message: "Email not Confirmed."));
         } else {
           emit(
             AuthError(message: "Invalid email or password. Please try again."),
           );
         }
-        debugPrint(error.errMessage);
+        debugPrint(error.message);
       },
     );
   }
@@ -95,8 +97,8 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthForgetPassword());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        debugPrint(error.errMessage);
+        emit(AuthError(message: error.message));
+        debugPrint(error.message);
       },
     );
   }
@@ -111,8 +113,8 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthUpdatePassword());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        debugPrint(error.errMessage);
+        emit(AuthError(message: error.message));
+        debugPrint(error.message);
       },
     );
   }
@@ -125,38 +127,9 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthNone());
       },
       failure: (error) {
-        emit(AuthError(message: error.errMessage));
-        debugPrint(error.errMessage);
+        emit(AuthError(message: error.message));
+        debugPrint(error.message);
       },
     );
   }
 }
-//  Future<void> eitherFailureOrSuccessByDate() async {
-//     final response = await getNews.callNewsDate();
-//     return response.when(
-//       success: (news) {
-//         final validateNewsDate = news.where((post) {
-//           return post.threadimageUrl != null &&
-//               post.threadimageUrl!.isNotEmpty &&
-//               Uri.tryParse(
-//                     post.threadimageUrl!,
-//                   )?.hasAbsolutePath ==
-//                   true;
-//         }).toList();
-//         emit(
-//           state.copyWith(
-//             dateStatus: NewsStatus.loaded,
-//             newsByDate: validateNewsDate,
-//           ),
-//         );
-//       },
-//       failure: (error) {
-//         emit(
-//           state.copyWith(
-//             dateStatus: NewsStatus.error,
-//             errorMessage: error.errMessage,
-//           ),
-//         );
-//       },
-//     );
-//   }

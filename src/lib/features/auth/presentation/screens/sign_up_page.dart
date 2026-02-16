@@ -4,7 +4,7 @@ import 'package:bookreading/features/auth/presentation/widgets/auth_redirect_pro
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/enums/orb_position.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/shared/routes/app_routes.dart';
 import '../../../../core/widget/orb.dart';
 import '../widgets/signup_card.dart';
 
