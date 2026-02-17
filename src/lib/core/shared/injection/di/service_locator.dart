@@ -59,25 +59,13 @@
 //   sl.registerLazySingleton(() => DioConsumer(sl<Dio>(), sl<ApiInterceptor>()));
 //   sl.registerLazySingleton(() => AuthNotifier());
 
-//   //! Register SupabaseClient
-//   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-//   // sl.registerLazySingleton<User>(() => sl<SupabaseClient>().auth.currentUser!);
 //   //! Data Sources
-//   //* Auth
-//   sl.registerLazySingleton<AuthRemoteDataSource>(
-//     () => AuthRemoteDataSource(supabase: sl<SupabaseClient>()),
-//   );
 //   //* Books
 //   sl.registerLazySingleton<BooksRemoteDataSource>(
 //     () => BooksRemoteDataSource(supabase: sl<SupabaseClient>()),
 //   );
 //   //! Repositories
-//   sl.registerLazySingleton<AuthRepository>(
-//     () => AuthRepositoryImpl(
-//       remoteDataSource: sl<AuthRemoteDataSource>(),
-//       networkInfo: sl<NetworkInfo>(),
-//     ),
-//   );
+
 //   sl.registerLazySingleton<BookRepository>(
 //     () => BookRepositoryImpl(
 //       remoteDataSource: sl<BooksRemoteDataSource>(),
@@ -86,23 +74,7 @@
 //   );
 
 //   //! Use Cases
-//   sl.registerLazySingleton(
-//     () => LoginWithGoogle(repository: sl<AuthRepository>()),
-//   );
-//   sl.registerLazySingleton(
-//     () => SignUpWithEmail(repository: sl<AuthRepository>()),
-//   );
-//   sl.registerLazySingleton(
-//     () => LoginWithEmail(repository: sl<AuthRepository>()),
-//   );
-//   sl.registerLazySingleton(() => Otp(repository: sl<AuthRepository>()));
-//   sl.registerLazySingleton(
-//     () => ForgetPassword(repository: sl<AuthRepository>()),
-//   );
-//   sl.registerLazySingleton(
-//     () => UpdatePassword(repository: sl<AuthRepository>()),
-//   );
-//   sl.registerLazySingleton(() => Logout(repository: sl<AuthRepository>()));
+
 //   //* Books
 //   sl.registerLazySingleton(
 //     () => GetBooksUseCase(repository: sl<BookRepository>()),
@@ -145,16 +117,7 @@
 //   );
 //   //Todo Edit the cubit to registerFactory rather than registerLazySingleton if its not widly used and need to be reset
 //   //! Cubits
-//   sl.registerLazySingleton(
-//     () => AuthCubit(
-//       sl<LoginWithGoogle>(),
-//       sl<Logout>(),
-//       sl<SignUpWithEmail>(),
-//       sl<LoginWithEmail>(),
-//       sl<ForgetPassword>(),
-//       sl<UpdatePassword>(),
-//     ),
-//   );
+
 //   sl.registerLazySingleton(() => BooksCubit(sl<GetBooksUseCase>()));
 //   sl.registerLazySingleton(() => BookCubit(sl<GetBooksIdUseCase>()));
 

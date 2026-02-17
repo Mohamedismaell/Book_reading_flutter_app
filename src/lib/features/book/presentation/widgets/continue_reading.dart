@@ -78,7 +78,7 @@ class _ContinueReadingState extends State<ContinueReading> {
         progress,
         () => _navigateToBookDetails(progress.bookDetails!, 'continue'),
       ),
-      _ => const SizedBox.shrink(),
+      // _ => const SizedBox.shrink(),
     };
   }
 }

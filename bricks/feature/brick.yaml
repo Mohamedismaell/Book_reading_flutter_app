@@ -1,0 +1,10 @@
+name: feature
+description: Generate a Clean Architecture Feature (Data/Domain/Presentation)
+version: 0.1.0+1
+environment:
+  mason: ^0.1.2
+vars:
+  name:
+    type: string
+    description: The feature name (e.g. auth, book, profile)
+    prompt: What is the feature name?

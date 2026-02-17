@@ -9,6 +9,7 @@ import 'package:bookreading/core/shared/presentation/manager/connection_cubit/co
 import 'package:bookreading/core/shared/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 CacheHelper get cacheHelper => sl<CacheHelper>();
 
@@ -33,6 +34,7 @@ class CommonDi {
     sl.registerLazySingleton(
       () => DioConsumer(sl<Dio>(), sl<ApiInterceptor>()),
     );
+    sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
     //! connection
 

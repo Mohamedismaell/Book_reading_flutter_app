@@ -55,8 +55,8 @@ Future<void> main() async {
   print('Step 5: Supabase initialized');
 
   runApp(
-    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    // AppBootstrap(),
+    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    AppBootstrap(),
   );
 }
 
@@ -132,11 +132,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print(
-        "USER EMAIL ===> **** ${sl<SupabaseClient>().auth.currentUser?.email} ****",
-      );
-    }
+    // if (kDebugMode) {
+    //   print(
+    //     "USER EMAIL ===> **** ${sl<SupabaseClient>().auth.currentUser?.email} ****",
+    //   );
+    // }
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, mode) {
         return SizeProvider(
@@ -150,7 +150,7 @@ class MyApp extends StatelessWidget {
             theme: getLightTheme(),
             darkTheme: getDarkTheme(),
             themeMode: mode.themeMode,
-            routerConfig: AppRouter(appGateCubit: sl<AppGateCubit>()).appRouter,
+            routerConfig: sl<AppRouter>().appRouter,
             builder: DevicePreview.appBuilder,
           ),
         );
