@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +18,12 @@ class GoogleButton extends StatelessWidget {
           onPressed: state is AuthLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: context.setHeight(16)),
+            padding: EdgeInsets.symmetric(vertical: 16.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Google", style: context.labelLarge()),
-                SizedBox(width: context.setWidth(8)),
+                SizedBox(width: 8.w),
                 state is AuthLoading
                     ? CircularProgressIndicator()
                     : SvgPicture.asset(
@@ -32,8 +32,8 @@ class GoogleButton extends StatelessWidget {
                           context.colorTheme.onPrimary,
                           BlendMode.srcIn,
                         ),
-                        width: context.setWidth(18),
-                        height: context.setHeight(22),
+                        width: 18.w,
+                        height: 22.h,
                       ),
               ],
             ),

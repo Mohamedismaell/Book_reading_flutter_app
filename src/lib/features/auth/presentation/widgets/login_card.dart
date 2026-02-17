@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
@@ -51,20 +51,20 @@ class _ContentState extends State<_Content> {
       children: [
         //! Banner
         MainBanner(),
-        SizedBox(height: context.setHeight(24)),
+        SizedBox(height: 24.h),
         //! Title
         HeadTitle(
           headText: 'Welcome Back',
           hashText: 'Start your reading journey today.',
         ),
-        SizedBox(height: context.setHeight(40)),
+        SizedBox(height: 40.h),
         //! Form
         _LoginForm(
           formKey: _formKey,
           emailController: _emailController,
           passwordController: _passwordController,
         ),
-        SizedBox(height: context.setHeight(24)),
+        SizedBox(height: 24.h),
         // //! Error Message
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
@@ -83,7 +83,7 @@ class _ContentState extends State<_Content> {
             child: Text("Forgot Password?", style: context.headlineSmall()),
           ),
         ),
-        SizedBox(height: context.setHeight(6)),
+        SizedBox(height: 6.h),
 
         //! Action button
         BlocListener<AuthCubit, AuthState>(
@@ -106,10 +106,10 @@ class _ContentState extends State<_Content> {
             },
           ),
         ),
-        SizedBox(height: context.setHeight(24)),
+        SizedBox(height: 24.h),
         // //! hash Line
         SeperatorLine(),
-        SizedBox(height: context.setHeight(24)),
+        SizedBox(height: 24.h),
         // //! Google Sign
         GoogleButton(
           onPressed: () {
@@ -146,7 +146,7 @@ class _LoginForm extends StatelessWidget {
             onSaved: (value) => emailController.text = value ?? '',
             isPassword: false,
           ),
-          SizedBox(height: context.setHeight(20)),
+          SizedBox(height: 20.h),
           AuthInput(
             hintText: 'Password',
             validationType: ValidationType.password,

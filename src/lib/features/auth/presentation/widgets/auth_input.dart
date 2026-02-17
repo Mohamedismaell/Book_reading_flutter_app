@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/enums/validation_type.dart';
@@ -51,7 +51,7 @@ class _AuthInputState extends State<AuthInput> {
         //! Eye icon
         suffixIcon: widget.isPassword
             ? Padding(
-                padding: EdgeInsets.only(right: context.setWidth(8)),
+                padding: EdgeInsets.only(right: 8.w),
                 child: IconButton(
                   icon: Icon(
                     _obscure ? Icons.visibility_off : Icons.visibility,

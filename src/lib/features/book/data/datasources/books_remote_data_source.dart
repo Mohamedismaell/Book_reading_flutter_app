@@ -172,20 +172,24 @@ class BooksRemoteDataSource {
   }
 
   Future<void> insertBookmark({
-    // required String userId,
+    required String userId,
     required int bookId,
-    // required double progressPercentage,
   }) async {
     await supabase.from('book_marks').upsert({
-      // 'user_id': userId,
+      'user_id': userId,
       'book_id': bookId,
-      'updated_at': DateTime.now().toUtc().toIso8601String(),
-      // 'progress': progressPercentage,
     });
   }
 
-  Future<void> removeBookmark({required int bookId}) async {
-    await supabase.from('book_marks').delete().eq('book_id', bookId);
+  Future<void> removeBookmark({
+    required String userId,
+    required int bookId,
+  }) async {
+    await supabase
+        .from('book_marks')
+        .delete()
+        .eq('book_id', bookId)
+        .eq('user_id', userId);
   }
 
   Future<List<BookMarksModel>> getBookmarks({required String userId}) async {

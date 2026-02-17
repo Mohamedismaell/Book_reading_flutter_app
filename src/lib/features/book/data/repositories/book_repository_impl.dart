@@ -196,7 +196,10 @@ class BookRepositoryImpl extends BookRepository {
     // required double progressPercentage,
   }) async {
     try {
-      await remoteDataSource.insertBookmark(bookId: bookId);
+      await remoteDataSource.insertBookmark(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+        bookId: bookId,
+      );
       return Result.ok(null);
     } catch (e) {
       final failure = ApiErrorMapper.fromException(e);
@@ -207,7 +210,10 @@ class BookRepositoryImpl extends BookRepository {
   @override
   Future<Result> removeBookmark({required int bookId}) async {
     try {
-      await remoteDataSource.removeBookmark(bookId: bookId);
+      await remoteDataSource.removeBookmark(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+        bookId: bookId,
+      );
       return Result.ok(null);
     } catch (e) {
       final failure = ApiErrorMapper.fromException(e);

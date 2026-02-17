@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_dialog.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_input.dart';
@@ -46,13 +46,13 @@ class _ContentState extends State<_Content> {
       children: [
         //! Banner
         MainBanner(),
-        SizedBox(height: context.setHeight(16)),
+        SizedBox(height: 16.h),
         //! Titel
         HeadTitle(headText: 'Change Password', hashText: ''),
-        SizedBox(height: context.setHeight(10)),
+        SizedBox(height: 10.h),
         //! Form
         _ForgetForm(formKey: _formKey, emailController: _emailController),
-        SizedBox(height: context.setHeight(4)),
+        SizedBox(height: 4.h),
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return state is AuthError
@@ -60,7 +60,7 @@ class _ContentState extends State<_Content> {
                 : const SizedBox.shrink();
           },
         ),
-        SizedBox(height: context.setHeight(20)),
+        SizedBox(height: 20.h),
         //! Action button
         BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {

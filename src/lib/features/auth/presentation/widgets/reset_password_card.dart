@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_dialog.dart';
@@ -47,10 +47,10 @@ class _ContentState extends State<_Content> {
       children: [
         //! Banner
         MainBanner(),
-        SizedBox(height: context.setHeight(16)),
+        SizedBox(height: 16.h),
         //! Titel
         HeadTitle(headText: 'Change Password', hashText: ''),
-        SizedBox(height: context.setHeight(10)),
+        SizedBox(height: 10.h),
         //! Form
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
@@ -61,7 +61,7 @@ class _ContentState extends State<_Content> {
             );
           },
         ),
-        SizedBox(height: context.setHeight(20)),
+        SizedBox(height: 20.h),
 
         //! Action button
         _OnSubmit(
@@ -96,7 +96,7 @@ class _ResetForm extends StatelessWidget {
             hintText: 'New Password',
             controller: newPasswordController,
           ),
-          SizedBox(height: context.setHeight(10)),
+          SizedBox(height: 10.h),
           AuthInput(
             hintText: 'Confirm Password',
             controller: confirmPasswordController,

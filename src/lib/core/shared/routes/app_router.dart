@@ -1,7 +1,11 @@
+import 'package:bookreading/core/navigaiton/tabs_shell.dart';
 import 'package:bookreading/core/shared/presentation/manager/app_gate_cubit/app_gate_cubit.dart';
+import 'package:bookreading/core/shared/presentation/shell/app_shell.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/shared/routes/go_router_refresh_stream.dart';
-import 'package:bookreading/features/book/routes/home_routes.dart';
+import 'package:bookreading/features/book/routes/generale_routes.dart';
+import 'package:bookreading/features/home/routes/home_routes.dart';
+import 'package:bookreading/features/onboarding/routes/onboarding_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,7 +19,32 @@ class AppRouter {
     initialLocation: AppRoutes.login,
     refreshListenable: GoRouterRefreshStream(appGateCubit.stream),
     redirect: _redirect,
-    routes: [...AuthRoutes.routes, ...HomeRoutes.routes],
+    routes: [
+      ...OnBoardingRoutes.routes,
+      ...AuthRoutes.routes,
+      ShellRoute(
+        builder: (context, state, child) {
+          return AppShell(location: state.uri.toString(), child: child);
+        },
+        routes: [
+          StatefulShellRoute.indexedStack(
+            builder: (context, state, navigationShell) {
+              return TabsShell(navigationShell: navigationShell);
+            },
+            branches: [
+              StatefulShellBranch(routes: [HomeRoutes.tabRoute]),
+              // StatefulShellBranch(routes: [CategoriesRoutes.tabRoute]),
+              // StatefulShellBranch(routes: [BookMarksRoutes.tabRoute]),
+              // StatefulShellBranch(routes: [ProfileRoutes.tabRoute]),
+            ],
+          ),
+          // ...HomeRoutes.extraRoutes,
+          // ...CategoriesRoutes.extraRoutes,
+          // ...PostDetailsRoutes.routes,
+        ],
+      ),
+      // ...GeneraleRoutes.routes,
+    ],
     errorBuilder: (context, state) => ErrorScreen(error: state.error),
   );
 
@@ -44,6 +73,7 @@ class AppRouter {
       default:
         return null;
     }
+    return null;
   }
 }
 // final class AppGateLoading extends AppGateState {}

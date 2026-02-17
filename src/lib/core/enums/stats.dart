@@ -1,1 +1,1 @@
-enum NewsStatus { initial, loading, loaded, error }
+enum LoadStatus { initial, loading, loaded, error }

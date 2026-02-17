@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
@@ -53,14 +53,14 @@ class _ContentState extends State<_Content> {
       children: [
         //! Banner
         MainBanner(),
-        SizedBox(height: context.setHeight(16)),
+        SizedBox(height: 16.h),
 
         //! Titel
         HeadTitle(
           headText: 'Create Account',
           hashText: 'Start your reading journey today.',
         ),
-        SizedBox(height: context.setHeight(32)),
+        SizedBox(height: 32.h),
         //! Form
         _SignUpForm(
           formKey: _formKey,
@@ -68,7 +68,7 @@ class _ContentState extends State<_Content> {
           emailController: _emailController,
           passwordController: _passwordController,
         ),
-        SizedBox(height: context.setHeight(4)),
+        SizedBox(height: 4.h),
         BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             return state is AuthError
@@ -76,7 +76,7 @@ class _ContentState extends State<_Content> {
                 : const SizedBox.shrink();
           },
         ),
-        SizedBox(height: context.setHeight(32)),
+        SizedBox(height: 32.h),
 
         //! Action button
         BlocListener<AuthCubit, AuthState>(
@@ -111,10 +111,10 @@ class _ContentState extends State<_Content> {
             },
           ),
         ),
-        SizedBox(height: context.setHeight(12)),
+        SizedBox(height: 12.h),
         //! hash Line
         SeperatorLine(),
-        SizedBox(height: context.setHeight(12)),
+        SizedBox(height: 12.h),
         //! Google Sign
         GoogleButton(
           onPressed: () {
@@ -150,14 +150,14 @@ class _SignUpForm extends StatelessWidget {
             controller: nameController,
             isPassword: false,
           ),
-          SizedBox(height: context.setHeight(16)),
+          SizedBox(height: 16.h),
           AuthInput(
             hintText: 'Email Address',
             validationType: ValidationType.email,
             controller: emailController,
             isPassword: false,
           ),
-          SizedBox(height: context.setHeight(16)),
+          SizedBox(height: 16.h),
           AuthInput(
             hintText: 'Password',
             validationType: ValidationType.password,

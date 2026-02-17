@@ -1,1 +1,1 @@
-abstract class {{name.pascalCase()}}DataSource {}
+abstract class {{name.pascalCase()}}LocalDataSource {}

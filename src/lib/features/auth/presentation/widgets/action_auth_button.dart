@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +23,7 @@ class ActionAuthButton extends StatelessWidget {
           onPressed: isLoading ? null : onPressed,
 
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: context.setHeight(16)),
+            padding: EdgeInsets.symmetric(vertical: 16.h),
             child: _Content(state: state, myText: myText, isLoading: isLoading),
           ),
         );
@@ -50,7 +50,7 @@ class _Content extends StatelessWidget {
           isLoading ? "Please wait..." : myText,
           style: context.labelLarge(),
         ),
-        SizedBox(width: context.setWidth(8)),
+        SizedBox(width: 8.w),
         isLoading ? CircularProgressIndicator() : Icon(Icons.arrow_forward),
       ],
     );

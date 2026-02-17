@@ -1,7 +1,5 @@
 import 'package:bookreading/core/database/cache/app_hive.dart';
 import 'package:bookreading/core/helper/hydrated_storage.dart';
-import 'package:bookreading/core/helper/size_provider/size_provider.dart';
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/core/shared/presentation/manager/app_gate_cubit/app_gate_cubit.dart';
 import 'package:bookreading/core/shared/routes/app_router.dart';
@@ -11,27 +9,14 @@ import 'package:bookreading/features/auth/domain/usecases/logout.dart';
 import 'package:bookreading/features/auth/domain/usecases/sign_up_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
-import 'package:bookreading/features/book/domain/usecases/book_marks.dart';
-import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/chapters_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/progress_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/user_profile_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/user_stats_usecase.dart';
-import 'package:bookreading/features/book/domain/usecases/avatar_usecase.dart';
-import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/book_marks/book_marks_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
 import 'package:bookreading/features/onboarding/domain/repositories/auth_repository.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'core/observers/app_bloc_observer.dart';
 import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
@@ -87,40 +72,40 @@ class AppBootstrap extends StatelessWidget {
         ),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
 
-        BlocProvider<BooksCubit>(
-          create: (context) => BooksCubit(sl<GetBooksUseCase>()),
-        ),
-        BlocProvider<BookCubit>(
-          create: (context) => BookCubit(sl<GetBooksIdUseCase>()),
-        ),
-        BlocProvider<ChaptersCubit>(
-          create: (context) => ChaptersCubit(sl<GetChaptersUseCase>()),
-        ),
-        BlocProvider<ReadingProgressCubit>(
-          create: (context) => ReadingProgressCubit(
-            sl<InsertReadingPregress>(),
-            sl<GetReadingProgress>(),
-          ),
-        ),
-        BlocProvider<UserStatsCubit>(
-          create: (context) =>
-              UserStatsCubit(sl<UpdateUserStats>(), sl<GetUserStats>()),
-        ),
-        BlocProvider<ProfileCubit>(
-          create: (context) => ProfileCubit(
-            sl<GetUserProfile>(),
-            sl<UpdateUserProfile>(),
-            sl<UploadAvatar>(),
-            // sl<GetAvatar>(),
-          ),
-        ),
-        BlocProvider<BookMarksCubit>(
-          create: (context) => BookMarksCubit(
-            sl<InsertBookMarks>(),
-            sl<RemoveBookMarks>(),
-            sl<GetBookMarks>(),
-          ),
-        ),
+        // BlocProvider<BooksCubit>(
+        //   create: (context) => BooksCubit(sl<GetBooksUseCase>()),
+        // ),
+        // BlocProvider<BookCubit>(
+        //   create: (context) => BookCubit(sl<GetBooksIdUseCase>()),
+        // ),
+        // BlocProvider<ChaptersCubit>(
+        //   create: (context) => ChaptersCubit(sl<GetChaptersUseCase>()),
+        // ),
+        // BlocProvider<ReadingProgressCubit>(
+        //   create: (context) => ReadingProgressCubit(
+        //     sl<InsertReadingPregress>(),
+        //     sl<GetReadingProgress>(),
+        //   ),
+        // ),
+        // BlocProvider<UserStatsCubit>(
+        //   create: (context) =>
+        //       UserStatsCubit(sl<UpdateUserStats>(), sl<GetUserStats>()),
+        // ),
+        // BlocProvider<ProfileCubit>(
+        //   create: (context) => ProfileCubit(
+        //     sl<GetUserProfile>(),
+        //     sl<UpdateUserProfile>(),
+        //     sl<UploadAvatar>(),
+        //     // sl<GetAvatar>(),
+        //   ),
+        // ),
+        // BlocProvider<BookMarksCubit>(
+        //   create: (context) => BookMarksCubit(
+        //     sl<InsertBookMarks>(),
+        //     sl<RemoveBookMarks>(),
+        //     sl<GetBookMarks>(),
+        //   ),
+        // ),
       ],
       child: const MyApp(),
     );
@@ -139,11 +124,11 @@ class MyApp extends StatelessWidget {
     // }
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, mode) {
-        return SizeProvider(
-          baseSize: const Size(428, 926),
-          height: context.screenHeight,
-          width: context.screenWidth,
-          child: MaterialApp.router(
+        return ScreenUtilInit(
+          designSize: const Size(428, 926),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) => MaterialApp.router(
             // locale: DevicePreview.locale(context),
             // builder: DevicePreview.appBuilder,
             debugShowCheckedModeBanner: false,

@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/theme/app_gradients.dart';
@@ -17,13 +17,10 @@ class MainBanner extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.setWidth(16),
-          vertical: context.setHeight(13),
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
         child: SizedBox(
-          width: context.setWidth(30),
-          height: context.setHeight(36),
+          width: 30.w,
+          height: 36.h,
           child: SvgPicture.asset("assets/icons/logo.svg"),
         ),
       ),

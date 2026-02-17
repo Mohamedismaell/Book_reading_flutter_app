@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/features/auth/presentation/widgets/arrow_back.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_redirect_prompt.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +34,7 @@ class SignUpPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.setWidth(16),
-                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: SignUpCard(),
                       ),
                       AuthRedirectPrompt(
