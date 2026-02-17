@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/app_colors.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.setMinSize(80),
+      height: 80.h,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(50),
@@ -34,7 +34,7 @@ class _CustomBottomNav extends StatelessWidget {
         color: context.colorTheme.surface,
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.setWidth(50)),
+        padding: EdgeInsets.symmetric(horizontal: 50.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -91,10 +91,10 @@ class _NavSvgIcon extends StatelessWidget {
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             child: path == null
-                ? Icon(icon, size: context.setMinSize(30), color: color)
+                ? Icon(icon, size: 30.r, color: color)
                 : SvgPicture.asset(
                     path!,
-                    width: context.setMinSize(23),
+                    width: 23.r,
                     fit: BoxFit.contain,
                     colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
                   ),

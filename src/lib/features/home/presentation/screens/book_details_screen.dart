@@ -1,5 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/size_provider.dart';
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
@@ -12,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class BookDetails extends StatefulWidget {
+class BookDetailsScreen extends StatefulWidget {
   final int bookId;
   final Object? heroTag;
   final String? previewCover;
   final String? previewTitle;
   final String? previewAuthor;
 
-  const BookDetails({
+  const BookDetailsScreen({
     super.key,
     required this.bookId,
     this.heroTag,
@@ -28,10 +27,10 @@ class BookDetails extends StatefulWidget {
     this.previewAuthor,
   });
   @override
-  State<BookDetails> createState() => _BookDetailsState();
+  State<BookDetailsScreen> createState() => _BookDetailsScreenState();
 }
 
-class _BookDetailsState extends State<BookDetails> {
+class _BookDetailsScreenState extends State<BookDetailsScreen> {
   @override
   void initState() {
     super.initState();
@@ -53,7 +52,7 @@ class _BookDetailsState extends State<BookDetails> {
               id: widget.bookId,
               heroTag: widget.heroTag,
             ),
-            SizedBox(height: context.setHeight(35)),
+            SizedBox(height: 35.h),
 
             if (bookState is BookLoaded)
               BookOverview(title: 'Overview', description: book!.summary!)
@@ -63,7 +62,7 @@ class _BookDetailsState extends State<BookDetails> {
                 child: CircularProgressIndicator(),
               ),
 
-            SizedBox(height: context.setHeight(18)),
+            SizedBox(height: 18.h),
             if (bookState is BookLoaded) _Buttons(book: book!),
           ],
         );
@@ -87,47 +86,35 @@ class _BookCover extends StatelessWidget {
   final Object? heroTag;
   @override
   Widget build(BuildContext context) {
-    return SizeProvider(
-      baseSize: const Size(220, 430),
-      width: context.setWidth(220),
-      height: context.setHeight(430),
-      child: Builder(
-        builder: (context) {
-          print('heroTag in widgfet  ==== ${heroTag}');
-          return SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: SizedBox(
-                    width: context.sizeProvider.width,
-                    child: Hero(
-                      tag: heroTag ?? id,
-                      child: Image.network(coverUrl!, fit: BoxFit.cover),
-                    ),
-                  ),
-                ),
-                SizedBox(height: context.setHeight(15)),
-                Text(
-                  title ?? '',
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  style: context.headlineMedium(),
-                ),
-                SizedBox(height: context.setHeight(10)),
-                Text(
-                  author ?? '',
-                  style: context.bodyLarge().copyWith(
-                    fontSize: context.setSp(20),
-                  ),
-                ),
-                SizedBox(height: context.setHeight(10)),
-                const Star(),
-              ],
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: SizedBox(
+              width: 220.w,
+              child: Hero(
+                tag: heroTag ?? id,
+                child: Image.network(coverUrl!, fit: BoxFit.cover),
+              ),
             ),
-          );
-        },
+          ),
+          SizedBox(height: 15.h),
+          Text(
+            title ?? '',
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            style: context.headlineMedium(),
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            author ?? '',
+            style: context.bodyLarge().copyWith(fontSize: 20.sp),
+          ),
+          SizedBox(height: 10.h),
+          const Star(),
+        ],
       ),
     );
   }
@@ -146,21 +133,15 @@ class _Buttons extends StatelessWidget {
             AppRoutes.read.replaceFirst(':bookId', book.id.toString()),
           ),
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.setMinSize(50),
-              vertical: context.setMinSize(17),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 17.h),
           ),
           child: Text("Read", style: context.labelMedium()),
         ),
-        SizedBox(width: context.setWidth(20)),
+        SizedBox(width: 20.w),
         ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.setMinSize(50),
-              vertical: context.setMinSize(17),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 17.h),
             backgroundColor: AppSemanticColors.secondaryActionDark,
           ),
 

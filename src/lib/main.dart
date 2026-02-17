@@ -1,7 +1,9 @@
+import 'package:bookreading/core/connections/retry_runner.dart';
 import 'package:bookreading/core/database/cache/app_hive.dart';
 import 'package:bookreading/core/helper/hydrated_storage.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/core/shared/presentation/manager/app_gate_cubit/app_gate_cubit.dart';
+import 'package:bookreading/core/shared/presentation/manager/connection_cubit/connection_cubit.dart';
 import 'package:bookreading/core/shared/routes/app_router.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_email.dart';
 import 'package:bookreading/features/auth/domain/usecases/login_google.dart';
@@ -15,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/observers/app_bloc_observer.dart';
@@ -53,6 +56,10 @@ class AppBootstrap extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<AppConnectionCubit>(
+          create: (_) =>
+              AppConnectionCubit(sl<InternetConnection>(), sl<RetryRunner>()),
+        ),
         BlocProvider<AppGateCubit>(
           create: (_) => AppGateCubit(
             onboardingRepository: sl<OnboardingRepository>(),

@@ -3,9 +3,7 @@ import 'package:bookreading/core/shared/presentation/manager/app_gate_cubit/app_
 import 'package:bookreading/core/shared/presentation/shell/app_shell.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/shared/routes/go_router_refresh_stream.dart';
-import 'package:bookreading/features/book/routes/generale_routes.dart';
 import 'package:bookreading/features/home/routes/home_routes.dart';
-import 'package:bookreading/features/onboarding/routes/onboarding_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,7 +18,7 @@ class AppRouter {
     refreshListenable: GoRouterRefreshStream(appGateCubit.stream),
     redirect: _redirect,
     routes: [
-      ...OnBoardingRoutes.routes,
+      // ...OnBoardingRoutes.routes,
       ...AuthRoutes.routes,
       ShellRoute(
         builder: (context, state, child) {
@@ -32,13 +30,13 @@ class AppRouter {
               return TabsShell(navigationShell: navigationShell);
             },
             branches: [
-              StatefulShellBranch(routes: [HomeRoutes.tabRoute]),
+              StatefulShellBranch(routes: [HomeRoutes.homeRoute]),
               // StatefulShellBranch(routes: [CategoriesRoutes.tabRoute]),
               // StatefulShellBranch(routes: [BookMarksRoutes.tabRoute]),
               // StatefulShellBranch(routes: [ProfileRoutes.tabRoute]),
             ],
           ),
-          // ...HomeRoutes.extraRoutes,
+          ...HomeRoutes.extraRoutes,
           // ...CategoriesRoutes.extraRoutes,
           // ...PostDetailsRoutes.routes,
         ],

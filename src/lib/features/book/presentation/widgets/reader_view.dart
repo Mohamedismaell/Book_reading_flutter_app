@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
@@ -93,8 +93,8 @@ class _ReaderViewState extends State<ReaderView> {
 
   Widget _buildContent() {
     return Positioned(
-      top: context.setHeight(60),
-      bottom: context.setHeight(60),
+      top: 60.h,
+      bottom: 60.h,
       left: 0,
       right: 0,
       child: GestureDetector(
@@ -104,7 +104,7 @@ class _ReaderViewState extends State<ReaderView> {
           child: LayoutBuilder(
             builder: (context, constraints) {
               final style = context.bodyLarge().copyWith(
-                fontSize: context.setSp(20),
+                fontSize: 20.sp,
                 height: 1.4,
               );
 
@@ -156,7 +156,7 @@ class ReaderHeader extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: areToolsVisible,
       builder: (context, visible, _) => SizedBox(
-        height: context.setMinSize(56),
+        height: 56.h,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -181,7 +181,7 @@ class ReaderHeader extends StatelessWidget {
           child: IconButton(
             onPressed: onTap,
             color: context.colorTheme.onSurface,
-            icon: Icon(Icons.arrow_back, size: context.setMinSize(26)),
+            icon: Icon(Icons.arrow_back, size: 26.r),
           ),
         ),
       ),
@@ -257,12 +257,12 @@ class ReaderFooter extends StatelessWidget {
           child: IgnorePointer(
             ignoring: !visible,
             child: SizedBox(
-              width: context.sizeProvider.width,
-              height: context.setMinSize(100),
+              width: 1.sw,
+              height: 100.h,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(width: context.sizeProvider.width / 4),
+                  SizedBox(width: 0.25.sw),
                   Expanded(child: _buildPageIndicator(context)),
                   _buildChapterListButton(context),
                 ],
@@ -297,15 +297,15 @@ class ReaderFooter extends StatelessWidget {
 
   Widget _buildChapterListButton(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.setMinSize(20)),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: context.colorTheme.primary.withOpacity(0.8),
           shape: const CircleBorder(),
-          padding: EdgeInsets.all(context.setMinSize(10)),
+          padding: EdgeInsets.all(10.r),
         ),
         onPressed: () {},
-        child: Icon(Icons.view_list_rounded, size: context.setMinSize(40)),
+        child: Icon(Icons.view_list_rounded, size: 40.r),
       ),
     );
   }

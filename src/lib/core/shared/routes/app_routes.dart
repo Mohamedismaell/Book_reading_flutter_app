@@ -12,6 +12,9 @@ class AppRoutes {
   // static const String explore = '/explore';
   // static const String bookmarks = '/bookmarks';
   // static const String profile = '/profile';
+  static const String screen2 = '/screen2';
+  static const String screen3 = '/screen3';
+  static const String screen4 = '/screen4';
 
   //! Sub Screens
   static const String bookDetails = '/bookDetails/:bookId';

@@ -4,10 +4,10 @@ import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
 import 'package:meta/meta.dart';
 part 'books_state.dart';
 
-class BooksCubit extends Cubit<BooksState> {
+class AllBooksCubit extends Cubit<BooksState> {
   final GetBooksUseCase getBooksUseCase;
 
-  BooksCubit(this.getBooksUseCase) : super(BooksInitial());
+  AllBooksCubit(this.getBooksUseCase) : super(BooksInitial());
 
   Future<void> getBooks() async {
     emit(BooksIsLoading());

@@ -1,21 +1,20 @@
 import 'dart:io';
 
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book/data/models/profile.dart';
 import 'package:bookreading/features/book/presentation/controllers/pick_image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileAvatar extends StatefulWidget {
   const ProfileAvatar({
     super.key,
-    required this.profile,
+    required this.profileImage,
     required this.canEdit,
     required this.radius,
   });
-  final ProfileModel profile;
+  final String? profileImage;
   final bool canEdit;
   final double radius;
   @override
@@ -27,7 +26,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
   late final ValueNotifier<File?> avatarNotifier;
   @override
   void initState() {
-    _pickImageController = PickImageController(profileCubit: context.read());
+    // _pickImageController = PickImageController(profileCubit: context.read());
     avatarNotifier = ValueNotifier(null);
 
     super.initState();
@@ -71,7 +70,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
   Widget build(BuildContext context) {
     return _buildProfileAvatar(
       context,
-      widget.profile,
+      widget.profileImage ?? 'assets/images/deafult_user_cover.png',
       avatarNotifier,
       widget.canEdit,
       widget.canEdit
@@ -83,7 +82,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
 
   Widget _buildProfileAvatar(
     BuildContext context,
-    ProfileModel profile,
+    String profileImage,
     ValueNotifier<File?> avatarNotifier,
     bool canEdit,
     VoidCallback? onTap,
@@ -94,12 +93,12 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
         ValueListenableBuilder<File?>(
           valueListenable: avatarNotifier,
           builder: (context, file, child) => CircleAvatar(
-            radius: context.setSp(radius),
+            radius: radius.r,
             backgroundImage: file != null
                 ? FileImage(file)
-                : profile.avatarUrl != 'assets/images/deafult_user_cover.png'
-                ? NetworkImage(profile.avatarUrl!)
-                : AssetImage(profile.avatarUrl!),
+                : profileImage != 'assets/images/deafult_user_cover.png'
+                ? NetworkImage(profileImage)
+                : const AssetImage('assets/images/deafult_user_cover.png'),
             backgroundColor: Colors.transparent,
           ),
         ),
@@ -111,8 +110,8 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                   customBorder: const CircleBorder(),
                   onTap: onTap,
                   child: Container(
-                    width: context.setSp(35),
-                    height: context.setSp(35),
+                    width: 35.r,
+                    height: 35.r,
                     decoration: BoxDecoration(
                       color: context.colorTheme.primary,
                       shape: BoxShape.circle,
@@ -121,7 +120,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                     child: Icon(
                       Icons.edit_outlined,
                       color: Colors.white,
-                      size: context.setSp(20),
+                      size: 20.r,
                     ),
                   ),
                 ),

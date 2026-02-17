@@ -1,5 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/size_provider.dart';
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
@@ -40,27 +39,18 @@ class _ContinueReadingState extends State<ContinueReading> {
 
   @override
   Widget build(BuildContext context) {
-    return SizeProvider(
-      baseSize: const Size(350, 310),
-      width: context.setWidth(350),
-      height: context.setHeight(310),
-      child: Builder(
-        builder: (context) {
-          return Container(
-            width: context.sizeProvider.width,
-            height: context.sizeProvider.height,
-            decoration: BoxDecoration(
-              color: context.colorTheme.surfaceContainer,
-              borderRadius: BorderRadius.circular(context.setMinSize(24)),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(context.setMinSize(16)),
-              child: BlocBuilder<ReadingProgressCubit, ReadingProgressState>(
-                builder: (context, state) => _buildBookStateUI(context, state),
-              ),
-            ),
-          );
-        },
+    return Container(
+      width: 350.w,
+      height: 310.h,
+      decoration: BoxDecoration(
+        color: context.colorTheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(24.r),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.r),
+        child: BlocBuilder<ReadingProgressCubit, ReadingProgressState>(
+          builder: (context, state) => _buildBookStateUI(context, state),
+        ),
       ),
     );
   }
@@ -93,7 +83,7 @@ Widget _buildCardItem(
   return Row(
     children: [
       _buildBookCover(context, book, onTap),
-      SizedBox(width: context.setMinSize(20)),
+      SizedBox(width: 20.w),
       _buildBookInfo(context, book, chapter, progress),
     ],
   );
@@ -108,10 +98,10 @@ Widget _buildBookCover(
     onTap: onTap,
     child: ClipRRect(
       clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.circular(context.setMinSize(16)),
+      borderRadius: BorderRadius.circular(16.r),
 
       child: SizedBox(
-        width: context.sizeProvider.width / 2.3,
+        width: 220.w / 2.3,
         height: double.infinity,
         child: Hero(
           tag: 'continue_${book.id}',
@@ -140,16 +130,16 @@ Widget _buildBookInfo(
 
   return Expanded(
     child: Padding(
-      padding: EdgeInsets.symmetric(vertical: context.setMinSize(15)),
+      padding: EdgeInsets.symmetric(vertical: 15.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(book.title, maxLines: 2, style: context.headlineSmall()),
-          SizedBox(height: context.setMinSize(12)),
+          SizedBox(height: 12.h),
           Text(book.author!, style: context.bodyLarge()),
-          SizedBox(height: context.setMinSize(12)),
+          SizedBox(height: 12.h),
           Text(chapter.title, style: context.bodyLarge()),
-          SizedBox(height: context.setMinSize(12)),
+          SizedBox(height: 12.h),
           Text.rich(
             TextSpan(
               children: [
@@ -163,7 +153,7 @@ Widget _buildBookInfo(
               ],
             ),
           ),
-          SizedBox(height: context.setMinSize(12)),
+          SizedBox(height: 12.h),
           Expanded(child: _buildBookProgress(context, chapter, progress)),
         ],
       ),
@@ -188,14 +178,14 @@ Widget _buildBookProgress(
               style: context.bodyMedium(),
             ),
           ),
-          SizedBox(width: context.setMinSize(6)),
+          SizedBox(width: 6.w),
           Text(
             "${(progress.progressPercentage * 100).toInt()}%",
             style: context.bodySmall().copyWith(fontWeight: FontWeight.bold),
           ),
-          SizedBox(width: context.setMinSize(10)),
+          SizedBox(width: 10.w),
           Container(
-            width: context.setMinSize(40),
+            width: 40.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: context.colorTheme.surface,
@@ -204,14 +194,14 @@ Widget _buildBookProgress(
               onPressed: () {},
               icon: Icon(
                 Icons.play_arrow_outlined,
-                size: context.setMinSize(24),
+                size: 24.r,
                 color: context.colorTheme.onSurface,
               ),
             ),
           ),
         ],
       ),
-      SizedBox(height: context.setMinSize(8)),
+      SizedBox(height: 8.h),
       ProgressBar(progress: progress.progressPercentage),
     ],
   );

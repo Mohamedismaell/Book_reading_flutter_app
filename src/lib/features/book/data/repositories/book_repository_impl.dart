@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'package:bookreading/core/connections/network_info.dart';
+
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/core/database/api/api_error_mapper.dart';
-import 'package:bookreading/core/shared/injection/di/service_locator.dart';
 import 'package:bookreading/core/errors/failure/failure.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/features/book/data/datasources/books_remote_data_source.dart';
@@ -10,11 +9,11 @@ import 'package:bookreading/features/book/domain/repositories/book_repository.da
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BookRepositoryImpl extends BookRepository {
-  final NetworkInfo networkInfo;
-  final BooksRemoteDataSource remoteDataSource;
+  // final NetworkInfo networkInfo;
+  final BookRemoteDataSource remoteDataSource;
   BookRepositoryImpl({
     required this.remoteDataSource,
-    required this.networkInfo,
+    // required this.networkInfo,
   });
 
   @override

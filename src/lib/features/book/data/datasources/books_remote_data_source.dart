@@ -9,12 +9,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/books.dart';
 import '../models/chapter.dart';
 
-class BooksRemoteDataSource {
-  final SupabaseClient supabase;
-  BooksRemoteDataSource({required this.supabase});
+class BookRemoteDataSource {
+  final SupabaseClient supabaseCilent;
+  BookRemoteDataSource({required this.supabaseCilent});
 
   Future<List<BookModel>> getBooks() async {
-    final response = await supabase.from('books').select();
+    final response = await supabaseCilent.from('books').select();
     // print(" Books **1** ===> $response");
     final resulte = response.map((e) => BookModel.fromJson(e)).toList();
     // print("Books **2**  ===> $resulte");
@@ -22,7 +22,7 @@ class BooksRemoteDataSource {
   }
 
   Future<BookModel?> getBookById(int bookId) async {
-    final response = await supabase
+    final response = await supabaseCilent
         .from('books')
         .select()
         .eq('id', bookId)
@@ -34,7 +34,7 @@ class BooksRemoteDataSource {
   }
 
   Future<List<ChapterModel>> getChapters(int bookId) async {
-    final response = await supabase
+    final response = await supabaseCilent
         .from('chapters')
         .select()
         .eq('book_id', bookId);
@@ -51,7 +51,7 @@ class BooksRemoteDataSource {
     // required int pageIndex,
     required double progressPercentage,
   }) async {
-    await supabase.from('user_progress').upsert({
+    await supabaseCilent.from('user_progress').upsert({
       'user_id': userId,
       'book_id': bookId,
       'chapter_id': chapterId,
@@ -65,7 +65,7 @@ class BooksRemoteDataSource {
     required String userId,
     // required int bookId,
   }) async {
-    final response = await supabase
+    final response = await supabaseCilent
         .from('user_progress')
         .select('*, books(*), chapters(*)')
         .eq('user_id', userId)
@@ -108,11 +108,14 @@ class BooksRemoteDataSource {
 
     updates['updated_at'] = DateTime.now().toIso8601String();
 
-    await supabase.from('user_stats').update(updates).eq('user_id', userId);
+    await supabaseCilent
+        .from('user_stats')
+        .update(updates)
+        .eq('user_id', userId);
   }
 
   Future<UserStatsModel?> getUserStats({required String userId}) async {
-    final response = await supabase
+    final response = await supabaseCilent
         .from('user_stats')
         .select()
         .eq('user_id', userId)
@@ -123,7 +126,7 @@ class BooksRemoteDataSource {
   }
 
   Future<ProfileModel?> getUserProfile({required String userId}) async {
-    final response = await supabase
+    final response = await supabaseCilent
         .from('profiles')
         .select()
         .eq('id', userId)
@@ -150,7 +153,7 @@ class BooksRemoteDataSource {
 
     if (updates.isEmpty) return;
 
-    await supabase.from('profiles').update(updates).eq('id', userId);
+    await supabaseCilent.from('profiles').update(updates).eq('id', userId);
     //     if (response.isEmpty) {
     //   throw Exception('Profile row not found');
     // }
@@ -164,10 +167,10 @@ class BooksRemoteDataSource {
     final path = '$userId/avatar_${DateTime.now().millisecondsSinceEpoch}.$ext';
 
     print('UPLOAD PATH => $path');
-    await supabase.storage
+    await supabaseCilent.storage
         .from('avatars')
         .upload(path, avatarFile, fileOptions: const FileOptions(upsert: true));
-    final publicUrl = supabase.storage.from('avatars').getPublicUrl(path);
+    final publicUrl = supabaseCilent.storage.from('avatars').getPublicUrl(path);
     return publicUrl;
   }
 
@@ -175,7 +178,7 @@ class BooksRemoteDataSource {
     required String userId,
     required int bookId,
   }) async {
-    await supabase.from('book_marks').upsert({
+    await supabaseCilent.from('book_marks').upsert({
       'user_id': userId,
       'book_id': bookId,
     });
@@ -185,7 +188,7 @@ class BooksRemoteDataSource {
     required String userId,
     required int bookId,
   }) async {
-    await supabase
+    await supabaseCilent
         .from('book_marks')
         .delete()
         .eq('book_id', bookId)
@@ -193,7 +196,7 @@ class BooksRemoteDataSource {
   }
 
   Future<List<BookMarksModel>> getBookmarks({required String userId}) async {
-    final response = await supabase
+    final response = await supabaseCilent
         .from('book_marks')
         .select('''
    book_id,

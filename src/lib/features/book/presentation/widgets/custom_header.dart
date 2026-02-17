@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_marks/book_marks_cubit.dart';
@@ -29,15 +29,13 @@ class CustomHeader extends StatelessWidget {
         IconButton(
           onPressed: () => context.canPop() ? context.pop() : null,
           color: context.colorTheme.onSurface,
-          icon: Icon(Icons.arrow_back, size: context.setMinSize(26)),
+          icon: Icon(Icons.arrow_back, size: 26.r),
         ),
         // Spacer(),
         isheader
             ? Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.setMinSize(40),
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -52,9 +50,7 @@ class CustomHeader extends StatelessWidget {
                       ),
                       Text(
                         author!,
-                        style: context.bodyLarge().copyWith(
-                          fontSize: context.setSp(20),
-                        ),
+                        style: context.bodyLarge().copyWith(fontSize: 20.sp),
                       ),
                     ],
                   ),
@@ -88,7 +84,7 @@ class CustomHeader extends StatelessWidget {
                 child: Icon(
                   isBookMarked ? Icons.bookmark : Icons.bookmark_border,
                   key: ValueKey(isBookMarked),
-                  size: context.setMinSize(32),
+                  size: 32.r,
                   color: context.colorTheme.primary,
                 ),
               ),

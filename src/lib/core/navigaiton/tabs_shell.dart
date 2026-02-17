@@ -1,4 +1,3 @@
-import 'package:bookreading/features/book/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,16 +10,17 @@ class TabsShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      backgroundColor: Colors.transparent,
       body: SafeArea(child: navigationShell),
-      bottomNavigationBar: BottomNav(
-        currentIndex: navigationShell.currentIndex,
-        onTap: (index) {
-          navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        },
-      ),
+      // bottomNavigationBar: BottomNav(
+      //   currentIndex: navigationShell.currentIndex,
+      //   onTap: (index) {
+      //     navigationShell.goBranch(
+      //       index,
+      //       initialLocation: index == navigationShell.currentIndex,
+      //     );
+      //   },
+      // ),
     );
   }
 }

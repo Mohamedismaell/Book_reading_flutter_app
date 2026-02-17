@@ -1,7 +1,7 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theme/cubit/theme_cubit.dart';
 
@@ -17,8 +17,8 @@ class ThemeIcon extends StatelessWidget {
           top: top ?? MediaQuery.sizeOf(context).height * 0.05,
           right: right ?? MediaQuery.sizeOf(context).width * 0.05,
           child: Container(
-            width: context.setMinSize(70),
-            height: context.setMinSize(35),
+            width: 70.w,
+            height: 35.h,
 
             color: Colors.transparent,
             child: Row(
@@ -34,7 +34,7 @@ class ThemeIcon extends StatelessWidget {
                         0.7,
                       ),
                       // backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.all(6),
+                      padding: EdgeInsets.all(6.r),
                     ),
                     child: AnimatedAlign(
                       duration: Duration(milliseconds: 300),

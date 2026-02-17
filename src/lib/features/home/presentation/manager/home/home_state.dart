@@ -3,16 +3,30 @@ part of 'home_cubit.dart';
 
 @immutable
 class HomeState extends Equatable {
+  final UserModel? user;
   final LoadStatus userStatus;
+  final String? userErrorMessage;
 
-  const HomeState({required this.userStatus});
+  const HomeState({
+    this.user,
+    this.userStatus = LoadStatus.initial,
+    this.userErrorMessage = '',
+  });
 
-  HomeState copyWith({LoadStatus? userStatus}) {
-    return HomeState(userStatus: userStatus ?? this.userStatus);
+  HomeState copyWith({
+    UserModel? user,
+    LoadStatus? userStatus,
+    String? userErrorMessage,
+  }) {
+    return HomeState(
+      user: user ?? this.user,
+      userStatus: userStatus ?? this.userStatus,
+      userErrorMessage: userErrorMessage ?? this.userErrorMessage,
+    );
   }
 
   @override
-  List<Object> get props => [userStatus];
+  List<Object?> get props => [userStatus, userErrorMessage, user];
 
   // @override
   // String toString() => 'HomeState(userStatus: $userStatus)';

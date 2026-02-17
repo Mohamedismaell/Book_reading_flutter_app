@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
@@ -19,25 +19,25 @@ class BookOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.sizeProvider.width,
+      width: 1.sw,
       decoration: BoxDecoration(
         color: context.colorTheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(context.setMinSize(24)),
+        borderRadius: BorderRadius.circular(24.r),
       ),
-      padding: EdgeInsets.all(context.setMinSize(16)),
+      padding: EdgeInsets.all(16.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: context.headlineMedium()),
-          SizedBox(height: context.setHeight(10)),
+          SizedBox(height: 10.h),
 
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.setWidth(7)),
+            padding: EdgeInsets.symmetric(horizontal: 7.w),
             child: Text(
               description,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: context.bodyMedium().copyWith(fontSize: context.setSp(18)),
+              style: context.bodyMedium().copyWith(fontSize: 18.sp),
             ),
           ),
 
@@ -57,10 +57,7 @@ class BookOverview extends StatelessWidget {
                 ),
               ),
               iconAlignment: IconAlignment.end,
-              icon: Icon(
-                Icons.keyboard_arrow_down_rounded,
-                size: context.setSp(25),
-              ),
+              icon: Icon(Icons.keyboard_arrow_down_rounded, size: 25.r),
             ),
           ),
         ],
@@ -123,34 +120,27 @@ class _ReadMore extends StatelessWidget {
         Center(
           child: Material(
             type: MaterialType.card,
-            borderRadius: BorderRadius.circular(context.setMinSize(24)),
+            borderRadius: BorderRadius.circular(24.r),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
               constraints: const BoxConstraints(maxHeight: 500),
               decoration: BoxDecoration(
                 color: context.colorTheme.surfaceContainer,
                 // color: Colors.transparent,
-                borderRadius: BorderRadius.circular(context.setMinSize(24)),
+                borderRadius: BorderRadius.circular(24.r),
               ),
-              padding: EdgeInsets.symmetric(
-                vertical: context.setMinSize(30),
-                horizontal: context.setMinSize(16),
-              ),
+              padding: EdgeInsets.symmetric(vertical: 30.r, horizontal: 16.r),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, style: context.headlineMedium()),
-                  SizedBox(height: context.setHeight(10)),
+                  SizedBox(height: 10.h),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.setWidth(7),
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 7.w),
                     child: Text(
                       description,
-                      style: context.bodyMedium().copyWith(
-                        fontSize: context.setSp(18),
-                      ),
+                      style: context.bodyMedium().copyWith(fontSize: 18.sp),
                     ),
                   ),
                 ],

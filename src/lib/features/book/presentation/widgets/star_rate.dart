@@ -1,4 +1,4 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:flutter/material.dart';
 
@@ -40,12 +40,12 @@ class StarState extends State<Star> {
                 end: isActive ? activatedColor : deactivatedColor,
               ),
               builder: (context, value, child) {
-                return Icon(Icons.star, size: context.setSp(23), color: value);
+                return Icon(Icons.star, size: 23.r, color: value);
               },
             ),
           ),
         ),
-        SizedBox(width: context.setWidth(8)),
+        SizedBox(width: 8.w),
         Text("4.0", style: context.bodyLarge()),
       ],
     );

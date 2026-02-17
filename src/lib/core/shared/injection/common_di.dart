@@ -7,6 +7,10 @@ import 'package:bookreading/core/database/cache/cache_helper.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/core/shared/presentation/manager/connection_cubit/connection_cubit.dart';
 import 'package:bookreading/core/shared/presentation/manager/theme_cubit/theme_cubit.dart';
+import 'package:bookreading/core/shared/user/data/datasources/user_remote_data_source.dart';
+import 'package:bookreading/core/shared/user/data/repositories/user_repository_impl.dart';
+import 'package:bookreading/core/shared/user/domain/repositories/user_repository.dart';
+import 'package:bookreading/core/shared/user/domain/usecases/get_current_user.dart';
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -36,28 +40,27 @@ class CommonDi {
     );
     sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
-    //! connection
-
-    // //! Validators
+    //! Validators
     // sl.registerLazySingleton(() => FormValidators());
     // sl.registerLazySingleton(() => UserValidation());
-    // //! Data Sources
-    // sl.registerLazySingleton<NewsRemoteDataSource>(
-    //   () => NewsRemoteDataSource(api: sl<DioConsumer>()),
+    //! Data Sources
+    sl.registerLazySingleton<UserRemoteDataSource>(
+      () => UserRemoteDataSource(supabaseClient: sl<SupabaseClient>()),
+    );
+    // sl.registerLazySingleton<UserLocalDataSource>(
+    //   () => UserLocalDataSource(newsBox: newsBox),
     // );
-    // sl.registerLazySingleton<NewsLocalDataSource>(
-    //   () => NewsLocalDataSource(newsBox: newsBox),
-    // );
-    // //! Repositories
-    // sl.registerLazySingleton<NewsRepository>(
-    //   () => NewsRepositoryImpl(
-    //     remoteDataSource: sl<NewsRemoteDataSource>(),
-    //     localDataSource: sl<NewsLocalDataSource>(),
-    //   ),
-    // ); //! Use Cases
-    // sl.registerLazySingleton(
-    //   () => GetNewsByCategory(repository: sl<NewsRepository>()),
-    // );
+    //! Repositories
+    sl.registerLazySingleton<UserRepository>(
+      () => UserRepositoryImpl(
+        remoteDataSource: sl<UserRemoteDataSource>(),
+        // localDataSource: sl<UserLocalDataSource>(),
+      ),
+    );
+    //! Use Cases
+    sl.registerLazySingleton(
+      () => GetCurrentUser(repository: sl<UserRepository>()),
+    );
     //! Local Storage
     final cacheHelper = CacheHelper();
     await cacheHelper.init();

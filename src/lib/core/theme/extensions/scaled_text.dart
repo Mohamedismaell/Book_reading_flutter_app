@@ -1,6 +1,6 @@
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension ScaledTextTheme on BuildContext {
   TextStyle headlineLarge() => _scale(textTheme.headlineLarge!);
@@ -19,6 +19,6 @@ extension ScaledTextTheme on BuildContext {
     final fontSize = style.fontSize;
     if (fontSize == null) return style;
 
-    return style.copyWith(fontSize: setSp(fontSize));
+    return style.copyWith(fontSize: fontSize.sp);
   }
 }
