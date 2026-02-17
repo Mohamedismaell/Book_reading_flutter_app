@@ -15,8 +15,9 @@ class HomeRoutes {
       path: AppRoutes.bookDetails,
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
-
+        final bookId = state.pathParameters['bookId']!;
         return BookDetailsScreen(
+          bookId: int.parse(bookId),
           heroTag: extra['heroTag'],
           coverUrl: extra['coverUrl'],
           title: extra['title'],

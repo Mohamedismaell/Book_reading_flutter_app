@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 part 'books_state.dart';
 
 class AllBooksCubit extends Cubit<BooksState> {
-  final GetBooksUseCase getBooksUseCase;
+  final GetAllBooksUseCase getBooksUseCase;
 
   AllBooksCubit(this.getBooksUseCase) : super(BooksInitial());
 

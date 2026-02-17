@@ -28,13 +28,15 @@ class BookDi {
     );
 
     //! Use Cases
-    sl.registerLazySingleton<GetBooksUseCase>(
-      () => GetBooksUseCase(repository: sl<BookRepository>()),
+    sl.registerLazySingleton<GetAllBooksUseCase>(
+      () => GetAllBooksUseCase(repository: sl<BookRepository>()),
     );
-
+    sl.registerLazySingleton<GetBookByIdUseCase>(
+      () => GetBookByIdUseCase(repository: sl<BookRepository>()),
+    );
     //! Cubit / Manager
     sl.registerLazySingleton<AllBooksCubit>(
-      () => AllBooksCubit(sl<GetBooksUseCase>()),
+      () => AllBooksCubit(sl<GetAllBooksUseCase>()),
     );
   }
 }

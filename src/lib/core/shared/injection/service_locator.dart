@@ -16,8 +16,8 @@ Future<void> initializeDependencies({
   await CommonDi.init();
   OnboardingDi.init(onboardingBox: onboardingBox);
   AuthDi.init();
-  HomeDi.init();
   BookDi.init();
+  HomeDi.init();
   // PostDi.init();
   // BookMarksDi.init();
   // ProfileDi.init(profileBox);

@@ -1,9 +1,11 @@
+import 'package:bookreading/core/enums/stats.dart';
+import 'package:bookreading/core/shared/injection/service_locator.dart';
+import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/presentation/cubit/book_id/book_cubit.dart';
 import 'package:bookreading/features/book/presentation/widgets/book_over_view.dart';
 import 'package:bookreading/features/book/presentation/widgets/custom_header.dart';
 import 'package:bookreading/features/book/presentation/widgets/star_rate.dart';
@@ -11,62 +13,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class BookDetailsScreen extends StatefulWidget {
+class BookDetailsScreen extends StatelessWidget {
   final int bookId;
   final Object? heroTag;
-  final String? previewCover;
-  final String? previewTitle;
-  final String? previewAuthor;
+  final String? coverUrl;
+  final String? title;
+  final String? author;
 
   const BookDetailsScreen({
     super.key,
     required this.bookId,
     this.heroTag,
-    this.previewCover,
-    this.previewTitle,
-    this.previewAuthor,
+    this.coverUrl,
+    this.title,
+    this.author,
   });
   @override
-  State<BookDetailsScreen> createState() => _BookDetailsScreenState();
-}
-
-class _BookDetailsScreenState extends State<BookDetailsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<BookCubit>().loadBook(widget.bookId);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BookCubit, BookState>(
-      builder: (context, bookState) {
-        final book = bookState is BookLoaded ? bookState.book : null;
-        return Column(
-          children: [
-            CustomHeader(isheader: false, bookId: widget.bookId),
-            _BookCover(
-              coverUrl: book?.coverUrl ?? widget.previewCover!,
-              title: book?.title ?? widget.previewTitle!,
-              author: book?.author ?? widget.previewAuthor!,
-              id: widget.bookId,
-              heroTag: widget.heroTag,
-            ),
-            SizedBox(height: 35.h),
-
-            if (bookState is BookLoaded)
-              BookOverview(title: 'Overview', description: book!.summary!)
-            else
-              const Padding(
-                padding: EdgeInsets.all(24),
-                child: CircularProgressIndicator(),
+    return BlocProvider(
+      create: (context) => sl<HomeCubit>()..loadBook(bookId),
+      child: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, bookState) {
+          final book = bookState.bookStatus == LoadStatus.loaded
+              ? bookState.book
+              : null;
+          return Column(
+            children: [
+              CustomHeader(isheader: false, bookId: bookId),
+              _BookCover(
+                coverUrl: book?.coverUrl ?? coverUrl!,
+                title: book?.title ?? title!,
+                author: book?.author ?? author!,
+                id: bookId,
+                heroTag: heroTag,
               ),
+              SizedBox(height: 35.h),
 
-            SizedBox(height: 18.h),
-            if (bookState is BookLoaded) _Buttons(book: book!),
-          ],
-        );
-      },
+              if (bookState.bookStatus == LoadStatus.loaded)
+                BookOverview(title: 'Overview', description: book!.summary!)
+              else
+                const Padding(
+                  padding: EdgeInsets.all(24),
+                  child: CircularProgressIndicator(),
+                ),
+
+              SizedBox(height: 18.h),
+              if (bookState.bookStatus == LoadStatus.loaded)
+                _Buttons(book: book!),
+            ],
+          );
+        },
+      ),
     );
   }
 }

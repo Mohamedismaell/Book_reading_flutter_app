@@ -58,38 +58,21 @@ class CustomHeader extends StatelessWidget {
               )
             : const SizedBox.shrink(),
 
-        BlocBuilder<BookMarksCubit, BookMarksState>(
-          builder: (context, state) {
-            final isBookMarked = state is BookMarkActive;
-            return GestureDetector(
-              onTap: () {
-                if (isBookMarked) {
-                  print('***Removed BookMarks');
-                  context.read<BookMarksCubit>().removeBookmark(bookId: bookId);
-                } else {
-                  print('***Added BookMarks');
-
-                  context.read<BookMarksCubit>().saveBookMark(bookId: bookId);
-                }
-              },
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                transitionBuilder: (child, animation) {
-                  final curved = CurvedAnimation(
-                    parent: animation,
-                    curve: Curves.easeOutBack,
-                  );
-                  return ScaleTransition(scale: curved, child: child);
-                },
-                child: Icon(
-                  isBookMarked ? Icons.bookmark : Icons.bookmark_border,
-                  key: ValueKey(isBookMarked),
-                  size: 32.r,
-                  color: context.colorTheme.primary,
-                ),
-              ),
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          transitionBuilder: (child, animation) {
+            final curved = CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutBack,
             );
+            return ScaleTransition(scale: curved, child: child);
           },
+          child: Icon(
+            Icons.bookmark,
+
+            size: 32.r,
+            color: context.colorTheme.primary,
+          ),
         ),
       ],
     );

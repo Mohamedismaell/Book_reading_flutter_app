@@ -1,17 +1,17 @@
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 
-class GetBooksUseCase {
+class GetAllBooksUseCase {
   final BookRepository repository;
-  GetBooksUseCase({required this.repository});
+  GetAllBooksUseCase({required this.repository});
   Future<Result> call() async {
     return await repository.getBooks();
   }
 }
 
-class GetBooksIdUseCase {
+class GetBookByIdUseCase {
   final BookRepository repository;
-  GetBooksIdUseCase({required this.repository});
+  GetBookByIdUseCase({required this.repository});
   Future<Result> call(int bookId) async {
     return await repository.getBookById(bookId);
   }
