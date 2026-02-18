@@ -20,10 +20,12 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     required int bookId,
     required String chapterId,
     required int pageNumber,
+    required double progress,
     BookModel? activeBook,
     ChapterModel? activeChapter,
   }) async {
     int pageNumberToSave = pageNumber;
+    double progressToSave = progress;
     String chapterIdToSave = chapterId;
     BookModel? bookDetailsToSave = activeBook;
     ChapterModel? chapterDetailsToSave = activeChapter;
@@ -31,10 +33,11 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     if (state.progressStatus == LoadStatus.loaded) {
       final oldState = state.progress;
       if (oldState?.bookId == bookId) {
-        final oldPercentage = oldState?.pageNumber;
+        final oldPercentage = oldState?.percentage;
 
-        if (oldPercentage != null && oldPercentage > pageNumberToSave) {
-          pageNumberToSave = oldPercentage;
+        if (oldPercentage != null && oldPercentage > progress) {
+          progressToSave = oldPercentage;
+          pageNumberToSave = oldState?.pageNumber ?? 0;
 
           if (oldState?.chapterDetails != null) {
             chapterDetailsToSave = oldState?.chapterDetails;
@@ -42,10 +45,12 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
         }
       }
     }
+    print('progressToSave: $progressToSave');
     final result = await saveReadingPregress.call(
       bookId: bookId,
       chapterId: chapterIdToSave,
       pageNumber: pageNumberToSave.ceil(),
+      percentage: progressToSave,
     );
 
     result.when(
@@ -62,6 +67,7 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
           pageNumber: pageNumberToSave,
           bookDetails: bookDetailsToSave,
           chapterDetails: chapterDetailsToSave,
+          percentage: progressToSave,
         );
         if (!isClosed) {
           emit(

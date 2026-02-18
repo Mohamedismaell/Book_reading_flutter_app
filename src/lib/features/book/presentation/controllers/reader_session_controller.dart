@@ -57,11 +57,15 @@ class ReaderSessionController {
     final readingDuration = DateTime.now().difference(_startReadingTime);
 
     if (readingDuration.inSeconds >= 3) {
-      _trySaveProgress();
+      final progress = _readingProgressCubit.calculateProgress(
+        pages: _pages,
+        currentPageIndex: currentPageIndex.value,
+      );
+      _trySaveProgress(progress);
     }
   }
 
-  void _trySaveProgress() {
+  void _trySaveProgress(double progress) {
     if (_pages.isEmpty) return;
 
     final currentPage = currentPageIndex.value;
@@ -69,27 +73,30 @@ class ReaderSessionController {
 
     if (chapterIndex < 0 || chapterIndex >= _chapters.length) return;
 
-    // final progress = ReadingProgressCalculator.calculateProgress(
-    //   pages: _pages,
-    //   currentPageIndex: currentPage,
-    // );
-
     _readingProgressCubit.saveProgress(
       bookId: _book.id,
       chapterId: _chapters[chapterIndex].id,
       activeBook: _book,
       activeChapter: _chapters[chapterIndex],
       pageNumber: currentPage,
+      progress: progress,
     );
     print("Progress Saved Successfully");
     _lastSavedPage = currentPage;
   }
 
   void start() {
-    _progressTimer = Timer.periodic(
-      const Duration(seconds: 5),
-      (_) =>
-          currentPageIndex.value != _lastSavedPage ? _trySaveProgress() : null,
-    );
+    _progressTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (_pages.isEmpty) return;
+
+      if (currentPageIndex.value != _lastSavedPage) {
+        final progress = _readingProgressCubit.calculateProgress(
+          pages: _pages,
+          currentPageIndex: currentPageIndex.value,
+        );
+
+        _trySaveProgress(progress);
+      }
+    });
   }
 }

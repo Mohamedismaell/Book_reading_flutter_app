@@ -1,7 +1,6 @@
 import 'package:bookreading/core/connections/result.dart';
 import 'package:bookreading/core/database/api/api_error_mapper.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
-import 'package:bookreading/features/progress/data/datasources/progress_data_source.dart';
 import 'package:bookreading/features/progress/data/datasources/progress_remote_data_source.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,6 +21,7 @@ class ProgressRepositoryImpl implements ProgressRepository {
     required String chapterId,
     // required int pageIndex,
     required int pageNumber,
+    required double percentage,
   }) async {
     try {
       await remoteDataSource.saveProgress(
@@ -30,6 +30,7 @@ class ProgressRepositoryImpl implements ProgressRepository {
         chapterId: chapterId,
         // pageIndex: pageIndex,
         pageNumber: pageNumber,
+        percentage: percentage,
       );
       return Result.ok(null);
     } catch (e) {

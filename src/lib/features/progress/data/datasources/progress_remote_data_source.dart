@@ -12,6 +12,7 @@ class ProgressRemoteDataSource {
     required String chapterId,
     // required int pageIndex,
     required int pageNumber,
+    required double percentage,
   }) async {
     await supabaseCilent.from('user_progress').upsert({
       'user_id': userId,
@@ -20,6 +21,7 @@ class ProgressRemoteDataSource {
       // 'page_index': pageIndex,
       'updated_at': DateTime.now().toUtc().toIso8601String(),
       'page_number': pageNumber,
+      'progress_percentage': percentage,
     });
   }
 

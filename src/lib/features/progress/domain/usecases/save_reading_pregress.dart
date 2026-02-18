@@ -9,12 +9,14 @@ class SaveReadingPregress {
     required String chapterId,
     // required int pageIndex,
     required int pageNumber,
+    required double percentage,
   }) async {
     return await repository.saveProgress(
       bookId: bookId,
       chapterId: chapterId,
       // pageIndex: pageIndex,
       pageNumber: pageNumber,
+      percentage: percentage,
     );
   }
 }

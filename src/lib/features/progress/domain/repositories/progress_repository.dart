@@ -5,6 +5,7 @@ abstract class ProgressRepository {
     required int bookId,
     required String chapterId,
     // required int pageIndex,
+    required double percentage,
     required int pageNumber,
   });
   Future<Result> getProgress();

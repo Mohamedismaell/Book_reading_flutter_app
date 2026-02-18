@@ -1,11 +1,10 @@
 import 'package:bookreading/core/shared/injection/service_locator.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class HorizontalView extends StatelessWidget {

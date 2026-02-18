@@ -9,6 +9,7 @@ class ProgressModel {
   final BookModel? bookDetails;
   final ChapterModel? chapterDetails;
   final int pageNumber;
+  final double percentage;
   ProgressModel({
     required this.bookId,
     required this.chapterId,
@@ -17,6 +18,7 @@ class ProgressModel {
     this.bookDetails,
     this.chapterDetails,
     required this.pageNumber,
+    required this.percentage,
   });
 
   factory ProgressModel.fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,9 @@ class ProgressModel {
       pageNumber: json['page_number'] != null
           ? (json['page_number'] as num).toInt()
           : 0,
+      percentage: json['progress_percentage'] != null
+          ? (json['progress_percentage'] as num).toDouble()
+          : 0.0,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
+import 'package:bookreading/features/book/presentation/widgets/progress_bar.dart';
 import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
 import 'package:bookreading/features/progress/data/models/user_progress.dart';
 import 'package:flutter/material.dart';
@@ -162,16 +163,20 @@ class ContinueReading extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Expanded(
+            //   child: Text(
+            //     "Chapter ${chapter.chapterIndex}",
+            //     style: context.bodyMedium(),
+            //   ),
+            // ),
+            // SizedBox(width: 6.w),
             Expanded(
               child: Text(
-                "Chapter ${chapter.chapterIndex}",
-                style: context.bodyMedium(),
+                "${(progress.percentage * 100).toInt()}%",
+                style: context.bodySmall().copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(width: 6.w),
-            Text(
-              "${(progress.pageNumber * 100).toInt()}%",
-              style: context.bodySmall().copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(width: 10.w),
             Container(
@@ -192,7 +197,7 @@ class ContinueReading extends StatelessWidget {
           ],
         ),
         SizedBox(height: 8.h),
-        // ProgressBar(progress: progress.pageNumber),
+        ProgressBar(progress: progress.percentage),
       ],
     );
   }
