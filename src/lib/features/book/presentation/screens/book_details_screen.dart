@@ -1,16 +1,16 @@
 import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
-import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
+import 'package:bookreading/features/book/presentation/cubit/book_id/book_id_cubit.dart';
 import 'package:bookreading/features/book/presentation/widgets/book_over_view.dart';
 import 'package:bookreading/features/book/presentation/widgets/custom_header.dart';
 import 'package:bookreading/features/book/presentation/widgets/star_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class BookDetailsScreen extends StatelessWidget {
@@ -31,8 +31,8 @@ class BookDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<HomeCubit>()..loadBook(bookId),
-      child: BlocBuilder<HomeCubit, HomeState>(
+      create: (context) => sl<BookIdCubit>()..loadBook(bookId),
+      child: BlocBuilder<BookIdCubit, BookIdState>(
         builder: (context, bookState) {
           final book = bookState.bookStatus == LoadStatus.loaded
               ? bookState.book
@@ -126,9 +126,13 @@ class _Buttons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () => context.push(
-            AppRoutes.read.replaceFirst(':bookId', book.id.toString()),
-          ),
+          onPressed: () {
+            context.pushNamed(
+              AppRoutes.read,
+
+              pathParameters: {'bookId': book.id.toString()},
+            );
+          },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 17.h),
           ),

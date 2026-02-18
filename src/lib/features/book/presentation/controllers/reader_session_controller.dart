@@ -3,24 +3,22 @@ import 'dart:async';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
-import 'package:bookreading/features/book/domain/services/reading_progress_calculator.dart';
-import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
-import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
+import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:flutter/material.dart';
 
 class ReaderSessionController {
   ReaderSessionController({
     required ReadingProgressCubit readingProgressCubit,
-    required UserStatsCubit userStatsCubit,
+    // required UserStatsCubit userStatsCubit,
     required BookModel book,
     required List<ChapterModel> chapters,
   }) : _readingProgressCubit = readingProgressCubit,
-       _userStatsCubit = userStatsCubit,
+       //  _userStatsCubit = userStatsCubit,
        _book = book,
        _chapters = chapters;
 
   final ReadingProgressCubit _readingProgressCubit;
-  final UserStatsCubit _userStatsCubit;
+  // final UserStatsCubit _userStatsCubit;
   final BookModel _book;
   final List<ChapterModel> _chapters;
 
@@ -56,15 +54,10 @@ class ReaderSessionController {
   }
 
   void onExit() {
-    _trySaveProgress();
-
     final readingDuration = DateTime.now().difference(_startReadingTime);
 
-    if (readingDuration.inSeconds >= 30) {
-      _userStatsCubit.changeUserStats(
-        totalReadingMinutes: readingDuration.inMinutes,
-        lastReadAt: DateTime.now(),
-      );
+    if (readingDuration.inSeconds >= 3) {
+      _trySaveProgress();
     }
   }
 
@@ -76,19 +69,19 @@ class ReaderSessionController {
 
     if (chapterIndex < 0 || chapterIndex >= _chapters.length) return;
 
-    final progress = ReadingProgressCalculator.calculateProgress(
-      pages: _pages,
-      currentPageIndex: currentPage,
-    );
+    // final progress = ReadingProgressCalculator.calculateProgress(
+    //   pages: _pages,
+    //   currentPageIndex: currentPage,
+    // );
 
     _readingProgressCubit.saveProgress(
       bookId: _book.id,
       chapterId: _chapters[chapterIndex].id,
       activeBook: _book,
       activeChapter: _chapters[chapterIndex],
-      progressPercentage: progress,
+      pageNumber: currentPage,
     );
-    print("✅ Progress Saved Successfully");
+    print("Progress Saved Successfully");
     _lastSavedPage = currentPage;
   }
 

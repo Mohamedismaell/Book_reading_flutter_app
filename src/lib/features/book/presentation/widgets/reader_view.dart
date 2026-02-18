@@ -5,7 +5,7 @@ import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/book/presentation/controllers/reader_session_controller.dart';
-import 'package:bookreading/features/book/presentation/cubit/reading_pregress/reading_progress_cubit.dart';
+import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:bookreading/features/book/presentation/pagination/reader_pagination_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +32,7 @@ class _ReaderViewState extends State<ReaderView> {
     super.initState();
     controller = ReaderSessionController(
       readingProgressCubit: context.read(),
-      userStatsCubit: context.read(),
+      // userStatsCubit: context.read(),
       book: widget.book,
       chapters: widget.chapters,
     );

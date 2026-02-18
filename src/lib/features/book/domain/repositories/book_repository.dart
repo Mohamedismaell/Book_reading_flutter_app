@@ -7,13 +7,7 @@ abstract class BookRepository {
   Future<Result> getBooks();
   Future<Result> getChapters(int bookId);
   Future<Result> getBookById(int bookId);
-  Future<Result> saveProgress({
-    required int bookId,
-    required String chapterId,
-    // required int pageIndex,
-    required double progressPercentage,
-  });
-  Future<Result> getProgress();
+
   Future<Result> updateUserStats({
     int? readingStreak,
     int? readingDays,

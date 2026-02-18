@@ -47,8 +47,6 @@ class HomeDi {
     );
 
     //! Cubit / Manager
-    sl.registerLazySingleton<HomeCubit>(
-      () => HomeCubit(sl<GetCurrentUser>(), sl<GetBookByIdUseCase>()),
-    );
+    sl.registerLazySingleton<HomeCubit>(() => HomeCubit(sl<GetCurrentUser>()));
   }
 }

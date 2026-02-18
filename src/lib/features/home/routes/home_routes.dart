@@ -1,6 +1,4 @@
 import 'package:bookreading/core/shared/routes/app_routes.dart';
-import 'package:bookreading/features/home/presentation/screens/book_details_screen.dart';
-import 'package:bookreading/features/home/presentation/screens/book_details_screen.dart';
 import 'package:bookreading/features/home/presentation/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,23 +7,7 @@ class HomeRoutes {
     path: AppRoutes.home,
     builder: (context, state) => const HomeScreen(),
   );
-  static List<RouteBase> extraRoutes = [
-    GoRoute(
-      name: AppRoutes.bookDetails,
-      path: AppRoutes.bookDetails,
-      builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>;
-        final bookId = state.pathParameters['bookId']!;
-        return BookDetailsScreen(
-          bookId: int.parse(bookId),
-          heroTag: extra['heroTag'],
-          coverUrl: extra['coverUrl'],
-          title: extra['title'],
-          author: extra['author'],
-        );
-      },
-    ),
-  ];
+
   // static final tabRoute1 = GoRoute(
   //   path: AppRoutes.screen2,
   //   builder: (context, state) => const Screen2(),

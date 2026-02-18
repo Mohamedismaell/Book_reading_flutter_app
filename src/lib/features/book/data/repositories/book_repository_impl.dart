@@ -55,44 +55,6 @@ class BookRepositoryImpl extends BookRepository {
   }
 
   @override
-  Future<Result> saveProgress({
-    required int bookId,
-    required String chapterId,
-    // required int pageIndex,
-    required double progressPercentage,
-  }) async {
-    try {
-      await remoteDataSource.saveProgress(
-        userId: sl<SupabaseClient>().auth.currentUser!.id,
-        bookId: bookId,
-        chapterId: chapterId,
-        // pageIndex: pageIndex,
-        progressPercentage: progressPercentage,
-      );
-      return Result.ok(null);
-    } catch (e) {
-      final failure = ApiErrorMapper.fromException(e);
-      return Result.error(failure);
-    }
-  }
-
-  @override
-  Future<Result> getProgress() async {
-    try {
-      final result = await remoteDataSource.getProgress(
-        userId: sl<SupabaseClient>().auth.currentUser!.id,
-      );
-      //   if (result == null) {
-      //   return Result.ok(null);
-      // }
-      return Result.ok(result);
-    } catch (e) {
-      final failure = ApiErrorMapper.fromException(e);
-      return Result.error(failure);
-    }
-  }
-
-  @override
   Future<Result> getUserStats() async {
     try {
       final result = await remoteDataSource.getUserStats(

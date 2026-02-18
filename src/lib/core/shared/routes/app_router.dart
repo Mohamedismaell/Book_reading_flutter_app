@@ -3,6 +3,7 @@ import 'package:bookreading/core/shared/presentation/manager/app_gate_cubit/app_
 import 'package:bookreading/core/shared/presentation/shell/app_shell.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/shared/routes/go_router_refresh_stream.dart';
+import 'package:bookreading/features/book/routes/book_routes.dart';
 import 'package:bookreading/features/home/routes/home_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +37,7 @@ class AppRouter {
               // StatefulShellBranch(routes: [ProfileRoutes.tabRoute]),
             ],
           ),
-          ...HomeRoutes.extraRoutes,
+          ...BookRoutes.routes,
           // ...CategoriesRoutes.extraRoutes,
           // ...PostDetailsRoutes.routes,
         ],
