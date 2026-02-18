@@ -1,27 +1,29 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
-import 'package:bookreading/features/book/data/models/user_progress.dart';
-import 'package:bookreading/features/book/domain/usecases/progress_usecase.dart';
+import 'package:bookreading/features/progress/data/models/user_progress.dart';
+import 'package:bookreading/features/book/domain/entities/page_data.dart';
+import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
+import 'package:bookreading/features/progress/domain/usecases/save_reading_pregress.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'reading_progress_state.dart';
 
 class ReadingProgressCubit extends Cubit<ReadingProgressState> {
-  ReadingProgressCubit(this.insertReadingPregress, this.getReadingProgress)
+  ReadingProgressCubit(this.saveReadingPregress, this.getReadingProgress)
     : super(ReadingProgressInitial());
-  final InsertReadingPregress insertReadingPregress;
+  final SaveReadingPregress saveReadingPregress;
   final GetReadingProgress getReadingProgress;
 
   Future<void> saveProgress({
     required int bookId,
     required String chapterId,
-    required double progressPercentage,
+    required int pageNumber,
     BookModel? activeBook,
     ChapterModel? activeChapter,
   }) async {
-    double progressToSave = progressPercentage;
+    int pageNumberToSave = pageNumber;
     String chapterIdToSave = chapterId;
     BookModel? bookDetailsToSave = activeBook;
     ChapterModel? chapterDetailsToSave = activeChapter;
@@ -29,10 +31,10 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     if (state is ReadingProgressLoaded) {
       final oldState = (state as ReadingProgressLoaded).progress;
       if (oldState.bookId == bookId) {
-        final oldPercentage = oldState.progressPercentage;
+        final oldPercentage = oldState.pageNumber;
 
-        if (oldPercentage > progressToSave) {
-          progressToSave = oldPercentage;
+        if (oldPercentage > pageNumberToSave) {
+          pageNumberToSave = oldPercentage;
 
           if (oldState.chapterDetails != null) {
             chapterDetailsToSave = oldState.chapterDetails;
@@ -40,10 +42,10 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
         }
       }
     }
-    final result = await insertReadingPregress.call(
+    final result = await saveReadingPregress.call(
       bookId: bookId,
       chapterId: chapterIdToSave,
-      progressPercentage: progressToSave,
+      pageNumber: pageNumberToSave.ceil(),
     );
 
     result.when(
@@ -58,15 +60,42 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
           bookId: bookId,
           updatedAt: DateTime.now(),
           chapterId: chapterIdToSave,
-          progressPercentage: progressToSave,
+          pageNumber: pageNumberToSave,
           bookDetails: bookDetailsToSave,
           chapterDetails: chapterDetailsToSave,
         );
-        emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));
+        if (!isClosed) {
+          emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));
+        }
       },
-      failure: (failure) =>
-          emit(ReadingProgressError(message: failure.message)),
+      failure: (failure) {
+        if (!isClosed) {
+          emit(ReadingProgressError(message: failure.message));
+        }
+      },
     );
+  }
+
+  double calculateProgress({
+    required List<PageData> pages,
+    required int currentPageIndex,
+  }) {
+    if (pages.isEmpty || currentPageIndex <= 0) return 0.0;
+
+    int charactersRead = 0;
+    final safeIndex = (currentPageIndex - 1).clamp(0, pages.length - 1);
+
+    for (int i = 0; i <= safeIndex; i++) {
+      charactersRead += pages[i].contentLength;
+    }
+    final totalCharacters = pages.fold<int>(
+      0,
+      (sum, page) => sum + page.contentLength,
+    );
+
+    if (totalCharacters == 0) return 0.0;
+
+    return charactersRead / totalCharacters;
   }
 
   Future<void> loadProgress() async {
@@ -74,10 +103,15 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     final result = await getReadingProgress.call();
     result.when(
       success: (progress) {
-        emit(ReadingProgressLoaded(progress: progress, justSaved: false));
+        if (!isClosed) {
+          emit(ReadingProgressLoaded(progress: progress, justSaved: false));
+        }
       },
-      failure: (failure) =>
-          emit(ReadingProgressError(message: failure.message)),
+      failure: (failure) {
+        if (!isClosed) {
+          emit(ReadingProgressError(message: failure.message));
+        }
+      },
     );
   }
 }
