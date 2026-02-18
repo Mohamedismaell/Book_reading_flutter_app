@@ -1,10 +1,7 @@
-import 'package:bookreading/core/database/api/dio_consumer.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
-import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/progress/data/datasources/progress_data_source.dart';
 import 'package:bookreading/features/progress/domain/usecases/save_reading_pregress.dart';
-import 'package:bookreading/features/progress/presentation/manager/progress/progress_cubit.dart';
 import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -55,6 +52,5 @@ class ProgressDi {
         sl<GetReadingProgress>(),
       ),
     );
-    sl.registerLazySingleton<ProgressCubit>(() => ProgressCubit());
   }
 }

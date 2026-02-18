@@ -1,31 +1,35 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'book_id_cubit.dart';
 
-class BookIdState extends Equatable {
+sealed class BookIdState extends Equatable {
+  // @override
+  // List<Object?> get props => [bookStatus, bookErrorMessage, book];
+}
+
+final class BookIdInitial extends BookIdState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class BookIdLoading extends BookIdState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class BookIdLoaded extends BookIdState {
   final BookModel? book;
-  final LoadStatus bookStatus;
+
+  BookIdLoaded({required this.book});
+
+  @override
+  List<Object?> get props => [book];
+}
+
+class BookIdError extends BookIdState {
   final String? bookErrorMessage;
 
-  const BookIdState({
-    this.book,
-    this.bookStatus = LoadStatus.initial,
-    this.bookErrorMessage = '',
-  });
-  @override
-  List<Object?> get props => [bookStatus, bookErrorMessage, book];
-
-  BookIdState copyWith({
-    BookModel? book,
-    LoadStatus? bookStatus,
-    String? bookErrorMessage,
-  }) {
-    return BookIdState(
-      book: book ?? this.book,
-      bookStatus: bookStatus ?? this.bookStatus,
-      bookErrorMessage: bookErrorMessage ?? this.bookErrorMessage,
-    );
-  }
+  BookIdError({required this.bookErrorMessage});
 
   @override
-  bool get stringify => true;
+  List<Object?> get props => [bookErrorMessage];
 }

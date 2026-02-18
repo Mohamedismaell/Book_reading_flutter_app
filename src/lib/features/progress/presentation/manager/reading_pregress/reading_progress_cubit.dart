@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 import 'package:bookreading/features/progress/data/models/user_progress.dart';
@@ -6,13 +7,12 @@ import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/progress/domain/usecases/save_reading_pregress.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 part 'reading_progress_state.dart';
 
 class ReadingProgressCubit extends Cubit<ReadingProgressState> {
   ReadingProgressCubit(this.saveReadingPregress, this.getReadingProgress)
-    : super(ReadingProgressInitial());
+    : super(ReadingProgressState());
   final SaveReadingPregress saveReadingPregress;
   final GetReadingProgress getReadingProgress;
 
@@ -28,16 +28,16 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     BookModel? bookDetailsToSave = activeBook;
     ChapterModel? chapterDetailsToSave = activeChapter;
 
-    if (state is ReadingProgressLoaded) {
-      final oldState = (state as ReadingProgressLoaded).progress;
-      if (oldState.bookId == bookId) {
-        final oldPercentage = oldState.pageNumber;
+    if (state.progressStatus == LoadStatus.loaded) {
+      final oldState = state.progress;
+      if (oldState?.bookId == bookId) {
+        final oldPercentage = oldState?.pageNumber;
 
-        if (oldPercentage > pageNumberToSave) {
+        if (oldPercentage != null && oldPercentage > pageNumberToSave) {
           pageNumberToSave = oldPercentage;
 
-          if (oldState.chapterDetails != null) {
-            chapterDetailsToSave = oldState.chapterDetails;
+          if (oldState?.chapterDetails != null) {
+            chapterDetailsToSave = oldState?.chapterDetails;
           }
         }
       }
@@ -50,13 +50,12 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
 
     result.when(
       success: (_) {
-        if (bookDetailsToSave == null && state is ReadingProgressLoaded) {
-          bookDetailsToSave =
-              (state as ReadingProgressLoaded).progress.bookDetails;
-          chapterDetailsToSave =
-              (state as ReadingProgressLoaded).progress.chapterDetails;
+        if (bookDetailsToSave == null &&
+            state.progressStatus == LoadStatus.loaded) {
+          bookDetailsToSave = state.progress?.bookDetails;
+          chapterDetailsToSave = state.progress?.chapterDetails;
         }
-        final newProgress = UserProgressModel(
+        final newProgress = ProgressModel(
           bookId: bookId,
           updatedAt: DateTime.now(),
           chapterId: chapterIdToSave,
@@ -65,12 +64,23 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
           chapterDetails: chapterDetailsToSave,
         );
         if (!isClosed) {
-          emit(ReadingProgressLoaded(progress: newProgress, justSaved: true));
+          emit(
+            state.copyWith(
+              progress: newProgress,
+              justSaved: true,
+              progressStatus: LoadStatus.loaded,
+            ),
+          );
         }
       },
       failure: (failure) {
         if (!isClosed) {
-          emit(ReadingProgressError(message: failure.message));
+          emit(
+            state.copyWith(
+              message: failure.message,
+              progressStatus: LoadStatus.error,
+            ),
+          );
         }
       },
     );
@@ -98,18 +108,29 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
     return charactersRead / totalCharacters;
   }
 
-  Future<void> loadProgress() async {
-    emit(ReadingProgressLoading());
+  Future<void> getProgress() async {
+    emit(state.copyWith(progressStatus: LoadStatus.loading));
     final result = await getReadingProgress.call();
     result.when(
       success: (progress) {
         if (!isClosed) {
-          emit(ReadingProgressLoaded(progress: progress, justSaved: false));
+          emit(
+            state.copyWith(
+              progress: progress,
+              justSaved: false,
+              progressStatus: LoadStatus.loaded,
+            ),
+          );
         }
       },
       failure: (failure) {
         if (!isClosed) {
-          emit(ReadingProgressError(message: failure.message));
+          emit(
+            state.copyWith(
+              message: failure.message,
+              progressStatus: LoadStatus.error,
+            ),
+          );
         }
       },
     );

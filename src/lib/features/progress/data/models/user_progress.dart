@@ -1,7 +1,7 @@
 import 'package:bookreading/features/book/data/models/books.dart';
 import 'package:bookreading/features/book/data/models/chapter.dart';
 
-class UserProgressModel {
+class ProgressModel {
   final int bookId;
   final String chapterId;
   // final int pageIndex;
@@ -9,7 +9,7 @@ class UserProgressModel {
   final BookModel? bookDetails;
   final ChapterModel? chapterDetails;
   final int pageNumber;
-  UserProgressModel({
+  ProgressModel({
     required this.bookId,
     required this.chapterId,
     // required this.pageIndex,
@@ -19,8 +19,8 @@ class UserProgressModel {
     required this.pageNumber,
   });
 
-  factory UserProgressModel.fromJson(Map<String, dynamic> json) {
-    return UserProgressModel(
+  factory ProgressModel.fromJson(Map<String, dynamic> json) {
+    return ProgressModel(
       bookId: json['book_id'] as int,
       chapterId: json['chapter_id'] as String,
       // pageIndex: json['page_index'] != null ? json['page_index'] as int : 0,

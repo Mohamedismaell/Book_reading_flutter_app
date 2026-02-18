@@ -79,7 +79,7 @@ class _BookCover extends StatelessWidget {
       child: InkWell(
         onTap: () {
           context.pushNamed(
-            AppRoutes.bookDetails,
+            'bookDetails',
             pathParameters: {'bookId': book.id.toString()},
             extra: {
               'heroTag': '${category}_${book.id}',
@@ -89,28 +89,13 @@ class _BookCover extends StatelessWidget {
             },
           );
         },
-        child: GestureDetector(
-          onTap: () {
-            print("herotag in Home : ${'${category}_${book.id}'}");
-
-            context.push(
-              AppRoutes.bookDetails.replaceFirst(':bookId', book.id.toString()),
-              extra: {
-                'heroTag': '${category}_${book.id}',
-                'coverUrl': book.coverUrl,
-                'title': book.title,
-                'author': book.author,
-              },
-            );
-          },
-          child: Container(
-            width: 160.w,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
-            child: Hero(
-              tag: '${category}_${book.id}',
-              child: Image.network(book.coverUrl!, fit: BoxFit.cover),
-            ),
+        child: Container(
+          width: 160.w,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
+          child: Hero(
+            tag: '${category}_${book.id}',
+            child: Image.network(book.coverUrl!, fit: BoxFit.cover),
           ),
         ),
       ),

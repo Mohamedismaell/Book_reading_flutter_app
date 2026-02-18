@@ -7,22 +7,28 @@ import 'package:bookreading/features/book/presentation/screens/book_details_scre
 import 'package:bookreading/features/book/presentation/screens/chapter_reader_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../core/shared/routes/app_routes.dart';
 
 class BookRoutes {
   static List<RouteBase> routes = [
     GoRoute(
+      name: 'bookDetails',
       path: AppRoutes.bookDetails,
 
       builder: (context, state) {
         final bookId = int.parse(state.pathParameters['bookId']!);
         final extra = state.extra as Map<String, dynamic>;
-        return BookDetailsScreen(
-          bookId: bookId,
-          heroTag: extra['heroTag'],
-          coverUrl: extra['coverUrl'],
-          title: extra['title'],
-          author: extra['author'],
+        return BlocProvider(
+          create: (context) =>
+              BookIdCubit(sl<GetBookByIdUseCase>())..loadBook(bookId),
+          child: BookDetailsScreen(
+            bookId: bookId,
+            heroTag: extra['heroTag'],
+            coverUrl: extra['coverUrl'],
+            title: extra['title'],
+            author: extra['author'],
+          ),
         );
       },
     ),

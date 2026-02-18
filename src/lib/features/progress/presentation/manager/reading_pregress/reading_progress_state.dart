@@ -1,47 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'reading_progress_cubit.dart';
 
-@immutable
-sealed class ReadingProgressState extends Equatable {
-  const ReadingProgressState();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class ReadingProgressInitial extends ReadingProgressState {
-  const ReadingProgressInitial();
-}
-
-class ReadingProgressLoading extends ReadingProgressState {
-  const ReadingProgressLoading();
-}
-
-// class ReadingProgressSaved extends ReadingProgressState {
-//   final double progress;
-
-//   const ReadingProgressSaved({required this.progress});
-//   @override
-//   List<Object?> get props => [progress];
-// }
-
-class ReadingProgressLoaded extends ReadingProgressState {
-  final UserProgressModel progress;
+class ReadingProgressState extends Equatable {
+  final ProgressModel? progress;
   final bool justSaved;
+  final String? message;
+  final LoadStatus progressStatus;
 
-  const ReadingProgressLoaded({
-    required this.progress,
-    required this.justSaved,
+  const ReadingProgressState({
+    this.progress,
+    this.justSaved = false,
+    this.message,
+    this.progressStatus = LoadStatus.initial,
   });
 
+  ReadingProgressState copyWith({
+    ProgressModel? progress,
+    bool? justSaved,
+    String? message,
+    LoadStatus? progressStatus,
+  }) {
+    return ReadingProgressState(
+      progress: progress ?? this.progress,
+      justSaved: justSaved ?? this.justSaved,
+      message: message ?? this.message,
+      progressStatus: progressStatus ?? this.progressStatus,
+    );
+  }
+
   @override
-  List<Object?> get props => [progress, justSaved];
-}
-
-class ReadingProgressError extends ReadingProgressState {
-  final String message;
-
-  const ReadingProgressError({required this.message});
+  List<Object?> get props => [progress, justSaved, message, progressStatus];
 
   @override
-  List<Object?> get props => [message];
+  bool get stringify => true;
 }

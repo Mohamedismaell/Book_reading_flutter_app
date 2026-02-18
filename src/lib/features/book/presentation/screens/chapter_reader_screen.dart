@@ -1,9 +1,8 @@
-import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_id_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
-import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:bookreading/features/book/presentation/widgets/reader_view.dart';
+import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,10 +30,13 @@ class _ChapterReaderScreenState extends State<ChapterReaderScreen> {
   }
 
   Widget _buildBookStateUI(BuildContext context, BookIdState state) {
-    return switch (state.bookStatus) {
-      LoadStatus.loading || LoadStatus.initial => _buildLoadingIndicator(),
-      LoadStatus.error => _buildErrorMessage(state.bookErrorMessage!),
-      LoadStatus.loaded => _buildChaptersContent(context, state.book!),
+    return switch (state) {
+      BookIdLoading() => _buildLoadingIndicator(),
+      BookIdError(:final bookErrorMessage) => _buildErrorMessage(
+        bookErrorMessage!,
+      ),
+      BookIdLoaded(:final book) => _buildChaptersContent(context, book),
+      _ => const SizedBox.shrink(),
     };
   }
 

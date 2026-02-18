@@ -23,7 +23,7 @@ class ProgressRemoteDataSource {
     });
   }
 
-  Future<UserProgressModel?> getProgress({
+  Future<ProgressModel?> getProgress({
     required String userId,
     // required int bookId,
   }) async {
@@ -36,6 +36,6 @@ class ProgressRemoteDataSource {
         .maybeSingle();
 
     if (response == null) return null;
-    return UserProgressModel.fromJson(response);
+    return ProgressModel.fromJson(response);
   }
 }

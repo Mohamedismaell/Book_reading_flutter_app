@@ -1,5 +1,3 @@
-import 'package:bookreading/core/enums/stats.dart';
-import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
@@ -16,7 +14,7 @@ import 'package:go_router/go_router.dart';
 class BookDetailsScreen extends StatelessWidget {
   final int bookId;
   final Object? heroTag;
-  final String? coverUrl;
+  final String coverUrl;
   final String? title;
   final String? author;
 
@@ -24,46 +22,44 @@ class BookDetailsScreen extends StatelessWidget {
     super.key,
     required this.bookId,
     this.heroTag,
-    this.coverUrl,
+    required this.coverUrl,
     this.title,
     this.author,
   });
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<BookIdCubit>()..loadBook(bookId),
-      child: BlocBuilder<BookIdCubit, BookIdState>(
-        builder: (context, bookState) {
-          final book = bookState.bookStatus == LoadStatus.loaded
-              ? bookState.book
-              : null;
-          return Column(
-            children: [
-              CustomHeader(isheader: false, bookId: bookId),
-              _BookCover(
-                coverUrl: book?.coverUrl ?? coverUrl!,
-                title: book?.title ?? title!,
-                author: book?.author ?? author!,
-                id: bookId,
-                heroTag: heroTag,
+    return BlocBuilder<BookIdCubit, BookIdState>(
+      builder: (context, state) {
+        final book = state is BookIdLoaded ? state.book : null;
+        return Column(
+          children: [
+            CustomHeader(isheader: false, bookId: bookId),
+            _BookCover(
+              coverUrl: coverUrl,
+              title: title,
+              author: author,
+              id: bookId,
+              heroTag: heroTag,
+            ),
+            SizedBox(height: 35.h),
+
+            if (state is BookIdLoading)
+              const Padding(
+                padding: EdgeInsets.all(24),
+                child: CircularProgressIndicator(),
               ),
-              SizedBox(height: 35.h),
-
-              if (bookState.bookStatus == LoadStatus.loaded)
-                BookOverview(title: 'Overview', description: book!.summary!)
-              else
-                const Padding(
-                  padding: EdgeInsets.all(24),
-                  child: CircularProgressIndicator(),
-                ),
-
-              SizedBox(height: 18.h),
-              if (bookState.bookStatus == LoadStatus.loaded)
-                _Buttons(book: book!),
-            ],
-          );
-        },
-      ),
+            if (state is BookIdLoaded)
+              BookOverview(
+                title: 'Overview',
+                description: book?.summary ?? state.book!.summary!,
+              )
+            else
+              const SizedBox.shrink(),
+            SizedBox(height: 18.h),
+            if (state is BookIdLoaded) _Buttons(book: book ?? state.book!),
+          ],
+        );
+      },
     );
   }
 }
