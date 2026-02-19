@@ -1,8 +1,8 @@
 import 'package:bookreading/core/enums/stats.dart';
+import 'package:bookreading/core/shared/user/manager/cubit/user_cubit.dart';
 import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/presentation/widgets/profile_avatar.dart';
-import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,13 +13,12 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        print(state.userStatus);
-        return switch (state.userStatus) {
+        return switch (state.status) {
           LoadStatus.loading || LoadStatus.initial => _buildLoadingIndicator(),
 
-          LoadStatus.error => _buildErrorMessage(state.userErrorMessage!),
+          LoadStatus.error => _buildErrorMessage(state.message!),
           LoadStatus.loaded => Row(
             children: [
               Expanded(

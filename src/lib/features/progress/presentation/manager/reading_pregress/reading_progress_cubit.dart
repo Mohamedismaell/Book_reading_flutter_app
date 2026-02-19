@@ -45,7 +45,6 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
         }
       }
     }
-    print('progressToSave: $progressToSave');
     final result = await saveReadingPregress.call(
       bookId: bookId,
       chapterId: chapterIdToSave,

@@ -23,8 +23,25 @@ class BookmarksScreen extends StatelessWidget {
 }
 
 Widget _buildBookStateUI(BuildContext context, List<BookMarksModel> books) {
-  return ListView(
-    children: [for (var book in books) Text(book.bookDetails?.title ?? '')],
+  return CustomScrollView(
+    slivers: [
+      SliverAppBar(
+        floating: true,
+        snap: true,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back),
+        ),
+        title: Row(
+          children: [
+            Text('My Library'),
+            Spacer(),
+            IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          ],
+        ),
+      ),
+    ],
   );
 }
 

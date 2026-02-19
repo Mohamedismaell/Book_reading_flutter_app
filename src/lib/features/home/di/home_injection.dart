@@ -1,10 +1,6 @@
 import 'package:bookreading/core/database/api/dio_consumer.dart';
 import 'package:bookreading/core/shared/injection/service_locator.dart';
-import 'package:bookreading/core/shared/user/domain/usecases/get_current_user.dart';
 import 'package:bookreading/features/home/data/datasources/home_data_source.dart';
-import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
-import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
-
 // Data sources
 import '../data/datasources/home_local_data_source.dart';
 import '../data/datasources/home_remote_data_source.dart';
@@ -45,8 +41,12 @@ class HomeDi {
     );
 
     //! Cubit / Manager
-    sl.registerLazySingleton<HomeCubit>(
-      () => HomeCubit(sl<GetCurrentUser>(), sl<GetReadingProgress>()),
-    );
+    // sl.registerLazySingleton<HomeCubit>(
+    //   () => HomeCubit(
+    //     sl<GetCurrentUser>(),
+    //     sl<GetReadingProgress>(),
+    //     sl<GetAllBooksUseCase>(),
+    //   ),
+    // );
   }
 }

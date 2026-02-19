@@ -55,7 +55,6 @@ class ProgressModel {
     };
   }
 
-  //Todo Check updatedAt Type
   factory ProgressModel.fromJsonMap(Map<String, dynamic> map) {
     return ProgressModel(
       bookId: map['book_id'] as int,

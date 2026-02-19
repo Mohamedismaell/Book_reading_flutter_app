@@ -1,7 +1,7 @@
-import 'package:bookreading/core/shared/injection/service_locator.dart';
+import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/features/book/data/models/book_model.dart';
-import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/all_books/all_books_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,24 +14,19 @@ class HorizontalView extends StatelessWidget {
   // Theme.of(context);
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<AllBooksCubit>()..getBooks(),
-      child: BlocBuilder<AllBooksCubit, BooksState>(
-        builder: (context, state) {
-          if (state is BooksIsLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is BooksIsFailed) {
-            print("Error Saving Progress: ${state.message}");
-            return Center(child: Text("Error: ${state.message}"));
-          }
-          if (state is BooksIsLoaded) {
-            print(" Here Books ${state.books}");
-            return _Content(books: state.books, category: category);
-          }
-          return const SizedBox.shrink();
-        },
-      ),
+    return BlocBuilder<AllBooksCubit, AllBooksState>(
+      builder: (context, state) {
+        if (state.status == LoadStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state.status == LoadStatus.error) {
+          return Center(child: Text("Error: ${state.message}"));
+        }
+        if (state.status == LoadStatus.loaded) {
+          return _Content(books: state.books, category: category);
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }

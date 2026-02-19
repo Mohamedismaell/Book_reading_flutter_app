@@ -11,6 +11,7 @@ import 'package:bookreading/core/shared/user/data/datasources/user_remote_data_s
 import 'package:bookreading/core/shared/user/data/repositories/user_repository_impl.dart';
 import 'package:bookreading/core/shared/user/domain/repositories/user_repository.dart';
 import 'package:bookreading/core/shared/user/domain/usecases/get_current_user.dart';
+import 'package:bookreading/core/shared/user/manager/cubit/user_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -70,5 +71,6 @@ class CommonDi {
     sl.registerLazySingleton(
       () => AppConnectionCubit(sl<InternetConnection>(), sl<RetryRunner>()),
     );
+    sl.registerFactory(() => UserCubit(sl<GetCurrentUser>()));
   }
 }

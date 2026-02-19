@@ -4,8 +4,8 @@ import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/book_model.dart';
 import 'package:bookreading/features/book/data/models/chapter_model.dart';
 import 'package:bookreading/features/home/presentation/widget/progress_bar.dart';
-import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
 import 'package:bookreading/features/progress/data/models/progress_model.dart';
+import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,8 +16,6 @@ class ContinueReading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HomeCubit>().getProgress();
-
     return Container(
       width: 350.w,
       height: 310.h,
@@ -27,7 +25,7 @@ class ContinueReading extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(16.r),
-        child: BlocBuilder<HomeCubit, HomeState>(
+        child: BlocBuilder<ReadingProgressCubit, ReadingProgressState>(
           builder: (context, state) {
             return _buildBookStateUI(context, state);
           },
@@ -36,11 +34,11 @@ class ContinueReading extends StatelessWidget {
     );
   }
 
-  Widget _buildBookStateUI(BuildContext context, HomeState state) {
+  Widget _buildBookStateUI(BuildContext context, ReadingProgressState state) {
     return switch (state.progressStatus) {
       LoadStatus.loading => const Center(child: CircularProgressIndicator()),
       LoadStatus.error => Center(
-        child: Text('Something went wrong ${state.progressErrorMessage}'),
+        child: Text('Something went wrong ${state.message}'),
       ),
       LoadStatus.loaded => _buildCardItem(
         context,

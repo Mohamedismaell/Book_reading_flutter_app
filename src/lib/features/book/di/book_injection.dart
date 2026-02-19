@@ -4,7 +4,7 @@ import 'package:bookreading/features/book/data/repositories/book_repository_impl
 import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
 import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
 import 'package:bookreading/features/book/domain/usecases/chapters_usecase.dart';
-import 'package:bookreading/features/book/presentation/cubit/all_books/books_cubit.dart';
+import 'package:bookreading/features/book/presentation/cubit/all_books/all_books_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_id_cubit.dart';
 import 'package:bookreading/features/book/presentation/cubit/chapters_id/chapters_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -43,15 +43,16 @@ class BookDi {
     );
 
     //! Cubit / Manager
-    sl.registerLazySingleton<AllBooksCubit>(
+
+    sl.registerFactory<AllBooksCubit>(
       () => AllBooksCubit(sl<GetAllBooksUseCase>()),
     );
 
-    sl.registerLazySingleton<BookIdCubit>(
+    sl.registerFactory<BookIdCubit>(
       () => BookIdCubit(sl<GetBookByIdUseCase>()),
     );
 
-    sl.registerLazySingleton<ChaptersCubit>(
+    sl.registerFactory<ChaptersCubit>(
       () => ChaptersCubit(sl<GetChaptersUseCase>()),
     );
   }

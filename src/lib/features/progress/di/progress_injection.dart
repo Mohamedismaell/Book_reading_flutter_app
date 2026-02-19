@@ -39,14 +39,14 @@ class ProgressDi {
     // sl.registerLazySingleton<ProgressUseCase>(
     //   () => ProgressUseCase(sl<ProgressRepository>()),
     // );
-    sl.registerLazySingleton<SaveReadingPregress>(
+    sl.registerFactory<SaveReadingPregress>(
       () => SaveReadingPregress(repository: sl<ProgressRepository>()),
     );
-    sl.registerLazySingleton<GetReadingProgress>(
+    sl.registerFactory<GetReadingProgress>(
       () => GetReadingProgress(repository: sl<ProgressRepository>()),
     );
     //! Cubit / Manager
-    sl.registerLazySingleton<ReadingProgressCubit>(
+    sl.registerFactory<ReadingProgressCubit>(
       () => ReadingProgressCubit(
         sl<SaveReadingPregress>(),
         sl<GetReadingProgress>(),

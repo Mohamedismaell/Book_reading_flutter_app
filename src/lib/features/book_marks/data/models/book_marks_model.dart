@@ -19,17 +19,15 @@ class BookMarksModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'bookDetails': bookDetails.toMap(),
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'books': bookDetails.toMap(),
+      'created_at': createdAt.millisecondsSinceEpoch,
     };
   }
 
   factory BookMarksModel.fromJsonMap(Map<String, dynamic> map) {
     return BookMarksModel(
-      bookDetails: BookModel.fromJsonMap(
-        map['bookDetails'] as Map<String, dynamic>,
-      ),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      bookDetails: BookModel.fromJsonMap(map['books'] as Map<String, dynamic>),
+      createdAt: DateTime.parse(map['created_at'] as String),
     );
   }
 
