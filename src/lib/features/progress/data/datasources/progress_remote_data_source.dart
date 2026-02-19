@@ -1,4 +1,4 @@
-import 'package:bookreading/features/progress/data/models/user_progress.dart';
+import 'package:bookreading/features/progress/data/models/progress_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProgressRemoteDataSource {
@@ -38,6 +38,6 @@ class ProgressRemoteDataSource {
         .maybeSingle();
 
     if (response == null) return null;
-    return ProgressModel.fromJson(response);
+    return ProgressModel.fromJsonMap(response);
   }
 }

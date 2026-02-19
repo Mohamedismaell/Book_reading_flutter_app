@@ -1,4 +1,4 @@
-import 'package:bookreading/features/book/data/models/chapter.dart';
+import 'package:bookreading/features/book/data/models/chapter_model.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/book/presentation/pagination/text_pagination_service.dart';
 import 'package:flutter/material.dart';

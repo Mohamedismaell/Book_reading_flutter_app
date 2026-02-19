@@ -1,21 +1,21 @@
 import 'dart:io';
 
-import 'package:bookreading/features/book/data/models/book_marks.dart';
-import 'package:bookreading/features/book/data/models/profile.dart';
-import 'package:bookreading/features/book/data/models/user_stats.dart';
+import 'package:bookreading/features/book/data/models/profile_model.dart';
+import 'package:bookreading/features/book/data/models/user_stats_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/books.dart';
-import '../models/chapter.dart';
+import '../models/book_model.dart';
+import '../models/chapter_model.dart';
 
 class BookRemoteDataSource {
   final SupabaseClient supabaseCilent;
   BookRemoteDataSource({required this.supabaseCilent});
 
+  //Books
   Future<List<BookModel>> getBooks() async {
     final response = await supabaseCilent.from('books').select();
     // print(" Books **1** ===> $response");
-    final resulte = response.map((e) => BookModel.fromJson(e)).toList();
+    final resulte = response.map((e) => BookModel.fromJsonMap(e)).toList();
     // print("Books **2**  ===> $resulte");
     return resulte;
   }
@@ -29,16 +29,17 @@ class BookRemoteDataSource {
 
     if (response == null) return null;
 
-    return BookModel.fromJson(response);
+    return BookModel.fromJsonMap(response);
   }
 
+  //Chapters
   Future<List<ChapterModel>> getChapters(int bookId) async {
     final response = await supabaseCilent
         .from('chapters')
         .select()
         .eq('book_id', bookId);
     // print(" Chapters **1** ===> $response");
-    final resulte = response.map((e) => ChapterModel.fromJson(e)).toList();
+    final resulte = response.map((e) => ChapterModel.fromJsonMap(e)).toList();
     // print("Chapter  **2**  ===> $resulte");
     return resulte;
   }
@@ -138,46 +139,5 @@ class BookRemoteDataSource {
         .upload(path, avatarFile, fileOptions: const FileOptions(upsert: true));
     final publicUrl = supabaseCilent.storage.from('avatars').getPublicUrl(path);
     return publicUrl;
-  }
-
-  Future<void> insertBookmark({
-    required String userId,
-    required int bookId,
-  }) async {
-    await supabaseCilent.from('book_marks').upsert({
-      'user_id': userId,
-      'book_id': bookId,
-    });
-  }
-
-  Future<void> removeBookmark({
-    required String userId,
-    required int bookId,
-  }) async {
-    await supabaseCilent
-        .from('book_marks')
-        .delete()
-        .eq('book_id', bookId)
-        .eq('user_id', userId);
-  }
-
-  Future<List<BookMarksModel>> getBookmarks({required String userId}) async {
-    final response = await supabaseCilent
-        .from('book_marks')
-        .select('''
-   book_id,
-  created_at,
-  books (
-    id,
-    title,
-    cover_url,
-    author,
-    user_progress ( progress, user_id )
-  )
-''')
-        .eq('user_id', userId)
-        .order('created_at', ascending: false);
-    final resulte = response.map((e) => BookMarksModel.fromJson(e)).toList();
-    return resulte;
   }
 }

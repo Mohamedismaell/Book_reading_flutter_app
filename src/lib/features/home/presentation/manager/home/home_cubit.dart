@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/shared/user/data/models/user_model.dart';
 import 'package:bookreading/core/shared/user/domain/usecases/get_current_user.dart';
-import 'package:bookreading/features/progress/data/models/user_progress.dart';
+import 'package:bookreading/features/progress/data/models/progress_model.dart';
 import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
 import 'package:equatable/equatable.dart';
 

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
+import 'package:bookreading/features/book/data/models/book_model.dart';
 import 'package:bookreading/features/book/domain/usecases/books_usecase.dart';
 import 'package:equatable/equatable.dart';
 part 'book_id_state.dart';

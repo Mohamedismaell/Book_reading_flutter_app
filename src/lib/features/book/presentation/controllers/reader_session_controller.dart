@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/data/models/chapter.dart';
+import 'package:bookreading/features/book/data/models/book_model.dart';
+import 'package:bookreading/features/book/data/models/chapter_model.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';
 import 'package:flutter/material.dart';

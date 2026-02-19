@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:bookreading/features/book/data/models/chapter.dart';
+import 'package:bookreading/features/book/data/models/chapter_model.dart';
 import 'package:bookreading/features/book/domain/usecases/chapters_usecase.dart';
 import 'package:meta/meta.dart';
 

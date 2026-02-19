@@ -1,8 +1,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/data/models/chapter.dart';
+import 'package:bookreading/features/book/data/models/book_model.dart';
+import 'package:bookreading/features/book/data/models/chapter_model.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/book/presentation/controllers/reader_session_controller.dart';
 import 'package:bookreading/features/progress/presentation/manager/reading_pregress/reading_progress_cubit.dart';

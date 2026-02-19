@@ -1,11 +1,11 @@
 import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/data/models/chapter.dart';
-import 'package:bookreading/features/book/presentation/widgets/progress_bar.dart';
+import 'package:bookreading/features/book/data/models/book_model.dart';
+import 'package:bookreading/features/book/data/models/chapter_model.dart';
+import 'package:bookreading/features/home/presentation/widget/progress_bar.dart';
 import 'package:bookreading/features/home/presentation/manager/home/home_cubit.dart';
-import 'package:bookreading/features/progress/data/models/user_progress.dart';
+import 'package:bookreading/features/progress/data/models/progress_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +39,9 @@ class ContinueReading extends StatelessWidget {
   Widget _buildBookStateUI(BuildContext context, HomeState state) {
     return switch (state.progressStatus) {
       LoadStatus.loading => const Center(child: CircularProgressIndicator()),
-      LoadStatus.error => Center(child: Text(state.progressErrorMessage!)),
+      LoadStatus.error => Center(
+        child: Text('Something went wrong ${state.progressErrorMessage}'),
+      ),
       LoadStatus.loaded => _buildCardItem(
         context,
         state.progress!.bookDetails!,

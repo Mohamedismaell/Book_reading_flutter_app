@@ -49,11 +49,11 @@ class _CustomBottomNav extends StatelessWidget {
             //   onTap: () => onTap(1),
             //   isActive: currentIndex == 1,
             // ),
-            // _NavSvgIcon(
-            //   icon: Icons.bookmark,
-            //   onTap: () => onTap(2),
-            //   isActive: currentIndex == 2,
-            // ),
+            _NavSvgIcon(
+              icon: Icons.bookmark,
+              onTap: () => onTap(1),
+              isActive: currentIndex == 1,
+            ),
             // _NavSvgIcon(
             //   icon: Icons.person_sharp,
             //   onTap: () => onTap(3),

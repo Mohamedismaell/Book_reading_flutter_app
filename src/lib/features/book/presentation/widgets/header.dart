@@ -64,5 +64,5 @@ Widget _buildLoadingIndicator() {
 }
 
 Widget _buildErrorMessage(String message) {
-  return Center(child: Text('Something Went Wronge'));
+  return Center(child: Text('Something Went Wrong $message'));
 }

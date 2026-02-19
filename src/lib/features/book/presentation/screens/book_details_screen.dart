@@ -1,7 +1,7 @@
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
+import 'package:bookreading/features/book/data/models/book_model.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_id_cubit.dart';
 import 'package:bookreading/features/book/presentation/widgets/book_over_view.dart';
 import 'package:bookreading/features/book/presentation/widgets/custom_header.dart';

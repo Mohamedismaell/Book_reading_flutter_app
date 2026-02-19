@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/core/enums/stats.dart';
-import 'package:bookreading/features/book/data/models/books.dart';
-import 'package:bookreading/features/book/data/models/chapter.dart';
-import 'package:bookreading/features/progress/data/models/user_progress.dart';
+import 'package:bookreading/features/book/data/models/book_model.dart';
+import 'package:bookreading/features/book/data/models/chapter_model.dart';
+import 'package:bookreading/features/progress/data/models/progress_model.dart';
 import 'package:bookreading/features/book/domain/entities/page_data.dart';
 import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/progress/domain/usecases/save_reading_pregress.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:bookreading/features/book/domain/usecases/user_profile_usecase.dart';
-import 'package:bookreading/features/book/data/models/profile.dart';
+import 'package:bookreading/features/book/data/models/profile_model.dart';
 import 'package:bookreading/features/book/domain/usecases/avatar_usecase.dart';
 import 'package:bookreading/features/book/presentation/models/profile_draft.dart';
 import 'package:meta/meta.dart';
