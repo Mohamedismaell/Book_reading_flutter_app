@@ -1,4 +1,4 @@
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class SaveButton extends StatelessWidget {
@@ -10,7 +10,7 @@ class SaveButton extends StatelessWidget {
       onPressed: () {
         print("Saved");
       },
-      child: Text("Save", style: context.headlineSmall()),
+      child: Text("Save", style: context.textTheme.headlineSmall),
     );
   }
 }

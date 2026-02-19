@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/presentation/controllers/pick_image_controller.dart';
 import 'package:flutter/material.dart';
@@ -197,7 +196,7 @@ class _PickOption extends StatelessWidget {
           children: [
             Icon(icon, size: 26),
             const SizedBox(width: 16),
-            Text(title, style: context.bodyLarge()),
+            Text(title, style: context.textTheme.bodyLarge),
           ],
         ),
       ),

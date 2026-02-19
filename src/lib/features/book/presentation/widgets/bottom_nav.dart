@@ -91,10 +91,10 @@ class _NavSvgIcon extends StatelessWidget {
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             child: path == null
-                ? Icon(icon, size: 30.r, color: color)
+                ? Icon(icon, size: 24.sp, color: color)
                 : SvgPicture.asset(
                     path!,
-                    width: 23.r,
+                    width: 22.r,
                     fit: BoxFit.contain,
                     colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
                   ),

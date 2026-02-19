@@ -1,5 +1,6 @@
 import 'package:bookreading/features/book/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class TabsShell extends StatelessWidget {
@@ -12,7 +13,12 @@ class TabsShell extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.transparent,
-      body: SafeArea(child: navigationShell),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: navigationShell,
+        ),
+      ),
       bottomNavigationBar: BottomNav(
         currentIndex: navigationShell.currentIndex,
         onTap: (index) {

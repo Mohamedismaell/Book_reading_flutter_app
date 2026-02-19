@@ -1,5 +1,6 @@
 import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/book_model.dart';
 import 'package:bookreading/features/book/presentation/cubit/all_books/all_books_cubit.dart';
 import 'package:flutter/material.dart';
@@ -46,52 +47,50 @@ class _Content extends StatelessWidget {
         itemBuilder: (context, index) {
           final book = books[index];
           return Padding(
-            padding: EdgeInsets.only(right: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _BookCover(book: book, category: category),
-                SizedBox(height: 16.h),
-                _BookHeader(book: book),
-              ],
+            padding: EdgeInsets.only(right: 20.w),
+            child: SizedBox(
+              width: 160.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      context.pushNamed(
+                        'bookDetails',
+                        pathParameters: {'bookId': book.id.toString()},
+                        extra: {
+                          'heroTag': '${category}_${book.id}',
+                          'coverUrl': book.coverUrl,
+                          'title': book.title,
+                          'author': book.author,
+                        },
+                      );
+                    },
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 250.h,
+                        child: Hero(
+                          tag: '${category}_${book.id}',
+                          child: Image.network(
+                            book.coverUrl!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // SizedBox(height: 16.h),
+                  _BookHeader(book: book),
+                ],
+              ),
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _BookCover extends StatelessWidget {
-  const _BookCover({required this.book, required this.category});
-
-  final BookModel book;
-  final String category;
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          context.pushNamed(
-            'bookDetails',
-            pathParameters: {'bookId': book.id.toString()},
-            extra: {
-              'heroTag': '${category}_${book.id}',
-              'coverUrl': book.coverUrl,
-              'title': book.title,
-              'author': book.author,
-            },
-          );
-        },
-        child: Container(
-          width: 160.w,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
-          child: Hero(
-            tag: '${category}_${book.id}',
-            child: Image.network(book.coverUrl!, fit: BoxFit.cover),
-          ),
-        ),
       ),
     );
   }
@@ -102,20 +101,19 @@ class _BookHeader extends StatelessWidget {
   final BookModel book;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 160.w,
+    return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             book.title,
-            style: context.headlineSmall(),
+            style: context.textTheme.headlineSmall,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
             book.author ?? "Unknown",
-            style: context.bodyMedium(),
+            style: context.textTheme.bodySmall,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

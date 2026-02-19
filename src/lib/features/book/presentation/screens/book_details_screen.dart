@@ -1,6 +1,6 @@
 import 'package:bookreading/core/shared/routes/app_routes.dart';
 import 'package:bookreading/core/theme/app_semantic_colors.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/data/models/book_model.dart';
 import 'package:bookreading/features/book/presentation/cubit/book_id/book_id_cubit.dart';
 import 'package:bookreading/features/book/presentation/widgets/book_over_view.dart';
@@ -28,38 +28,44 @@ class BookDetailsScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BookIdCubit, BookIdState>(
-      builder: (context, state) {
-        final book = state is BookIdLoaded ? state.book : null;
-        return Column(
-          children: [
-            CustomHeader(isheader: false, bookId: bookId),
-            _BookCover(
-              coverUrl: coverUrl,
-              title: title,
-              author: author,
-              id: bookId,
-              heroTag: heroTag,
-            ),
-            SizedBox(height: 35.h),
+    return SafeArea(
+      // top: false,
+      child: BlocBuilder<BookIdCubit, BookIdState>(
+        builder: (context, state) {
+          final book = state is BookIdLoaded ? state.book : null;
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              children: [
+                CustomHeader(isheader: false, bookId: bookId),
+                _BookCover(
+                  coverUrl: coverUrl,
+                  title: title,
+                  author: author,
+                  id: bookId,
+                  heroTag: heroTag,
+                ),
 
-            if (state is BookIdLoading)
-              const Padding(
-                padding: EdgeInsets.all(24),
-                child: CircularProgressIndicator(),
-              ),
-            if (state is BookIdLoaded)
-              BookOverview(
-                title: 'Overview',
-                description: book?.summary ?? state.book!.summary!,
-              )
-            else
-              const SizedBox.shrink(),
-            SizedBox(height: 18.h),
-            if (state is BookIdLoaded) _Buttons(book: book ?? state.book!),
-          ],
-        );
-      },
+                SizedBox(height: 35.h),
+                if (state is BookIdLoading)
+                  const Padding(
+                    padding: EdgeInsets.all(24),
+                    child: CircularProgressIndicator(),
+                  ),
+                if (state is BookIdLoaded)
+                  BookOverview(
+                    title: 'Overview',
+                    description: book?.summary ?? state.book!.summary!,
+                  )
+                else
+                  const SizedBox.shrink(),
+                SizedBox(height: 18.h),
+                if (state is BookIdLoaded) _Buttons(book: book ?? state.book!),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -80,13 +86,14 @@ class _BookCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: 220.w,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
             child: SizedBox(
-              width: 220.w,
+              height: 330.h,
               child: Hero(
                 tag: heroTag ?? id,
                 child: Image.network(coverUrl!, fit: BoxFit.cover),
@@ -98,14 +105,9 @@ class _BookCover extends StatelessWidget {
             title ?? '',
             maxLines: 1,
             textAlign: TextAlign.center,
-            style: context.headlineMedium(),
+            style: context.textTheme.headlineMedium,
           ),
-          SizedBox(height: 10.h),
-          Text(
-            author ?? '',
-            style: context.bodyLarge().copyWith(fontSize: 20.sp),
-          ),
-          SizedBox(height: 10.h),
+          Text(author ?? '', style: context.textTheme.bodyLarge),
           const Star(),
         ],
       ),
@@ -121,28 +123,32 @@ class _Buttons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          onPressed: () {
-            context.pushNamed(
-              AppRoutes.read,
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {
+              context.pushNamed(
+                AppRoutes.read,
 
-              pathParameters: {'bookId': book.id.toString()},
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 17.h),
+                pathParameters: {'bookId': book.id.toString()},
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 17.h),
+            ),
+            child: Text("Read", style: context.textTheme.labelMedium),
           ),
-          child: Text("Read", style: context.labelMedium()),
         ),
-        SizedBox(width: 20.w),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 17.h),
-            backgroundColor: AppSemanticColors.secondaryActionDark,
-          ),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 17.h),
+              backgroundColor: AppSemanticColors.secondaryActionDark,
+            ),
 
-          child: Text("Listen", style: context.labelMedium()),
+            child: Text("Listen", style: context.textTheme.labelMedium),
+          ),
         ),
       ],
     );

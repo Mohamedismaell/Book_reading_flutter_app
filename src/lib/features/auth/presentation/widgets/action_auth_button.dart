@@ -1,7 +1,8 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../cubit/cubit/auth_cubit.dart';
 
 class ActionAuthButton extends StatelessWidget {
@@ -48,7 +49,7 @@ class _Content extends StatelessWidget {
       children: [
         Text(
           isLoading ? "Please wait..." : myText,
-          style: context.labelLarge(),
+          style: context.textTheme.labelLarge,
         ),
         SizedBox(width: 8.w),
         isLoading ? CircularProgressIndicator() : Icon(Icons.arrow_forward),

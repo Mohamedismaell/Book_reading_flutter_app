@@ -1,7 +1,6 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomHeader extends StatelessWidget {
@@ -42,13 +41,15 @@ class CustomHeader extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
-                        style: context.headlineMedium().copyWith(
+                        style: context.textTheme.headlineMedium!.copyWith(
                           color: context.colorTheme.onSurface.withOpacity(0.9),
                         ),
                       ),
                       Text(
                         author!,
-                        style: context.bodyLarge().copyWith(fontSize: 20.sp),
+                        style: context.textTheme.bodyLarge!.copyWith(
+                          fontSize: 20.sp,
+                        ),
                       ),
                     ],
                   ),

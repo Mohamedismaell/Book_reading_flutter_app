@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bookreading/core/theme/app_semantic_colors.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BookOverview extends StatelessWidget {
   const BookOverview({
@@ -18,49 +16,66 @@ class BookOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 1.sw,
-      decoration: BoxDecoration(
-        color: context.colorTheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(24.r),
-      ),
-      padding: EdgeInsets.all(16.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: context.headlineMedium()),
-          SizedBox(height: 10.h),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 7.w),
-            child: Text(
-              description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: context.bodyMedium().copyWith(fontSize: 18.sp),
+    return Expanded(
+      child: Container(
+        // height: 270.h,
+        decoration: BoxDecoration(
+          color: context.colorTheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        padding: EdgeInsets.all(18.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: context.textTheme.bodyLarge!.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
+            SizedBox(height: 4.h),
 
-          Center(
-            child: TextButton.icon(
-              onPressed: () {
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.w),
+                child: Text(
+                  description,
+                  // softWrap: true,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.bodyMedium,
+                ),
+              ),
+            ),
+
+            InkWell(
+              onTap: () {
                 _showReadMoreDialog(
                   context,
                   title: title,
                   description: description,
                 );
               },
-              label: Text(
-                "Read More",
-                style: context.labelLarge().copyWith(
-                  color: AppSemanticColors.primaryActionDark,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Read More",
+                    style: context.textTheme.labelMedium!.copyWith(
+                      color: context.colorTheme.primary,
+                    ),
+                  ),
+                  // iconAlignment: IconAlignment.end,
+                  Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    size: 24.sp,
+                    color: context.colorTheme.primary,
+                  ),
+                ],
               ),
-              iconAlignment: IconAlignment.end,
-              icon: Icon(Icons.keyboard_arrow_down_rounded, size: 25.r),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -123,24 +138,23 @@ class _ReadMore extends StatelessWidget {
             borderRadius: BorderRadius.circular(24.r),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              constraints: const BoxConstraints(maxHeight: 500),
+              // constraints: BoxConstraints(maxHeight: 500.h),
               decoration: BoxDecoration(
                 color: context.colorTheme.surfaceContainer,
                 // color: Colors.transparent,
                 borderRadius: BorderRadius.circular(24.r),
               ),
-              padding: EdgeInsets.symmetric(vertical: 30.r, horizontal: 16.r),
+              padding: EdgeInsets.all(18.r),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: context.headlineMedium()),
-                  SizedBox(height: 10.h),
+                  Text(title, style: context.textTheme.headlineMedium),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 7.w),
                     child: Text(
                       description,
-                      style: context.bodyMedium().copyWith(fontSize: 18.sp),
+                      style: context.textTheme.bodyMedium,
                     ),
                   ),
                 ],

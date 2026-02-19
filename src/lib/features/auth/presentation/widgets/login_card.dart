@@ -1,20 +1,21 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bookreading/core/params/params.dart';
 import 'package:bookreading/core/shared/routes/app_routes.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/auth/presentation/widgets/action_auth_button.dart';
 import 'package:bookreading/features/auth/presentation/widgets/auth_input.dart';
-import 'package:bookreading/features/auth/presentation/widgets/main_banner.dart';
 import 'package:bookreading/features/auth/presentation/widgets/error_message.dart';
 import 'package:bookreading/features/auth/presentation/widgets/google_button.dart';
 import 'package:bookreading/features/auth/presentation/widgets/head_title.dart';
+import 'package:bookreading/features/auth/presentation/widgets/main_banner.dart';
 import 'package:bookreading/features/auth/presentation/widgets/seperator_line.dart';
 import 'package:bookreading/features/auth/presentation/widgets/white_contianer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Banner;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/enums/validation_type.dart';
 
 class LoginCard extends StatelessWidget {
@@ -80,7 +81,10 @@ class _ContentState extends State<_Content> {
             onPressed: () {
               context.push(AppRoutes.forgotPassword);
             },
-            child: Text("Forgot Password?", style: context.headlineSmall()),
+            child: Text(
+              "Forgot Password?",
+              style: context.textTheme.headlineSmall,
+            ),
           ),
         ),
         SizedBox(height: 6.h),

@@ -1,5 +1,4 @@
 import 'package:bookreading/core/theme/app_colors.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/auth/presentation/widgets/action_auth_button.dart';
 import 'package:flutter/material.dart';
@@ -58,13 +57,13 @@ class _Content extends StatelessWidget {
         children: [
           _CheckIcon(),
           SizedBox(height: 30.h),
-          Text(title, style: context.labelLarge()),
+          Text(title, style: context.textTheme.labelLarge),
           SizedBox(height: 12.h),
           Text(
             description,
 
             textAlign: TextAlign.center,
-            style: context.bodyMedium(),
+            style: context.textTheme.bodyMedium,
           ),
           SizedBox(height: 30.h),
           // ToDo make it pop in resest and go in sign up

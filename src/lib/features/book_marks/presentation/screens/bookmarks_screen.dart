@@ -26,19 +26,35 @@ Widget _buildBookStateUI(BuildContext context, List<BookMarksModel> books) {
   return CustomScrollView(
     slivers: [
       SliverAppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
         floating: true,
         snap: true,
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back),
-        ),
+        automaticallyImplyLeading: false,
+
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('My Library'),
-            Spacer(),
-            IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+            // Spacer(),
+            InkWell(
+              onTap: () {
+                //Show menu or something
+              },
+              child: Icon(Icons.more_vert),
+            ),
           ],
+        ),
+      ),
+      SliverToBoxAdapter(
+        child: Container(
+          decoration: BoxDecoration(),
+          child: Row(
+            children: [
+              ElevatedButton(onPressed: () {}, child: Text('Favorites')),
+              ElevatedButton(onPressed: () {}, child: Text('Finished Books')),
+            ],
+          ),
         ),
       ),
     ],

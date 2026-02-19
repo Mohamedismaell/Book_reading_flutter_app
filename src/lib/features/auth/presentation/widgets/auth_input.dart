@@ -1,8 +1,8 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/enums/validation_type.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/core/utils/validators/form_validators.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/enums/validation_type.dart';
-import '../../../../core/utils/validators/form_validators.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthInput extends StatefulWidget {
   final String hintText;
@@ -47,7 +47,7 @@ class _AuthInputState extends State<AuthInput> {
       decoration: InputDecoration(
         //! Hint Text
         hintText: widget.hintText,
-        hintStyle: context.bodyMedium(),
+        hintStyle: context.textTheme.bodyMedium,
         //! Eye icon
         suffixIcon: widget.isPassword
             ? Padding(
@@ -61,7 +61,9 @@ class _AuthInputState extends State<AuthInput> {
               )
             : null,
       ),
-      style: context.bodyMedium().copyWith(fontWeight: FontWeight.w600),
+      style: context.textTheme.bodyMedium!.copyWith(
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

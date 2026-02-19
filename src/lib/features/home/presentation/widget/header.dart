@@ -1,7 +1,7 @@
 import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/shared/user/manager/cubit/user_cubit.dart';
 import 'package:bookreading/core/theme/cubit/theme_cubit.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/book/presentation/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,11 +25,14 @@ class Header extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Wednesday, 24 Oct", style: context.bodyMedium()),
+                    Text(
+                      "Wednesday, 24 Oct",
+                      style: context.textTheme.bodyMedium,
+                    ),
                     SizedBox(height: 4.h),
                     Text(
                       "Good Morning, ${state.user!.name}",
-                      style: context.headlineMedium(),
+                      style: context.textTheme.bodyLarge,
                     ),
                   ],
                 ),

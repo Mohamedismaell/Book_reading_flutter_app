@@ -1,5 +1,4 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bookreading/core/theme/extensions/scaled_text.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,9 @@ class NoteMessage extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           text,
-          style: context.bodySmall().copyWith(color: context.colorTheme.error),
+          style: context.textTheme.bodySmall!.copyWith(
+            color: context.colorTheme.error,
+          ),
         ),
       ),
     );

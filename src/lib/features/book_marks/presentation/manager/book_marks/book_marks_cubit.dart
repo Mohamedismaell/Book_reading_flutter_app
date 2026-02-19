@@ -53,26 +53,25 @@ class BookMarksCubit extends Cubit<BookMarksState> {
 
   Future<void> removeBookmark({required int bookId}) async {
     final copyList = state.bookmarks
-        .where((element) => element.bookDetails?.id != bookId)
+        .where((element) => element.bookDetails.id != bookId)
         .toList();
 
     final result = await removeBookMark.call(bookId: bookId);
     result.when(
-      success: (_) {},
-      failure: (failure) {
+      success: (_) {
         emit(
           state.copyWith(
             bookmarks: copyList,
             bookmarksStatus: LoadStatus.loaded,
           ),
         );
-        emit(
-          state.copyWith(
-            bookmarksStatus: LoadStatus.error,
-            errorMessage: failure.message,
-          ),
-        );
       },
+      failure: (failure) => emit(
+        state.copyWith(
+          bookmarksStatus: LoadStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
     );
   }
 }

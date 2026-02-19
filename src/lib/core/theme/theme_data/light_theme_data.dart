@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../app_color_schemes.dart';
 import '../app_semantic_colors.dart';
 import '../app_text_theme.dart';
 
 ThemeData getLightTheme() {
-  final textTheme = AppTextTheme.from(lightColorScheme);
+  final rawTextTheme = AppTextTheme.from(lightColorScheme);
+  final responsiveTextTheme = rawTextTheme.apply(fontSizeFactor: 1.sp);
   return ThemeData(
     brightness: Brightness.light,
     useMaterial3: true,
     colorScheme: lightColorScheme,
-    textTheme: textTheme,
+    textTheme: responsiveTextTheme,
     scaffoldBackgroundColor: AppSemanticColors.backgroundLight,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
