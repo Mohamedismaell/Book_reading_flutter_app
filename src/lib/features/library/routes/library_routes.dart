@@ -9,7 +9,7 @@ class LibraryRoutes {
   static final bookmarksRoute = GoRoute(
     path: AppRoutes.library,
     builder: (context, state) => BlocProvider(
-      create: (context) => sl<LibraryCubit>(),
+      create: (context) => sl<LibraryCubit>()..fetchAllBookmarks(),
       child: const LibraryScreen(),
     ),
   );

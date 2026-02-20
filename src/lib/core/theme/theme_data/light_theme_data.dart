@@ -20,7 +20,7 @@ ThemeData getLightTheme() {
         borderRadius: BorderRadius.circular(60),
         borderSide: BorderSide.none,
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16),
+      contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -28,6 +28,16 @@ ThemeData getLightTheme() {
         backgroundColor: lightColorScheme.primary,
         foregroundColor: lightColorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        // foregroundColor: darkColorScheme.onSurface,
+
+        // padding: EdgeInsets.symmetric(horizontal: 34, vertical: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
       ),
     ),
   );

@@ -20,8 +20,8 @@ class ContinueReading extends StatelessWidget {
           // width: 350.w,
           height: 310.h,
           decoration: BoxDecoration(
-            // color: context.colorTheme.surfaceContainer,
-            color: Color(0xFF27272A).withOpacity(0.1),
+            color: context.colorTheme.surfaceContainer,
+
             borderRadius: BorderRadius.circular(24.r),
           ),
           child: Padding(

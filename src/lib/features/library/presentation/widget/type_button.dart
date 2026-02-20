@@ -1,8 +1,8 @@
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
-class TypeButton extends StatelessWidget {
-  const TypeButton({
+class LibraryTypeButton extends StatelessWidget {
+  const LibraryTypeButton({
     super.key,
     required this.title,
     required this.onPressed,
@@ -14,14 +14,33 @@ class TypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: isActive
-              ? context.colorTheme.primary
-              : Color(0XFF27272A),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        decoration: BoxDecoration(
+          color: isActive ? context.colorTheme.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
         ),
-        onPressed: onPressed,
-        child: Text(title, style: context.textTheme.labelSmall),
+        child: TextButton(
+          style: TextButton.styleFrom(backgroundColor: Colors.transparent),
+          onPressed: onPressed,
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 300),
+            style: context.textTheme.labelSmall!.copyWith(
+              color: isActive
+                  ? context.colorTheme.onPrimary
+                  : context.colorTheme.onSurface.withOpacity(0.8),
+            ),
+            child: Text(
+              title,
+              // key: ValueKey(title),
+              style: context.textTheme.labelSmall!.copyWith(
+                color: isActive
+                    ? context.colorTheme.onPrimary
+                    : context.colorTheme.onSurface.withOpacity(0.8),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

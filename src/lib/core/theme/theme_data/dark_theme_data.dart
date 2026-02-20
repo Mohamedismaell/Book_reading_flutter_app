@@ -38,5 +38,15 @@ ThemeData getDarkTheme() {
         ),
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        // foregroundColor: darkColorScheme.onPrimary,
+
+        // padding: EdgeInsets.symmetric(horizontal: 34, vertical: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+      ),
+    ),
   );
 }

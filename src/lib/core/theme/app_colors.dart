@@ -21,6 +21,7 @@ class AppColors {
   static const offWhite = Color(0xFFFDFDFD);
   static const red15 = Color(0x26D45555);
   static const red5 = Color(0x0DD45555);
+  static const grayF3F4F6 = Color(0xFFF3F4F6);
 
   // DARK
   static const black = Color(0xFF000000);
@@ -30,4 +31,5 @@ class AppColors {
   static const white50 = Color(0x80FFFFFF);
   static const white15 = Color(0x26FFFFFF);
   static const grayLighter30 = Color(0x4DCDCDCD);
+  static const gray27272A = Color(0xFF27272A);
 }

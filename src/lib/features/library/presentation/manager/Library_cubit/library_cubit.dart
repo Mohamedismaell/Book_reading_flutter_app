@@ -42,7 +42,7 @@ class LibraryCubit extends Cubit<LibraryState> {
 
     result.when(
       success: (booksList) => emit(
-        state.copyWith(bookMarksBooks: booksList, status: LoadStatus.loaded),
+        state.copyWith(finishedBooks: booksList, status: LoadStatus.loaded),
       ),
       failure: (failure) => emit(
         state.copyWith(status: LoadStatus.error, errorMessage: failure.message),

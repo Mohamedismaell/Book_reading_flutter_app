@@ -16,7 +16,8 @@ final ColorScheme lightColorScheme = ColorScheme.light(
   // Surfaces
   surface: AppSemanticColors.surfaceLight,
   onSurface: AppSemanticColors.textPrimaryLight,
-  surfaceContainer: AppSemanticColors.surfaceMutedLight.withOpacity(0.4),
+  surfaceContainer: Color(0xFFC4C4C4).withAlpha(90),
+
   // Status
   error: Colors.red,
   onError: AppSemanticColors.onPrimaryActionLight,
@@ -37,7 +38,7 @@ final ColorScheme darkColorScheme = ColorScheme.dark(
   // Surfaces
   surface: AppSemanticColors.surfaceDark,
   onSurface: AppSemanticColors.textPrimaryDark,
-  surfaceContainer: AppSemanticColors.surfaceMutedDark.withOpacity(0.1),
+  surfaceContainer: Color(0xFF9CA3AF).withAlpha(50),
   // Status
   error: Colors.red,
   onError: AppSemanticColors.onPrimaryActionDark,

@@ -1,7 +1,4 @@
-import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book_marks/domain/usecases/insert_book_marks.dart';
-import 'package:bookreading/features/book_marks/domain/usecases/remove_book_marks.dart';
 import 'package:bookreading/features/book_marks/presentation/manager/book_marks/book_marks_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
