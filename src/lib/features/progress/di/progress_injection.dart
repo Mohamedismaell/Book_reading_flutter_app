@@ -1,4 +1,5 @@
 import 'package:bookreading/core/shared/injection/service_locator.dart';
+import 'package:bookreading/features/progress/domain/usecases/get_finished_books.dart';
 import 'package:bookreading/features/progress/domain/usecases/get_reading_progress.dart';
 import 'package:bookreading/features/progress/data/datasources/progress_data_source.dart';
 import 'package:bookreading/features/progress/domain/usecases/save_reading_pregress.dart';
@@ -44,6 +45,9 @@ class ProgressDi {
     );
     sl.registerFactory<GetReadingProgress>(
       () => GetReadingProgress(repository: sl<ProgressRepository>()),
+    );
+    sl.registerFactory<GetFinishedBooks>(
+      () => GetFinishedBooks(repository: sl<ProgressRepository>()),
     );
     //! Cubit / Manager
     sl.registerFactory<ReadingProgressCubit>(

@@ -9,4 +9,5 @@ abstract class ProgressRepository {
     required int pageNumber,
   });
   Future<Result> getProgress();
+  Future<Result> getFinishedBooks();
 }

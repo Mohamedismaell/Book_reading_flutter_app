@@ -54,4 +54,16 @@ class ProgressRepositoryImpl implements ProgressRepository {
       return Result.error(failure);
     }
   }
+   @override
+  Future<Result> getFinishedBooks() async {
+    try {
+      final result = await remoteDataSource.getFinishedBooks(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
+      return Result.ok(result);
+    } catch (e) {
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
+    }
+  }
 }

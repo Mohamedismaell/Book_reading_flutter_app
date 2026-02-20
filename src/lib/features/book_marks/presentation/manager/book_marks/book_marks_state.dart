@@ -2,27 +2,32 @@ part of 'book_marks_cubit.dart';
 
 @immutable
 class BookMarksState extends Equatable {
-  final List<BookMarksModel> bookmarks;
+  final Set<int> bookmarkedIds;
   final LoadStatus bookmarksStatus;
   final String errorMessage;
+
   const BookMarksState({
-    this.bookmarks = const [],
+    this.bookmarkedIds = const {},
     this.bookmarksStatus = LoadStatus.initial,
     this.errorMessage = '',
   });
 
   BookMarksState copyWith({
-    List<BookMarksModel>? bookmarks,
+    Set<int>? bookmarkedIds,
     LoadStatus? bookmarksStatus,
     String? errorMessage,
   }) {
     return BookMarksState(
-      bookmarks: bookmarks ?? this.bookmarks,
+      bookmarkedIds: bookmarkedIds ?? this.bookmarkedIds,
       bookmarksStatus: bookmarksStatus ?? this.bookmarksStatus,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
+  bool isBookmarked(int bookId) {
+    return bookmarkedIds.contains(bookId);
+  }
+
   @override
-  List<Object?> get props => [bookmarks, bookmarksStatus, errorMessage];
+  List<Object?> get props => [bookmarkedIds, bookmarksStatus, errorMessage];
 }

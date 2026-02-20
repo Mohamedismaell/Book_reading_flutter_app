@@ -40,7 +40,19 @@ class BookMarksRemoteDataSource {
       ''')
         .eq('user_id', userId)
         .order('created_at', ascending: false);
-    final resulte = response.map((e) => BookMarksModel.fromJsonMap(e)).toList();
-    return resulte;
+    final result = response.map((e) => BookMarksModel.fromJsonMap(e)).toList();
+    return result;
+  }
+
+  Future<Set<int>> getBookmarksId({required String userId}) async {
+    final response = await supabaseClient
+        .from('book_marks')
+        .select('''
+        book_id
+      ''')
+        .eq('user_id', userId)
+        .order('created_at', ascending: false);
+    final result = (response as List).map((e) => e['book_id'] as int).toSet();
+    return result;
   }
 }

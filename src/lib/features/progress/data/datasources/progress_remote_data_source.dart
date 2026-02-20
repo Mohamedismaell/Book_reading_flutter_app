@@ -40,4 +40,21 @@ class ProgressRemoteDataSource {
     if (response == null) return null;
     return ProgressModel.fromJsonMap(response);
   }
+
+  Future<ProgressModel?> getFinishedBooks({
+    required String userId,
+    // required int bookId,
+  }) async {
+    final response = await supabaseCilent
+        .from('user_progress')
+        .select('*, books(*), chapters(*)')
+        .eq('user_id', userId)
+        .eq('progress_percentage', 1)
+        .order('updated_at', ascending: false)
+        .limit(1)
+        .maybeSingle();
+
+    if (response == null) return null;
+    return ProgressModel.fromJsonMap(response);
+  }
 }

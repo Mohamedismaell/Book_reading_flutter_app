@@ -9,4 +9,5 @@ abstract class BookMarksRepository {
   });
   Future<Result> removeBookmark({required int bookId});
   Future<Result<List<BookMarksModel>>> getBookmarks();
+  Future<Result<Set<int>>> getBookmarksId();
 }

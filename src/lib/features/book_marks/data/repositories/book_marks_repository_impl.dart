@@ -58,4 +58,17 @@ class BookMarksRepositoryImpl implements BookMarksRepository {
       return Result.error(failure);
     }
   }
+
+  @override
+  Future<Result<Set<int>>> getBookmarksId() async {
+    try {
+      final result = await remoteDataSource.getBookmarksId(
+        userId: sl<SupabaseClient>().auth.currentUser!.id,
+      );
+      return Result.ok(result);
+    } catch (e) {
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/features/book_marks/domain/usecases/get_book_marks.dart';
+import 'package:bookreading/features/book_marks/domain/usecases/get_book_marks_id.dart';
 import 'package:bookreading/features/book_marks/domain/usecases/insert_book_marks.dart';
 import 'package:bookreading/features/book_marks/presentation/manager/book_marks/book_marks_cubit.dart';
 import 'package:bookreading/features/book_marks/data/datasources/book_marks_data_source.dart';
@@ -46,8 +47,11 @@ class BookMarksDi {
     sl.registerLazySingleton<RemoveBookMarks>(
       () => RemoveBookMarks(repository: sl<BookMarksRepository>()),
     );
-    sl.registerLazySingleton<GetBookMarks>(
-      () => GetBookMarks(repository: sl<BookMarksRepository>()),
+    sl.registerLazySingleton<GetBookMarksBooks>(
+      () => GetBookMarksBooks(repository: sl<BookMarksRepository>()),
+    );
+    sl.registerLazySingleton<GetBookMarksId>(
+      () => GetBookMarksId(repository: sl<BookMarksRepository>()),
     );
 
     //! Cubit / Manager
@@ -55,7 +59,7 @@ class BookMarksDi {
       () => BookMarksCubit(
         sl<InsertBookMarks>(),
         sl<RemoveBookMarks>(),
-        sl<GetBookMarks>(),
+        sl<GetBookMarksId>(),
       ),
     );
   }
