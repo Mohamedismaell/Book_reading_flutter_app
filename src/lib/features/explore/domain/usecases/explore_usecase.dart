@@ -1,3 +1,0 @@
-class ExploreUseCase {
-  const ExploreUseCase();
-}
