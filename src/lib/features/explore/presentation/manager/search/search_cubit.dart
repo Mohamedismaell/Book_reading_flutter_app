@@ -1,13 +1,10 @@
 // import 'dart:async';
 
 // import 'package:bloc/bloc.dart';
+// import 'package:bookreading/core/connections/refresh_on_reconnect.dart';
+// import 'package:bookreading/core/enums/stats.dart';
+// import 'package:bookreading/features/book/data/models/book_model.dart';
 // import 'package:equatable/equatable.dart';
-// import 'package:news_app/core/connection/refresh_on_reconnect.dart';
-// import 'package:news_app/core/enums/stats.dart';
-// import 'package:news_app/core/shared/domain/entities/post_entitiy.dart';
-// import 'package:news_app/core/shared/presentation/manager/connection_cubit/connection_cubit.dart';
-// import 'package:news_app/core/shared/params/news_category_params.dart';
-// import 'package:news_app/features/home/domain/usecases/search_category.dart';
 
 // part 'search_state.dart';
 

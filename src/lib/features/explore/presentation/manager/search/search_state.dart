@@ -1,12 +1,12 @@
 // part of 'search_cubit.dart';
 
 // class SearchState extends Equatable {
-//   final NewsStatus searchStatus;
-//   final List<PostEntity> searchResults;
+//   final LoadStatus searchStatus;
+//   final List<BookModel> searchResults;
 //   final String? searchQuery;
 //   final String? errorMessage;
 //   const SearchState({
-//     this.searchStatus = NewsStatus.loading,
+//     this.searchStatus = LoadStatus.loading,
 //     this.searchQuery,
 //     this.searchResults = const [],
 //     this.errorMessage,
@@ -14,8 +14,8 @@
 
 //   SearchState copyWith({
 //     String? searchQuery,
-//     NewsStatus? searchStatus,
-//     List<PostEntity>? searchResults,
+//     LoadStatus? searchStatus,
+//     List<BookModel>? searchResults,
 //     String? errorMessage,
 //   }) {
 //     return SearchState(
