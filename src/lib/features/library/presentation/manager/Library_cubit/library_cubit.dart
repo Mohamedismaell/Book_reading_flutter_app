@@ -14,12 +14,19 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   final GetBookMarksBooks getBookMarks;
   final GetFinishedBooks getFinishedBooks;
-  void changeCall() {
-    if (state.isFavoriteScreen) {
-      fetchAllBookmarks();
-    } else {
-      fetchFinishedBooks();
-    }
+  // void changeCall() {
+  //   if (state.isFavoriteScreen) {
+  //   } else {
+  //   }
+  // }
+  void showFavorites() {
+    fetchAllBookmarks();
+    emit(state.copyWith(isFavoriteScreen: true));
+  }
+
+  void showFinished() {
+    fetchFinishedBooks();
+    emit(state.copyWith(isFavoriteScreen: false));
   }
 
   Future<void> fetchAllBookmarks() async {
