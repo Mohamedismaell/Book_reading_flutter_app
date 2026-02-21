@@ -13,6 +13,7 @@ import 'package:bookreading/features/auth/domain/usecases/update_passwords.dart'
 import 'package:bookreading/features/auth/presentation/cubit/cubit/auth_cubit.dart';
 import 'package:bookreading/features/onboarding/domain/repositories/auth_repository.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,8 +44,8 @@ Future<void> main() async {
   print('Step 5: Supabase initialized');
 
   runApp(
-    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    AppBootstrap(),
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    // AppBootstrap(),
   );
 }
 

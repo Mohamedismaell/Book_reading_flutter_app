@@ -6,7 +6,9 @@ import 'package:bookreading/features/library/presentation/widget/all_book_marks_
 import 'package:bookreading/features/library/presentation/widget/library_app_bar.dart';
 import 'package:bookreading/features/library/presentation/widget/recent_favorites_section.dart';
 import 'package:bookreading/features/library/presentation/widget/section_header.dart';
+import 'package:bookreading/features/library/presentation/widget/track_finished_books.dart';
 import 'package:bookreading/features/library/presentation/widget/type_button.dart';
+import 'package:bookreading/features/progress/domain/usecases/get_finished_books.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,9 +32,16 @@ class LibraryScreen extends StatelessWidget {
               RecentFavoritesSection(state: state),
               SectionHeader(title: 'All Bookmarks', isRecentFavorites: false),
               SliverToBoxAdapter(child: SizedBox(height: 16.h)),
-              AllBookMarksSection(state: state),
+              AllBookMarksSection(state: state, isFavorite: true),
             ] else ...[
-              SectionHeader(title: 'Recent Favorites', isRecentFavorites: true),
+              TrackFinishedBooks(state: state),
+              SliverToBoxAdapter(child: SizedBox(height: 24.h)),
+              SectionHeader(
+                title: 'Recent Favorites',
+                isRecentFavorites: false,
+              ),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+              AllBookMarksSection(state: state, isFavorite: false),
             ],
           ],
         );
