@@ -13,6 +13,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+
+        //! Goal
+
         //! Header
         const Header(),
         SizedBox(height: 20.h),

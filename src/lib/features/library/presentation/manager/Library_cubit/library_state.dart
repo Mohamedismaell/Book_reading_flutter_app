@@ -6,8 +6,9 @@ class LibraryState extends Equatable {
   final List<BookModel> finishedBooks;
   final LoadStatus status;
   final String? errorMessage;
-  bool isFavoriteScreen;
-  LibraryState({
+  final bool isFavoriteScreen;
+
+  const LibraryState({
     this.bookMarksBooks = const [],
     this.finishedBooks = const [],
     this.status = LoadStatus.initial,

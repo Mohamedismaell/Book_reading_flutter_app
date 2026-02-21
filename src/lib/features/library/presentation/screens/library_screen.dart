@@ -8,7 +8,6 @@ import 'package:bookreading/features/library/presentation/widget/recent_favorite
 import 'package:bookreading/features/library/presentation/widget/section_header.dart';
 import 'package:bookreading/features/library/presentation/widget/track_finished_books.dart';
 import 'package:bookreading/features/library/presentation/widget/type_button.dart';
-import 'package:bookreading/features/progress/domain/usecases/get_finished_books.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,7 +67,6 @@ class _TabsSection extends StatelessWidget {
               LibraryTypeButton(
                 title: 'Favorites',
                 onPressed: () {
-                  print('1');
                   context.read<LibraryCubit>().showFavorites();
                   // context.read<LibraryCubit>().fetchAllBookmarks();
                 },
@@ -77,8 +75,6 @@ class _TabsSection extends StatelessWidget {
               LibraryTypeButton(
                 title: 'Finished Books',
                 onPressed: () {
-                  print('2');
-
                   context.read<LibraryCubit>().showFinished();
                 },
                 isActive: !state.isFavoriteScreen,

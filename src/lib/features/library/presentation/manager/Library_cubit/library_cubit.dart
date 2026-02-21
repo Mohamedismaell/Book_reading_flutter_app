@@ -19,14 +19,14 @@ class LibraryCubit extends Cubit<LibraryState> {
   //   } else {
   //   }
   // }
-  void showFavorites() {
-    fetchAllBookmarks();
+  void showFavorites() async {
     emit(state.copyWith(isFavoriteScreen: true));
+    await fetchAllBookmarks();
   }
 
-  void showFinished() {
-    fetchFinishedBooks();
+  void showFinished() async {
     emit(state.copyWith(isFavoriteScreen: false));
+    await fetchFinishedBooks();
   }
 
   Future<void> fetchAllBookmarks() async {
