@@ -12,7 +12,6 @@ class TrackFinishedBooks extends StatelessWidget {
     final numFinishedBooks = state.finishedBooks.length;
     return SliverToBoxAdapter(
       child: Container(
-        height: 130.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
           color: context.colorTheme.surfaceContainer,

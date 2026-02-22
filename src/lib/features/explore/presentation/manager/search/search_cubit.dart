@@ -40,7 +40,7 @@ class SearchCubit extends Cubit<SearchState> with RefreshOnReconnect {
         );
         return;
       }
-      if (query == state.searchQuery) return;
+      // if (query == state.searchQuery) return;
       emit(
         state.copyWith(searchStatus: LoadStatus.loading, searchQuery: query),
       );
@@ -66,10 +66,10 @@ class SearchCubit extends Cubit<SearchState> with RefreshOnReconnect {
     });
   }
 
-  @override
-  Future<void> close() {
-    _debounce?.cancel();
-    disposeReconnect();
-    return super.close();
-  }
+  // @override
+  // Future<void> close() {
+  //   _debounce?.cancel();
+  //   disposeReconnect();
+  //   return super.close();
+  // }
 }

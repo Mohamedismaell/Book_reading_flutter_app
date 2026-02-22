@@ -44,8 +44,8 @@ Future<void> main() async {
   print('Step 5: Supabase initialized');
 
   runApp(
-    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    AppBootstrap(),
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    // AppBootstrap(),
   );
 }
 

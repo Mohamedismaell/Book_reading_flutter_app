@@ -56,12 +56,10 @@ class AllBookMarksSection extends StatelessWidget {
                 color: context.colorTheme.surfaceContainer,
                 borderRadius: BorderRadius.circular(24.r),
               ),
-              height: 122.h,
               child: Padding(
                 padding: EdgeInsets.all(12.r),
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     InkWell(
                       onTap: () {
@@ -94,12 +92,11 @@ class AllBookMarksSection extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 16.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 270.w,
-                                child: Row(
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
                                   children: [
                                     Expanded(
                                       child: Column(
@@ -130,16 +127,16 @@ class AllBookMarksSection extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                              ),
-                              SizedBox(height: 15.h),
-                              Text(
-                                (state.bookMarksBooks[index].createdAt)
-                                    .toString(),
-                                style: context.textTheme.bodySmall,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                                SizedBox(height: 15.h),
+                                Text(
+                                  (state.bookMarksBooks[index].createdAt)
+                                      .toString(),
+                                  style: context.textTheme.bodySmall,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
