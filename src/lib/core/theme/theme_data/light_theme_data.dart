@@ -17,10 +17,13 @@ ThemeData getLightTheme() {
       filled: true,
       fillColor: AppSemanticColors.surfaceMutedLight.withOpacity(0.5),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(60),
+        borderRadius: BorderRadius.circular(60.r),
         borderSide: BorderSide.none,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      hintStyle: responsiveTextTheme.bodyMedium?.copyWith(
+        color: lightColorScheme.onSurface,
+      ),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(

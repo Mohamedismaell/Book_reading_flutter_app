@@ -23,6 +23,7 @@ class AppShell extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        // backgroundColor: Colors.transparent,
         // extendBody: true,
         body: Stack(
           children: [

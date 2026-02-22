@@ -22,7 +22,7 @@ ThemeData getDarkTheme() {
         borderSide: BorderSide.none,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
-      hintStyle: responsiveTextTheme.bodySmall?.copyWith(
+      hintStyle: responsiveTextTheme.bodyMedium?.copyWith(
         color: darkColorScheme.onSurface,
       ),
     ),

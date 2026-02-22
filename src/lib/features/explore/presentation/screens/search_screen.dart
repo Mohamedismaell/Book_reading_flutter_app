@@ -13,25 +13,24 @@ class SearchScreen extends StatelessWidget {
     final controller = ScrollController();
     return BlocProvider(
       create: (context) => sl<SearchCubit>(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              const CustomSearchBar(),
-              Expanded(
-                child: Scrollbar(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        child: Column(
+          children: [
+            const CustomSearchBar(isTapable: false),
+            Expanded(
+              child: Scrollbar(
+                controller: controller,
+                thumbVisibility: true,
+                thickness: 6,
+                radius: const Radius.circular(10),
+                child: CustomScrollView(
                   controller: controller,
-                  thumbVisibility: true,
-                  thickness: 6,
-                  radius: const Radius.circular(10),
-                  child: CustomScrollView(
-                    controller: controller,
-                    slivers: const [_SearchContent()],
-                  ),
+                  slivers: const [_SearchContent()],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
