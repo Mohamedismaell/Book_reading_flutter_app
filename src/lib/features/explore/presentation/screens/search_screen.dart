@@ -1,4 +1,5 @@
 import 'package:bookreading/core/shared/injection/service_locator.dart';
+import 'package:bookreading/core/widget/vertical_cards_display.dart';
 import 'package:bookreading/features/explore/presentation/manager/search/search_cubit.dart';
 import 'package:bookreading/features/explore/presentation/widget/custom_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,14 @@ class SearchScreen extends StatelessWidget {
               child: Scrollbar(
                 controller: controller,
                 thumbVisibility: true,
-                thickness: 6,
+                thickness: 3,
                 radius: const Radius.circular(10),
                 child: CustomScrollView(
                   controller: controller,
-                  slivers: const [_SearchContent()],
+                  slivers: [
+                    SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+                    const _SearchContent(),
+                  ],
                 ),
               ),
             ),
@@ -46,14 +50,9 @@ class _SearchContent extends StatelessWidget {
       builder: (context, state) {
         return SliverList.builder(
           itemCount: state.searchResults.length,
-          itemBuilder: (context, index) => ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
-            leading: Icon(Icons.access_time),
-            title: Text(maxLines: 1, state.searchResults[index].title),
-            trailing: Transform.rotate(
-              angle: 4,
-              child: Icon(Icons.arrow_forward_sharp),
-            ),
+          itemBuilder: (context, index) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: VerticalCardsDisplay(book: state.searchResults[index]),
           ),
         );
       },

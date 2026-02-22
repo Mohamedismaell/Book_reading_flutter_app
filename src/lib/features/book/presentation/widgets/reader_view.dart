@@ -155,7 +155,7 @@ class _ReaderViewState extends State<ReaderView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(width: 0.25.sw),
+                    // SizedBox(width: 0.25.sw),
                     Expanded(
                       child: Center(
                         child: ValueListenableBuilder<int>(
@@ -179,19 +179,19 @@ class _ReaderViewState extends State<ReaderView> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: context.colorTheme.primary
-                              .withOpacity(0.8),
-                          shape: const CircleBorder(),
-                          padding: EdgeInsets.all(10.r),
-                        ),
-                        onPressed: () {},
-                        child: Icon(Icons.view_list_rounded, size: 40.r),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    //   child: ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor: context.colorTheme.primary
+                    //           .withOpacity(0.8),
+                    //       shape: const CircleBorder(),
+                    //       padding: EdgeInsets.all(10.r),
+                    //     ),
+                    //     onPressed: () {},
+                    //     child: Icon(Icons.view_list_rounded, size: 40.r),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

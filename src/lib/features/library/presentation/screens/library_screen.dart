@@ -3,7 +3,7 @@ import 'package:bookreading/features/library/presentation/manager/Library_cubit/
 import 'package:bookreading/features/library/presentation/widget/all_book_marks_section.dart';
 import 'package:bookreading/features/library/presentation/widget/library_app_bar.dart';
 import 'package:bookreading/features/library/presentation/widget/recent_favorites_section.dart';
-import 'package:bookreading/features/library/presentation/widget/section_header.dart';
+import 'package:bookreading/core/widget/section_header.dart';
 import 'package:bookreading/features/library/presentation/widget/track_finished_books.dart';
 import 'package:bookreading/features/library/presentation/widget/type_button.dart';
 import 'package:flutter/material.dart';

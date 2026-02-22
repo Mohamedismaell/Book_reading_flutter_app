@@ -21,7 +21,7 @@ ThemeData getDarkTheme() {
         borderRadius: BorderRadius.circular(60.r),
         borderSide: BorderSide.none,
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 16.h),
+      contentPadding: EdgeInsets.symmetric(horizontal: 17.w),
       hintStyle: responsiveTextTheme.bodyMedium?.copyWith(
         color: darkColorScheme.onSurface,
       ),
