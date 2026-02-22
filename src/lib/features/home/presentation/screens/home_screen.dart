@@ -13,13 +13,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-
-        //! Goal
-
         //! Header
         const Header(),
         SizedBox(height: 20.h),
-
         //! Continue Reading
         const ContinueReading(),
         SizedBox(height: 32.h),
@@ -32,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         // Text("Popular", style: context.headlineMedium()),
         // SizedBox(height: context.setHeight(16)),
         // const HorizontalView(category: "popular"),
-        SizedBox(height: 300.h),
+        SizedBox(height: 10.h),
       ],
     );
   }

@@ -13,7 +13,11 @@ class BookRemoteDataSource {
 
   //Books
   Future<List<BookModel>> getBooks() async {
-    final response = await supabaseCilent.from('books').select();
+    final response = await supabaseCilent
+        .from('books')
+        .select()
+        .eq('is_coming_soon', false);
+    // .eq('is_coming_soon', false);
     // print(" Books **1** ===> $response");
     final resulte = response.map((e) => BookModel.fromJsonMap(e)).toList();
     // print("Books **2**  ===> $resulte");
@@ -25,6 +29,7 @@ class BookRemoteDataSource {
         .from('books')
         .select()
         .eq('id', bookId)
+        .eq('is_coming_soon', false)
         .maybeSingle();
 
     if (response == null) return null;
@@ -37,7 +42,9 @@ class BookRemoteDataSource {
     final response = await supabaseCilent
         .from('chapters')
         .select()
-        .eq('book_id', bookId);
+        .eq('book_id', bookId)
+        .eq('is_coming_soon', false);
+
     // print(" Chapters **1** ===> $response");
     final resulte = response.map((e) => ChapterModel.fromJsonMap(e)).toList();
     // print("Chapter  **2**  ===> $resulte");

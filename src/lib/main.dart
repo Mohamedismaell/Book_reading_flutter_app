@@ -28,6 +28,13 @@ import 'core/theme/theme_data/light_theme_data.dart';
 import 'features/auth/domain/usecases/forget_password.dart';
 
 Future<void> main() async {
+  // var uris = ['dart:core', '/foo/bar.dart', '/foo/file_with', 'comma.dart'];
+  // var possibleBadUris = uris.where(
+  //   (u) => !u.startsWith('dart:') && !u.endsWith('.dart'),
+  // );
+  // print(
+  //   possibleBadUris.join('\n'),
+  // ); // prints "/foo/file_with" which is the start of the
   WidgetsFlutterBinding.ensureInitialized();
   print('Step 1: ensureInitialized done');
   Bloc.observer = AppBlocObserver();
@@ -44,8 +51,8 @@ Future<void> main() async {
   print('Step 5: Supabase initialized');
 
   runApp(
-    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    // AppBootstrap(),
+    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    AppBootstrap(),
   );
 }
 

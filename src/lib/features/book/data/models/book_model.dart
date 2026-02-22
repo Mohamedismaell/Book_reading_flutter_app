@@ -10,6 +10,7 @@ class BookModel extends Equatable {
   final String? language;
   final String? coverUrl;
   final String? summary;
+  final bool isComingSoon;
   const BookModel({
     required this.id,
     required this.title,
@@ -17,6 +18,7 @@ class BookModel extends Equatable {
     required this.language,
     this.coverUrl,
     this.summary,
+    required this.isComingSoon,
   });
 
   BookModel copyWith({
@@ -26,6 +28,7 @@ class BookModel extends Equatable {
     String? language,
     String? coverUrl,
     String? summary,
+    bool? isComingSoon,
   }) {
     return BookModel(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class BookModel extends Equatable {
       language: language ?? this.language,
       coverUrl: coverUrl ?? this.coverUrl,
       summary: summary ?? this.summary,
+      isComingSoon: isComingSoon ?? this.isComingSoon,
     );
   }
 
@@ -45,6 +49,7 @@ class BookModel extends Equatable {
       'language': language,
       'cover_url': coverUrl,
       'summary': summary,
+      'is_coming_soon': isComingSoon,
     };
   }
 
@@ -56,6 +61,9 @@ class BookModel extends Equatable {
       language: map['language'] != null ? map['language'] as String : null,
       coverUrl: map['cover_url'] != null ? map['cover_url'] as String : null,
       summary: map['summary'] != null ? map['summary'] as String : null,
+      isComingSoon: map['is_coming_soon'] != null
+          ? map['is_coming_soon'] as bool
+          : false,
     );
   }
 
@@ -69,6 +77,6 @@ class BookModel extends Equatable {
 
   @override
   List<Object?> get props {
-    return [id, title, author, language, coverUrl, summary];
+    return [id, title, author, language, coverUrl, summary, isComingSoon];
   }
 }

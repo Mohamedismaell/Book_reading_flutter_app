@@ -52,7 +52,8 @@ class VerticalCardsDisplay extends StatelessWidget {
                     SizedBox(width: 16.w),
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
@@ -64,13 +65,13 @@ class VerticalCardsDisplay extends StatelessWidget {
                                   children: [
                                     Text(
                                       book.title,
-                                      style: context.textTheme.headlineSmall,
+                                      style: context.textTheme.bodyLarge,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       book.author ?? "Unknown",
-                                      style: context.textTheme.bodySmall,
+                                      style: context.textTheme.bodyMedium,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),

@@ -9,9 +9,11 @@ class HorizontalBookCard extends StatelessWidget {
     super.key,
     required this.book,
     required this.category,
+    // required this.isTapable,
   });
   final String category;
   final BookModel book;
+  // final bool isTapable;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,13 +58,13 @@ class HorizontalBookCard extends StatelessWidget {
                 children: [
                   Text(
                     book.title,
-                    style: context.textTheme.headlineSmall,
+                    style: context.textTheme.bodyLarge,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     book.author ?? "Unknown",
-                    style: context.textTheme.bodySmall,
+                    style: context.textTheme.bodyMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

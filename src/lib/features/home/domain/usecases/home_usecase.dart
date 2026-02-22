@@ -1,3 +1,0 @@
-class HomeUseCase {
-  const HomeUseCase();
-}

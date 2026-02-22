@@ -15,9 +15,32 @@ class ExploreRepositoryImpl implements ExploreRepository {
     // required this.networkInfo,
   });
 
+  @override
   Future<Result<List<BookModel>>> search({required String query}) async {
     try {
       final result = await remoteDataSource.search(query: query);
+      return Result.ok(result);
+    } catch (e) {
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
+    }
+  }
+
+  @override
+  Future<Result<List<BookModel>>> getPopularBooks() async {
+    try {
+      final result = await remoteDataSource.getPopularBooks();
+      return Result.ok(result);
+    } catch (e) {
+      final failure = ApiErrorMapper.fromException(e);
+      return Result.error(failure);
+    }
+  }
+
+  @override
+  Future<Result<List<BookModel>>> getCommingSoonBooks() async {
+    try {
+      final result = await remoteDataSource.getCommingSoonBooks();
       return Result.ok(result);
     } catch (e) {
       final failure = ApiErrorMapper.fromException(e);
