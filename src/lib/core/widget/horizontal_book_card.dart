@@ -18,8 +18,7 @@ class HorizontalBookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 20.w),
-      child: Container(
-        color: Colors.amber,
+      child: SizedBox(
         width: 160.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -6,13 +6,14 @@ class UserStatsModel extends Equatable {
   final int readingDays;
   final int booksCompleted;
   final int totalReadingMinutes;
+  final int booksFavorite;
   final DateTime? lastReadAt;
-
   const UserStatsModel({
     required this.readingStreak,
     required this.readingDays,
     required this.booksCompleted,
     required this.totalReadingMinutes,
+    required this.booksFavorite,
     this.lastReadAt,
   });
 
@@ -22,6 +23,7 @@ class UserStatsModel extends Equatable {
       readingDays: json['reading_days'] ?? 0,
       booksCompleted: json['books_completed'] ?? 0,
       totalReadingMinutes: json['total_reading_minutes'] ?? 0,
+      booksFavorite: json['books_favorite'] ?? 0,
       lastReadAt: json['last_read_at'] != null
           ? DateTime.parse(json['last_read_at'].toString())
           : null,
@@ -33,6 +35,7 @@ class UserStatsModel extends Equatable {
     int? readingDays,
     int? booksCompleted,
     int? totalReadingMinutes,
+    int? booksFavorite,
     DateTime? lastReadAt,
   }) {
     return UserStatsModel(
@@ -41,6 +44,7 @@ class UserStatsModel extends Equatable {
       booksCompleted: booksCompleted ?? this.booksCompleted,
       totalReadingMinutes: totalReadingMinutes ?? this.totalReadingMinutes,
       lastReadAt: lastReadAt ?? this.lastReadAt,
+      booksFavorite: booksFavorite ?? this.booksFavorite,
     );
   }
 
@@ -52,6 +56,7 @@ class UserStatsModel extends Equatable {
       booksCompleted,
       totalReadingMinutes,
       lastReadAt,
+      booksFavorite,
     ];
   }
 }

@@ -2,6 +2,8 @@ import 'package:bookreading/core/enums/profile.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/profile/presentation/widget/custom_profile_options.dart';
 import 'package:bookreading/features/profile/presentation/widget/profile_header.dart';
+import 'package:bookreading/features/profile/presentation/widget/user_stats_card.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,23 +12,37 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 20.w, left: 20.w, top: 20.h),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Profile', style: context.textTheme.headlineLarge),
-            SizedBox(height: 32.h),
-            ProfileHeader(),
-            SizedBox(height: 32.h),
-            for (var item in Profile.values)
-              Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: CustomProfileOptions(widgetType: item, onTap: () {}),
-              ),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Profile', style: context.textTheme.headlineMedium),
+          SizedBox(height: 32.h),
+          ProfileHeader(),
+          SizedBox(height: 32.h),
+          UserStatsCard(),
+          SizedBox(height: 32.h),
+          Text('Settings', style: context.textTheme.headlineSmall),
+          SizedBox(height: 16.h),
+
+          for (var item in Profile.values)
+            Padding(
+              padding: EdgeInsets.only(bottom: 4.h),
+              child: CustomProfileOptions(widgetType: item, onTap: () {}),
+            ),
+          SizedBox(height: 20.h),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: context.colorTheme.primary.withOpacity(0.05),
+              foregroundColor: context.colorTheme.primary,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(Icons.logout), Text('Log Out')],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -3,31 +3,32 @@ part of 'user_stats_cubit.dart';
 
 class UserStatsState extends Equatable {
   final LoadStatus userStateStatus;
-  final UserStatsModel userStatsModel;
+  final UserStatsModel userStats;
   final String? errorMessage;
 
   const UserStatsState({
     this.userStateStatus = LoadStatus.initial,
-    this.userStatsModel = const UserStatsModel(
+    this.userStats = const UserStatsModel(
       readingStreak: 0,
       readingDays: 0,
       booksCompleted: 0,
+      booksFavorite: 0,
       totalReadingMinutes: 0,
     ),
     this.errorMessage,
   });
 
   @override
-  List<Object?> get props => [userStateStatus, userStatsModel, errorMessage];
+  List<Object?> get props => [userStateStatus, userStats, errorMessage];
 
   UserStatsState copyWith({
     LoadStatus? userStateStatus,
-    UserStatsModel? userStatsModel,
+    UserStatsModel? userStats,
     String? errorMessage,
   }) {
     return UserStatsState(
       userStateStatus: userStateStatus ?? this.userStateStatus,
-      userStatsModel: userStatsModel ?? this.userStatsModel,
+      userStats: userStats ?? this.userStats,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

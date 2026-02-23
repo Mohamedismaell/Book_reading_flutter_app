@@ -19,7 +19,7 @@ class UserStatsCubit extends Cubit<UserStatsState> {
       success: (userStats) => emit(
         state.copyWith(
           userStateStatus: LoadStatus.loaded,
-          userStatsModel: userStats,
+          userStats: userStats,
         ),
       ),
       failure: (error) => emit(

@@ -1,5 +1,7 @@
 import 'package:bookreading/core/shared/injection/service_locator.dart';
 import 'package:bookreading/features/profile/data/datasources/profile_data_source.dart';
+import 'package:bookreading/features/profile/domain/usecases/get_user_stats.dart';
+import 'package:bookreading/features/profile/presentation/manager/user_stats/user_stats_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Data sources
@@ -42,6 +44,9 @@ class ProfileDi {
         // sl<ProfileRepository>(),
       ),
     );
+    sl.registerLazySingleton<GetUserStats>(
+      () => GetUserStats(repository: sl<ProfileRepository>()),
+    );
 
     //! Cubit / Manager
     // sl.registerLazySingleton<ProfileCubit>(
@@ -49,5 +54,8 @@ class ProfileDi {
     //     sl<ProfileUseCase>(),
     //   ),
     // );
+    sl.registerFactory<UserStatsCubit>(
+      () => UserStatsCubit(sl<GetUserStats>()),
+    );
   }
 }

@@ -1,13 +1,9 @@
 enum Profile {
-  notifications('Notifications'),
-  language(
-    'Language',
-  ),
-  changePassword('Change Password'),
-  education('Education'),
-  privacy('Privacy'),
-  termsAndConditions('Terms & Conditions'),
-  signOut('Sign Out');
+  accountSecurity('Account Security'),
+  // changePassword('Change Password'),
+  appTheme('App Theme'),
+  language('Language');
+  // signOut('Log Out');
 
   final String value;
   const Profile(this.value);

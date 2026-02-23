@@ -1,3 +1,4 @@
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class LibraryAppBar extends StatelessWidget {
@@ -15,7 +16,7 @@ class LibraryAppBar extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('My Library'),
+          Text('My Library', style: context.textTheme.headlineMedium),
           // Spacer(),
           InkWell(
             onTap: () {

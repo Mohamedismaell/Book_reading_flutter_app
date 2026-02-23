@@ -1,63 +1,53 @@
-import 'dart:io';
-
-import 'package:bookreading/core/enums/profile.dart';
+import 'package:bookreading/core/enums/stats.dart';
 import 'package:bookreading/core/shared/user/manager/cubit/user_cubit.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
+import 'package:bookreading/core/widget/profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        BlocBuilder<UserCubit, UserState>(
-          builder: (context, userState) {
-            return Stack(
-              alignment: Alignment.bottomRight,
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, userState) {
+        return switch (userState.status) {
+          LoadStatus.loading || LoadStatus.initial => _buildLoadingIndicator(),
+
+          LoadStatus.error => _buildErrorMessage(userState.message!),
+          LoadStatus.loaded => Center(
+            child: Column(
               children: [
-                CircleAvatar(
-                  radius: 35.r,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: userState.user?.profileImage != null
-                      ? FileImage(File(userState.user!.profileImage!))
-                      : const AssetImage(
-                              'assets/images/7CBCD403-05F5-4DE0-BF87-3AD3215870C7.png',
-                            )
-                            as ImageProvider,
+                ProfileAvatar(
+                  canEdit: true,
+                  radius: 40.r,
+                  onTap: () {},
+                  state: userState,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    // pickImage(context);
-                  },
-                  child: Container(
-                    width: 34.w,
-                    height: 34.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: context.colorTheme.surface,
-                    ),
-                    child: Icon(Icons.camera_alt_outlined, size: 18.sp),
+                SizedBox(height: 16.h),
+                Text(
+                  userState.user!.name!,
+                  style: context.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
-            );
-          },
-        ),
-        SizedBox(width: 25.w),
-        Column(
-          children: [
-            Text('Mohamed Ismael', style: context.textTheme.headlineMedium),
-          ],
-        ),
-      ],
+            ),
+          ),
+        };
+      },
     );
   }
+}
+
+Widget _buildLoadingIndicator() {
+  return const Center(child: CircularProgressIndicator());
+}
+
+Widget _buildErrorMessage(String message) {
+  return Center(child: Text('Something Went Wrong $message'));
 }
 
 //Todo save image to in lcoal

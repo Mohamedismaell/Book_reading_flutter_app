@@ -17,7 +17,7 @@ class ProfileRoutes {
         providers: [
           BlocProvider(create: (_) => sl<UserCubit>()..loadUser()),
           BlocProvider(create: (_) => sl<ProfileCubit>()),
-          BlocProvider(create: (_) => sl<UserStatsCubit>()),
+          BlocProvider(create: (_) => sl<UserStatsCubit>()..fetchUserStats()),
         ],
         child: ProfileScreen(),
       );

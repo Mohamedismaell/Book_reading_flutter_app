@@ -3,8 +3,8 @@ import 'package:bookreading/features/book/di/book_injection.dart';
 import 'package:bookreading/features/book_marks/di/book_marks_injection.dart';
 import 'package:bookreading/features/explore/di/explore_injection.dart';
 import 'package:bookreading/features/library/di/library_injection.dart';
+import 'package:bookreading/features/profile/di/profile_injection.dart';
 import 'package:bookreading/features/progress/di/progress_injection.dart';
-
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:bookreading/core/shared/injection/common_di.dart';
@@ -24,6 +24,7 @@ Future<void> initializeDependencies({
   BookMarksDi.init();
   LibraryDi.init();
   ExploreDi.init();
+  ProfileDi.init();
   // PostDi.init();
   // ProfileDi.init(profileBox);
 }
