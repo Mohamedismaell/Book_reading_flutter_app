@@ -1,62 +1,36 @@
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:bookreading/core/shared/injection/service_locator.dart';
-// import 'package:bookreading/core/theme/extensions/scaled_text.dart';
-// import 'package:bookreading/core/theme/extensions/theme_extension.dart';
-// import 'package:bookreading/core/widget/theme_icon.dart';
-// import 'package:bookreading/features/book/data/models/profile.dart';
-// import 'package:bookreading/features/book/data/models/user_stats.dart';
-// import 'package:bookreading/features/book/presentation/cubit/profile/profile_cubit.dart';
-// import 'package:bookreading/features/book/presentation/cubit/user_stats/user_stats_cubit.dart';
-// import 'package:bookreading/features/book/presentation/widgets/profile_avatar.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:bookreading/core/enums/profile.dart';
+import 'package:bookreading/core/theme/extensions/theme_extension.dart';
+import 'package:bookreading/features/profile/presentation/widget/custom_profile_options.dart';
+import 'package:bookreading/features/profile/presentation/widget/profile_header.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// class ProfilePage extends StatefulWidget {
-//   const ProfilePage({super.key});
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
-//   @override
-//   State<ProfilePage> createState() => _ProfilePageState();
-// }
-
-// class _ProfilePageState extends State<ProfilePage>
-//     with AutomaticKeepAliveClientMixin {
-//   final user = sl<SupabaseClient>().auth.currentUser;
-
-//   @override
-//   bool get wantKeepAlive => true;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // print('userMetadata ===> ${user!.userMetadata}');
-//     super.build(context);
-//     return BlocBuilder<UserStatsCubit, UserStatsState>(
-//       builder: (context, userState) {
-//         return BlocBuilder<ProfileCubit, ProfileState>(
-//           builder: (context, profileState) {
-//             return switch ((profileState, userState)) {
-//               (ProfileLoading(), _) ||
-//               (_, UserStatsLoading()) ||
-//               (ProfileInitial(), _) ||
-//               (_, UserStatsInitial()) => _buildLoadingIndicator(),
-
-//               (ProfileError(:final message), _) => _buildErrorMessage(message),
-
-//               (_, UserStatsError(:final message)) => _buildErrorMessage(
-//                 message,
-//               ),
-//               (
-//                 ProfileLoaded(:final profile),
-//                 UserStatsLoaded(:final userStats),
-//               ) =>
-//                 _buildStateUI(userStats, profile),
-//               // _ => const SizedBox.shrink(),
-//             };
-//           },
-//         );
-//       },
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: 20.w, left: 20.w, top: 20.h),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Profile', style: context.textTheme.headlineLarge),
+            SizedBox(height: 32.h),
+            ProfileHeader(),
+            SizedBox(height: 32.h),
+            for (var item in Profile.values)
+              Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: CustomProfileOptions(widgetType: item, onTap: () {}),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 //   Widget _buildStateUI(UserStatsModel userStats, ProfileModel profile) {
 //     return Stack(
@@ -68,7 +42,12 @@
 //               padding: const EdgeInsets.symmetric(horizontal: 20),
 //               child: Column(
 //                 children: [
-//                   ProfileAvatar(profile: profile, canEdit: true, radius: 50),
+//                   ProfileAvatar(
+//                     profile: profile,
+//                     canEdit: true,
+//                     radius: 50,
+//                     profileImage: '',
+//                   ),
 //                   SizedBox(height: 10.h),
 //                   Text(
 //                     user!.userMetadata!['full_name'],

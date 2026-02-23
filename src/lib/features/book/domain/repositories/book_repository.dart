@@ -8,14 +8,6 @@ abstract class BookRepository {
   Future<Result> getChapters(int bookId);
   Future<Result> getBookById(int bookId);
 
-  Future<Result> updateUserStats({
-    int? readingStreak,
-    int? readingDays,
-    int? booksCompleted,
-    int? totalReadingMinutes,
-    DateTime? lastReadAt,
-  });
-  Future<Result> getUserStats();
   Future<Result> getUserProfile();
   Future<Result> updateUserProfile({
     String? avatarUrl,

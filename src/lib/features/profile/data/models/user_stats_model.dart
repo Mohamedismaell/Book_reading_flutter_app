@@ -1,11 +1,14 @@
-class UserStatsModel {
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:equatable/equatable.dart';
+
+class UserStatsModel extends Equatable {
   final int readingStreak;
   final int readingDays;
   final int booksCompleted;
   final int totalReadingMinutes;
   final DateTime? lastReadAt;
 
-  UserStatsModel({
+  const UserStatsModel({
     required this.readingStreak,
     required this.readingDays,
     required this.booksCompleted,
@@ -39,5 +42,16 @@ class UserStatsModel {
       totalReadingMinutes: totalReadingMinutes ?? this.totalReadingMinutes,
       lastReadAt: lastReadAt ?? this.lastReadAt,
     );
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      readingStreak,
+      readingDays,
+      booksCompleted,
+      totalReadingMinutes,
+      lastReadAt,
+    ];
   }
 }

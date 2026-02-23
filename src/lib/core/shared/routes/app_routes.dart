@@ -11,7 +11,7 @@ class AppRoutes {
   static const String home = '/home';
   static const String explore = '/explore';
   static const String library = '/library';
-  // static const String profile = '/profile';
+  static const String profile = '/profile';
   static const String screen3 = '/screen3';
   static const String screen4 = '/screen4';
 

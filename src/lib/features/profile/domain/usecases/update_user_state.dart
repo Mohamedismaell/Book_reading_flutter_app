@@ -1,8 +1,8 @@
 import 'package:bookreading/core/connections/result.dart';
-import 'package:bookreading/features/book/domain/repositories/book_repository.dart';
+import 'package:bookreading/features/profile/domain/repositories/profile_repository.dart';
 
 class UpdateUserStats {
-  final BookRepository repository;
+  final ProfileRepository repository;
   UpdateUserStats({required this.repository});
   Future<Result> call({
     int? readingStreak,

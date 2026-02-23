@@ -55,49 +55,6 @@ class BookRepositoryImpl extends BookRepository {
   }
 
   @override
-  Future<Result> getUserStats() async {
-    try {
-      final result = await remoteDataSource.getUserStats(
-        userId: sl<SupabaseClient>().auth.currentUser!.id,
-      );
-      //   if (result == null) {
-      //   return Result.ok(null);
-      // }
-      return Result.ok(result);
-    } catch (e) {
-      final failure = ApiErrorMapper.fromException(e);
-      return Result.error(failure);
-    }
-  }
-
-  @override
-  Future<Result> updateUserStats({
-    // required String userId,
-    int? readingStreak,
-    int? readingDays,
-    int? booksCompleted,
-    int? totalReadingMinutes,
-    DateTime? lastReadAt,
-    // DateTime? updatedAt,
-  }) async {
-    try {
-      await remoteDataSource.updateUserStats(
-        userId: sl<SupabaseClient>().auth.currentUser!.id,
-        readingStreak: readingStreak,
-        readingDays: readingDays,
-        booksCompleted: booksCompleted,
-        totalReadingMinutes: totalReadingMinutes,
-        lastReadAt: lastReadAt,
-        // updatedAt: updatedAt,
-      );
-      return Result.ok(null);
-    } catch (e) {
-      final failure = ApiErrorMapper.fromException(e);
-      return Result.error(failure);
-    }
-  }
-
-  @override
   Future<Result> getUserProfile() async {
     try {
       final result = await remoteDataSource.getUserProfile(

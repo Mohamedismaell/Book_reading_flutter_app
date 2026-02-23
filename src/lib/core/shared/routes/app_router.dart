@@ -7,6 +7,7 @@ import 'package:bookreading/features/book/routes/book_routes.dart';
 import 'package:bookreading/features/explore/routes/explore_routes.dart';
 import 'package:bookreading/features/home/routes/home_routes.dart';
 import 'package:bookreading/features/library/routes/library_routes.dart';
+import 'package:bookreading/features/profile/routes/profile_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -36,7 +37,7 @@ class AppRouter {
               StatefulShellBranch(routes: [HomeRoutes.homeRoute]),
               StatefulShellBranch(routes: [ExploreRoutes.routes]),
               StatefulShellBranch(routes: [LibraryRoutes.bookmarksRoute]),
-              // StatefulShellBranch(routes: [ProfileRoutes.tabRoute]),
+              StatefulShellBranch(routes: [ProfileRoutes.routes]),
             ],
           ),
           ...BookRoutes.routes,

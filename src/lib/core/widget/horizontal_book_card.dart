@@ -18,58 +18,59 @@ class HorizontalBookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 20.w),
-      child: SizedBox(
+      child: Container(
+        color: Colors.amber,
         width: 160.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              onTap: () {
-                context.pushNamed(
-                  'bookDetails',
-                  pathParameters: {'bookId': book.id.toString()},
-                  extra: {
-                    'heroTag': '${category}_${book.id}',
-                    'coverUrl': book.coverUrl,
-                    'title': book.title,
-                    'author': book.author,
-                  },
-                );
-              },
-              child: Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 250.h,
-                  child: Hero(
-                    tag: '${category}_${book.id}',
-                    child: Image.network(book.coverUrl!, fit: BoxFit.cover),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  context.pushNamed(
+                    'bookDetails',
+                    pathParameters: {'bookId': book.id.toString()},
+                    extra: {
+                      'heroTag': '${category}_${book.id}',
+                      'coverUrl': book.coverUrl,
+                      'title': book.title,
+                      'author': book.author,
+                    },
+                  );
+                },
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    // height: 250.h,
+                    child: Hero(
+                      tag: '${category}_${book.id}',
+                      child: Image.network(book.coverUrl!, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
               ),
             ),
             // SizedBox(height: 16.h),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    book.title,
-                    style: context.textTheme.bodyLarge,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    book.author ?? "Unknown",
-                    style: context.textTheme.bodyMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  book.title,
+                  style: context.textTheme.bodyLarge,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  book.author ?? "Unknown",
+                  style: context.textTheme.bodyMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ],
         ),

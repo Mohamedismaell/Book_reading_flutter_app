@@ -27,11 +27,3 @@ class GetUserProfile {
     return await repository.getUserProfile();
   }
 }
-
-class GetUserStats {
-  final BookRepository repository;
-  GetUserStats({required this.repository});
-  Future<Result> call() async {
-    return await repository.getUserStats();
-  }
-}
