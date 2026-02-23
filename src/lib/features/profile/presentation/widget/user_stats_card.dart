@@ -19,11 +19,11 @@ class UserStatsCard extends StatelessWidget {
           ),
           height: 100.h,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildStatCard(
                 context,
-                'Read',
+                'Favorite',
                 state.userStats.booksFavorite.toString(),
               ),
               Expanded(
@@ -45,7 +45,7 @@ class UserStatsCard extends StatelessWidget {
               ),
               _buildStatCard(
                 context,
-                'Favorite',
+                'Read',
                 state.userStats.booksCompleted.toString(),
               ),
             ],

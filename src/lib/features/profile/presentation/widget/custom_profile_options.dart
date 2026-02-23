@@ -23,7 +23,7 @@ class CustomProfileOptions extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: context.colorTheme.surface,
+          color: context.colorTheme.surfaceContainer,
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: ListTile(

@@ -22,7 +22,7 @@ class ProfileHeader extends StatelessWidget {
               children: [
                 ProfileAvatar(
                   canEdit: true,
-                  radius: 40.r,
+                  radius: 50.r,
                   onTap: () {},
                   state: userState,
                 ),

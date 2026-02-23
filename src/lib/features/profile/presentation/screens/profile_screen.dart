@@ -1,10 +1,10 @@
 import 'package:bookreading/core/enums/profile.dart';
 import 'package:bookreading/core/theme/extensions/theme_extension.dart';
 import 'package:bookreading/features/profile/presentation/widget/custom_profile_options.dart';
+import 'package:bookreading/features/profile/presentation/widget/logout_button.dart';
 import 'package:bookreading/features/profile/presentation/widget/profile_header.dart';
 import 'package:bookreading/features/profile/presentation/widget/user_stats_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -27,21 +27,11 @@ class ProfileScreen extends StatelessWidget {
 
           for (var item in Profile.values)
             Padding(
-              padding: EdgeInsets.only(bottom: 4.h),
+              padding: EdgeInsets.only(bottom: 10.h),
               child: CustomProfileOptions(widgetType: item, onTap: () {}),
             ),
           SizedBox(height: 20.h),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: context.colorTheme.primary.withOpacity(0.05),
-              foregroundColor: context.colorTheme.primary,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(Icons.logout), Text('Log Out')],
-            ),
-          ),
+          LogoutButton(),
         ],
       ),
     );
