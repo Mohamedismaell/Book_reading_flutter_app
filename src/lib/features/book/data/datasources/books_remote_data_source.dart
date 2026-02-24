@@ -39,8 +39,8 @@ class BookRemoteDataSource {
     final response = await supabaseCilent
         .from('chapters')
         .select()
-        .eq('book_id', bookId)
-        .eq('is_coming_soon', false);
+        .eq('book_id', bookId);
+    // .eq('is_coming_soon', false);
 
     // print(" Chapters **1** ===> $response");
     final resulte = response.map((e) => ChapterModel.fromJsonMap(e)).toList();

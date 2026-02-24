@@ -13,7 +13,8 @@ class LibraryRoutes {
     builder: (context, state) => BlocProvider(
       create: (context) =>
           LibraryCubit(sl<GetBookMarksBooks>(), sl<GetFinishedBooks>())
-            ..fetchAllBookmarks(),
+            ..fetchAllBookmarks()
+            ..fetchFinishedBooks(),
       child: const LibraryScreen(),
     ),
   );

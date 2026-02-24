@@ -15,6 +15,7 @@ import 'package:bookreading/features/onboarding/domain/repositories/auth_reposit
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -28,13 +29,6 @@ import 'core/theme/theme_data/light_theme_data.dart';
 import 'features/auth/domain/usecases/forget_password.dart';
 
 Future<void> main() async {
-  // var uris = ['dart:core', '/foo/bar.dart', '/foo/file_with', 'comma.dart'];
-  // var possibleBadUris = uris.where(
-  //   (u) => !u.startsWith('dart:') && !u.endsWith('.dart'),
-  // );
-  // print(
-  //   possibleBadUris.join('\n'),
-  // ); // prints "/foo/file_with" which is the start of the
   WidgetsFlutterBinding.ensureInitialized();
   print('Step 1: ensureInitialized done');
   Bloc.observer = AppBlocObserver();
@@ -50,6 +44,7 @@ Future<void> main() async {
   );
   print('Step 5: Supabase initialized');
 
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(
     // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
     AppBootstrap(),
