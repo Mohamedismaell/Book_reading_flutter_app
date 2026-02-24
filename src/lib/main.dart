@@ -46,8 +46,8 @@ Future<void> main() async {
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(
-    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    AppBootstrap(),
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    // AppBootstrap(),
   );
 }
 
